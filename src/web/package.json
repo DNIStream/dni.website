@@ -19,9 +19,13 @@
     "@angular/http": "^6.1.0",
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
+    "@angular/platform-server": "^6.1.7",
     "@angular/router": "^6.1.0",
+    "@nguniversal/express-engine": "^6.1.0",
+    "@nguniversal/module-map-ngfactory-loader": "^6.1.0",
     "core-js": "^2.5.4",
     "rxjs": "~6.2.0",
+    "ts-loader": "^5.1.1",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {
