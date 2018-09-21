@@ -60,7 +60,7 @@
           }
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-serverserver",
+          "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "browserTarget": "dni:build"
           },
