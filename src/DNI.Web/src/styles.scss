@@ -1,1 +1,14 @@
-/* You can add global styles to this file, and also import other style files */
+// Custom fonts
+@import url('https://fonts.googleapis.com/css?family=Lato');
+
+// Bootstrap 4
+// Import local theme / variable overrides. You can customise this file to theme bootstrap 4 for this project
+@import '_bootstrap-variables';
+// Import remiaining bootstrap functionality
+@import '~bootstrap/scss/bootstrap';
+
+$test: #CD0000;
+
+h1 {
+    color: $test;
+}
