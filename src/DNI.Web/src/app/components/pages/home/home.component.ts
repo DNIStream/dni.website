@@ -1,21 +1,36 @@
-import { Component, Inject, APP_ID, PLATFORM_ID } from '@angular/core';
+import { Component, Inject, APP_ID, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ContactService } from 'app/services/contact.service';
+import { CountdownService } from 'app/services/countdown/countdown.service';
+import { Observable } from 'rxjs';
+import { TickData } from 'app/services/countdown/tick-data';
 
 @Component({
   selector: 'dni-root',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  providers: [CountdownService]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  private timer$: Observable<TickData>;
+
+  public tickData: TickData;
+
   constructor(
     @Inject(PLATFORM_ID)
     private platformId: Object,
     @Inject(APP_ID)
     private appId: string,
-    private contactService: ContactService
+    private countdownService: CountdownService
   ) {
     console.log(this.appId + ' ' + this.platformId);
+  }
+
+  ngOnInit(): void {
+    this.timer$ = this.countdownService.createTimer(4, 19, 0);
+    this.timer$
+      .subscribe(td => {
+        this.tickData = td;
+      });
   }
 
   public get title() {

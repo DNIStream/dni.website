@@ -1,3 +1,24 @@
-<h1>Home Page</h1>
+<div *ngIf="tickData && tickData.showIsLive">
+    <iframe src="https://player.twitch.tv?channel=dnistream"
+            height="300"
+            width="100%"
+            frameborder="0"
+            scrolling="no"
+            allowfullscreen="false"
+            style="position: absolute; height: 100%; border: none;">
+    </iframe>
+</div>
+<div *ngIf="tickData && !tickData.showIsLive">
+    <div class="jumbotron">
+        <p class="lead"><img src="assets/logo.svg" id="logo" class="float-left" alt="DNI Logo" />Documentation Not Included is a live-streamed development talk show and podcast where Josey, Chris and Patryk delve deep into all things development.</p>
+        <p>We're platform agnostic, covering topics such as web development, process work-flows, enterprise architecture, game development, visual effects, community management, virtual assistance and DevOps practices.</p>
 
-<dni-countdown></dni-countdown>
+        <hr class="my-4">
+
+        <div class="row text-center">
+            <div class="col">Next show in:</div>
+            <div class="col">{{tickData.nextShowIn.days()}} days</div>
+            <div class="col">{{tickData.nextShowIn.hours()}}:{{tickData.nextShowIn.minutes()}}:{{tickData.nextShowIn.seconds()}}</div>
+        </div>
+    </div>
+</div>
