@@ -1,5 +1,5 @@
 // Custom fonts
-@import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 // Bootstrap 4
 // Import local theme / variable overrides. You can customise this file to theme bootstrap 4 for this project
@@ -7,8 +7,6 @@
 // Import remiaining bootstrap functionality
 @import '~bootstrap/scss/bootstrap';
 
-$test: #CD0000;
-
-h1 {
-    color: $test;
+body {
+    margin: 1em;
 }
