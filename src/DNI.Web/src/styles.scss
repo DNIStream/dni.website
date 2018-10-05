@@ -8,5 +8,13 @@
 @import '~bootstrap/scss/bootstrap';
 
 body {
-    margin: 1em;
+    background-image: url('assets/moth-bg.png');
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-attachment: fixed;
+}
+
+.card-img-top {
+    max-width: 490px;
+    max-height: 550px;
 }
