@@ -1,0 +1,23 @@
+<div class="container">
+    <ul class="nav justify-content-center">
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/show-archive']" routerLinkActive="active">Show Archive</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/ethics']" routerLinkActive="active">Code of Ethics</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
+        </li>
+    </ul>
+
+    <router-outlet></router-outlet>
+</div>
+
+<cookie-law name="dni-cookie-law"
+            awsomeCloseIcon="far fa-times-circle">
+    <p>We use cookies... <small class="text-muted">yadda, yadda,</small> ...your privacy... <small class="text-muted">mumble, mumble,</small> ...GDPR... <small class="text-muted">something, something, </small> ...customise your experience. Just press the little X on the right or <a [routerLink]="['privacy']">read more</a>.</p>
+</cookie-law>

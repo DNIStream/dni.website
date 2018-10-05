@@ -1,0 +1,17 @@
+<h2 class="text-light shadow-sm">Meet The Creators</h2>
+
+<p class="text-light shadow-sm">We LOVE development. We boast over 40 years of collective development industry experience, but we don't know everything - that's why we got together for this show - to learn from each other and bring the wider community up to date details on the latest development tech.</p>
+
+<div class="card-deck">
+  <div class="card"
+       *ngFor="let c of creators">
+    <img class="card-img-top" [src]="c.img" [alt]="c.name"/>
+    <div class="card-body">
+      <h5 class="card-title">{{c.name}}</h5>
+      <p class="card-text">{{c.desc}}</p>
+    </div>
+    <div class="card-footer">
+      <a *ngFor="let l of c.links" [href]="l.uri" class="btn btn-primary card-link" [title]="l.alt" target="_blank"><i class="{{l.icon}}"></i></a>
+    </div>
+  </div>
+</div>

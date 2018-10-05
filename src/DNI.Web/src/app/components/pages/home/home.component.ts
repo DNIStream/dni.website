@@ -3,6 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { CountdownService } from 'app/services/countdown/countdown.service';
 import { Observable } from 'rxjs';
 import { TickData } from 'app/services/countdown/tick-data';
+import { DataService } from 'app/services/creators/data.service';
+import { Creator } from 'app/model/creator';
 
 @Component({
   selector: 'dni-root',

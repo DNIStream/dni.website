@@ -1,0 +1,63 @@
+[
+    {
+        "name": "Josey Howarth",
+        "img": "assets/creators/josey.jpg",
+        "desc": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec cursus varius eros nec ullamcorper. Phasellus elit nulla, iaculis at enim rhoncus, auctor maximus nisi. Proin ac mi pulvinar, elementum mauris vitae, aliquet arcu. Fusce eget rutrum sapien.",
+        "links": [
+            {
+                "icon": "fab fa-linkedin",
+                "uri": "//www.linkedin.com/in/joseyhowarth/",
+                "alt": "Josey's LinkedIn"
+            },
+            {
+                "icon": "fas fa-link",
+                "uri": "//www.lovesudo.com/",
+                "alt": "Love Sudo - Josey's Company Website"
+            },
+            {
+                "icon": "fab fa-twitter",
+                "uri": "//twitter.com/joseyhowarth",
+                "alt": "Josey's Twitter"
+            }
+        ]
+    },
+    {
+        "name": "Chris Sebok",
+        "img": "assets/creators/chris.jpg",
+        "desc": "Every development team needs a giant-dwarf, and Chris provides this service to us free of charge. He's been involved in web site and app development since the inception of the internet, and today manages his own software consultancy - covering everything from DevOps to Technical Architecture. He's also got a better beard than you.",
+        "links": [
+            {
+                "icon": "fab fa-linkedin",
+                "uri": "//www.linkedin.com/in/shadow-moses-developments/",
+                "alt": "Chris's LinkedIn"
+            },
+            {
+                "icon": "fas fa-link",
+                "uri": "//www.shadowmoses.co.uk/",
+                "alt": "Shadow Moses Developments - Chris's Company Website"
+            },
+            {
+                "icon": "fab fa-twitter",
+                "uri": "//twitter.com/nineteenninjas",
+                "alt": "Chris's Twitter"
+            }
+        ]
+    },
+    {
+        "name": "Patryk Kowalik",
+        "img": "assets/creators/patryk.jpg",
+        "desc": "Patryk is the product of a rogue Polish AI and a libertarian Vincent van Gogh who couldn't decide between art and programming, so he did both! He's our go to 'graphics guy' and has worked across game development, AR, VR and CG programming. You'll love the way he pronounces his R's.",
+        "links": [
+            {
+                "icon": "fab fa-linkedin",
+                "uri": "//www.linkedin.com/in/patryk-kowalik/",
+                "alt": "Patryk's LinkedIn"
+            },
+            {
+                "icon": "fab fa-twitter",
+                "uri": "//twitter.com/imrooniel",
+                "alt": "Patryk's Twitter"
+            }
+        ]
+    }
+]
