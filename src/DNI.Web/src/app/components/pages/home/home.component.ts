@@ -1,10 +1,7 @@
-import { Component, Inject, APP_ID, PLATFORM_ID, OnInit } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CountdownService } from 'app/services/countdown/countdown.service';
 import { Observable } from 'rxjs';
 import { TickData } from 'app/services/countdown/tick-data';
-import { DataService } from 'app/services/creators/data.service';
-import { Creator } from 'app/model/creator';
 
 @Component({
   selector: 'dni-root',
@@ -18,13 +15,8 @@ export class HomeComponent implements OnInit {
   public tickData: TickData;
 
   constructor(
-    @Inject(PLATFORM_ID)
-    private platformId: Object,
-    @Inject(APP_ID)
-    private appId: string,
     private countdownService: CountdownService
   ) {
-    console.log(this.appId + ' ' + this.platformId);
   }
 
   ngOnInit(): void {
@@ -33,9 +25,5 @@ export class HomeComponent implements OnInit {
       .subscribe(td => {
         this.tickData = td;
       });
-  }
-
-  public get title() {
-    return '\'' + this.appId + '\' running in \'' + (isPlatformBrowser(this.platformId) ? 'browser' : 'server') + '\' mode';
   }
 }
