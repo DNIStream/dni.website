@@ -8,9 +8,11 @@ import { EthicsComponent } from 'app/components/pages/ethics/ethics.component';
 import { ShowArchiveComponent } from './components/pages/show-archive/show-archive.component';
 import { ContactComponent } from 'app/components/pages/contact/contact.component';
 import { FaqComponent } from 'app/components/pages/faq/faq.component';
+import { CommunityGuidelinesComponent } from 'app/components/pages/community-guidelines/community-guidelines.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'community-guidelines', component: CommunityGuidelinesComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'show-archive', component: ShowArchiveComponent },

@@ -22,11 +22,8 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
 
   public model: ContactModel = new ContactModel();
 
-  public processing: boolean = false;
-  public sent: boolean = false;
-  public error: boolean = false;
   public messageHtml: string = null;
-
+  public state: 'init' | 'processing' | 'error' | 'sent';
   public reCaptchaSiteKey: string;
 
   constructor(
@@ -38,24 +35,19 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
 
   ngOnInit() {
     this.reCaptchaSiteKey = environment.recaptchaSiteKey;
+    this.state = 'init';
   }
 
   public onSubmit(): void {
-    this.processing = true;
-    this.error = false;
-    this.sent = false;
+    this.state = 'processing';
 
     this.contactService
       .sendContactEmail(this.model)
-      .pipe(
-        finalize(() => {
-          this.sent = true;
-          this.processing = false;
-        }))
       .subscribe(x => {
-        this.messageHtml = '<p>Thank you for your message, we\'ll get back you as soon as possible.</p>';
+        this.state = 'sent';
+        this.messageHtml = 'Thank you for your message, we\'ll get back you as soon as possible.';
       }, e => {
-        this.error = true;
+        this.state = 'error';
         this.messageHtml = 'There was an unexpected error when trying to send your message; please try again or contact us using one of other methods. Please let us know if this form isn\'t working!';
       });
 

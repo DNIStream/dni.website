@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CookieLawModule } from 'angular2-cookie-law';
 import { NgStringPipesModule } from 'angular-pipes';
 import { NgxCaptchaModule } from 'ngx-captcha';
+import { TabsModule } from 'ngx-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from 'app/app.component';
@@ -18,8 +19,8 @@ import { ShowArchiveComponent } from './components/pages/show-archive/show-archi
 import { EthicsComponent } from './components/pages/ethics/ethics.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
 import { FaqComponent } from './components/pages/faq/faq.component';
-
-
+import { CommunityGuidelinesComponent } from './components/pages/community-guidelines/community-guidelines.component';
+import { SocialLinksComponent } from './components/shared/social-links/social-links.component';
 
 @NgModule({
   declarations: [
@@ -31,10 +32,13 @@ import { FaqComponent } from './components/pages/faq/faq.component';
     ShowArchiveComponent,
     EthicsComponent,
     ContactComponent,
-    FaqComponent
+    FaqComponent,
+    CommunityGuidelinesComponent,
+    SocialLinksComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'dni' }),
+    TabsModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
     NgxCaptchaModule,

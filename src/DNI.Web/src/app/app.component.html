@@ -7,9 +7,6 @@
             <a class="nav-link" [routerLink]="['/show-archive']" routerLinkActive="active">Show Archive</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/ethics']" routerLinkActive="active">Code of Ethics</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
         </li>
     </ul>
@@ -26,6 +23,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
+                <h5>Site Links</h5>
                 <ul class="footer-links list-unstyled">
                     <li>
                         <a [routerLink]="['/']" routerLinkActive="active">Home</a>
@@ -34,10 +32,18 @@
                         <a [routerLink]="['/show-archive']" routerLinkActive="active">Show Archive</a>
                     </li>
                     <li>
+                        <a [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5>Community &amp; Policies</h5>
+                <ul class="footer-links list-unstyled">
+                    <li>
                         <a [routerLink]="['/ethics']" routerLinkActive="active">Code of Ethics</a>
                     </li>
                     <li>
-                        <a [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
+                        <a [routerLink]="['/community-guidelines']" routerLinkActive="active">Community Guidelines</a>
                     </li>
                     <li>
                         <a [routerLink]="['/privacy']" routerLinkActive="active">Privacy &amp; Cookies Policy</a>
@@ -47,7 +53,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col">
+            <div class="col small">
                 <p>Website and content &copy; Documentation Not Included 2018. All 3rd party resources are used with consent and / or are licensed for reuse.</p>
 
                 <p>Website by <a href="//www.shadowmoses.co.uk" target="_blank"><img src="assets/creators/smd.png" alt="Shadow Moses Developments Ltd" width="32" /></a>. DNI v{{version}} - {{versionText}}.</p>
