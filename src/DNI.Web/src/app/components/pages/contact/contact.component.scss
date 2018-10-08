@@ -8,3 +8,7 @@ form {
         }
     }
 }
+
+:host ::ng-deep .tab-content {
+    padding-top: 2em;
+}

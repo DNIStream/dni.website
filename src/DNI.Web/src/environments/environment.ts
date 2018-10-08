@@ -6,7 +6,7 @@ const pkgJson = require('../../package.json');
 export const environment = {
     production: false,
     webUri: 'http://spikeh.ddns.net:4200/',
-    apiBaseUri: 'http://localhost:12341/',
+    apiBaseUri: 'http://spikeh.ddns.net:12341/',
     recaptchaSiteKey: '6Lcv_3MUAAAAAPTlA1F3Jk2X3mc_Vnixqbgk3pgv',
     version: pkgJson.version,
     versionText: 'The MVP'
