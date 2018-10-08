@@ -1,0 +1,10 @@
+@import './src/_bootstrap-variables';
+
+form {
+    .has-error {
+        color: theme-color('warning');
+        input, textarea, select {
+            border-color: theme-color('warning');
+        }
+    }
+}

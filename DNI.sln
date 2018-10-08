@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B86E4627-3062-42F7-8BDD-47E53C2D0584}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.API", "src\DNI.API\DNI.API.csproj", "{33DE2843-E0F4-491A-BF35-2CA0110D1519}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.API", "src\DNI.API\DNI.API.csproj", "{33DE2843-E0F4-491A-BF35-2CA0110D1519}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{891550B5-48CD-4DA8-BA22-652E32C8B35C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.API.Tests", "test\DNI.API.Tests\DNI.API.Tests.csproj", "{25512F38-B5BB-41C4-81AC-BDD2118C969E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.API.Tests", "test\DNI.API.Tests\DNI.API.Tests.csproj", "{25512F38-B5BB-41C4-81AC-BDD2118C969E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Services", "src\DNI.Services\DNI.Services.csproj", "{A35CA6BC-7B0B-4A68-91F2-E82124245B02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,9 +21,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{33DE2843-E0F4-491A-BF35-2CA0110D1519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -48,9 +47,28 @@ Global
 		{25512F38-B5BB-41C4-81AC-BDD2118C969E}.Release|x64.Build.0 = Release|Any CPU
 		{25512F38-B5BB-41C4-81AC-BDD2118C969E}.Release|x86.ActiveCfg = Release|Any CPU
 		{25512F38-B5BB-41C4-81AC-BDD2118C969E}.Release|x86.Build.0 = Release|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Debug|x64.Build.0 = Debug|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Debug|x86.Build.0 = Debug|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Release|x64.ActiveCfg = Release|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Release|x64.Build.0 = Release|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Release|x86.ActiveCfg = Release|Any CPU
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{33DE2843-E0F4-491A-BF35-2CA0110D1519} = {B86E4627-3062-42F7-8BDD-47E53C2D0584}
 		{25512F38-B5BB-41C4-81AC-BDD2118C969E} = {891550B5-48CD-4DA8-BA22-652E32C8B35C}
+		{A35CA6BC-7B0B-4A68-91F2-E82124245B02} = {B86E4627-3062-42F7-8BDD-47E53C2D0584}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DDCA0584-5373-4C56-B8F0-4F6C7A65C926}
 	EndGlobalSection
 EndGlobal

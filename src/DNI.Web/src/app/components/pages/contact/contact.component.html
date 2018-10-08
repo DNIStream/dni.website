@@ -1,3 +1,140 @@
-<p>
-  contact works!
-</p>
+<div class="container bg-light rounded p-4">
+  <h1>Contact the Show</h1>
+  <p>If you have a question that's not addressed in the <a [routerLink]="['/faq']">FAQ</a>, or you simply want to get in touch with us for any reason, you can contact us using one of the below methods:</p>
+
+  <p>TODO: Icons for contact methods - form (email), discord, linkedin,</p>
+
+  <form name="contact-form"
+        id="contact-form"
+        (ngSubmit)="f.form.valid && captchaValid && onSubmit()"
+        #f="ngForm"
+        novalidate
+        class="form-horizontal">
+
+    <!-- Name -->
+    <div class="form-group row"
+         [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+      <label class="col-2 col-form-label"
+             for="name">Name:</label>
+      <div class="col-7">
+        <input type="text"
+               class="form-control"
+               id="name"
+               name="name"
+               placeholder="Your full name"
+               [(ngModel)]="model.name"
+               #name="ngModel"
+               required>
+      </div>
+      <div class="col-3"
+           *ngIf="f.submitted && !name.valid">Name is required</div>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group row"
+         [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+      <label class="col-2 col-form-label"
+             for="email">Email Address:</label>
+      <div class="col-7">
+        <input type="email"
+               class="form-control"
+               id="email"
+               name="email"
+               placeholder="Your Email Address"
+               [(ngModel)]="model.email"
+               #email="ngModel"
+               required>
+      </div>
+      <div class="col-3"
+           *ngIf="f.submitted && !email.valid">Email is required</div>
+    </div>
+
+    <!-- Message -->
+    <div class="form-group row"
+         [ngClass]="{ 'has-error': f.submitted && !message.valid }">
+      <label class="col-2 col-form-label"
+             for="message">Message:</label>
+      <div class="col-7">
+        <textarea rows="8"
+                        cols="100"
+                        class="form-control"
+                        id="message"
+                        name="message"
+                        placeholder="Your message"
+                        [(ngModel)]="model.message"
+                        #message="ngModel"
+                        required
+                        maxlength="5000"
+                        style="resize:none"
+                        autocomplete="off"></textarea>
+      </div>
+      <div class="col-3"
+           *ngIf="f.submitted && !message.valid">Message is required</div>
+    </div>
+
+    <!-- Recaptcha -->
+    <div class="form-group row"
+         [ngClass]="{ 'has-error': f.submitted && !captchaValid }">
+      <label for="recaptcha"
+             class="col-2 col-form-label">Do you human?</label>
+      <div class="col-7">
+        <ngx-recaptcha2 [siteKey]="reCaptchaSiteKey"
+                        id="recaptcha"
+                        name="recaptcha"
+                        #ReCaptcha
+                        (success)="handleCaptchaResponse($event)"
+                        (expire)="handleCaptchaExpired()"
+                        (load)="handleCaptchaLoaded()">
+        </ngx-recaptcha2>
+      </div>
+      <div class="col-3"
+           *ngIf="f.submitted && !captchaValid">CAPTCHA is required
+      </div>
+    </div>
+
+    <!-- Opt out -->
+    <div class="offset-2 col-10">
+      <div class="small">
+        <ul class="list-unstyled">
+          <li>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"
+                       id="deleteDetails"
+                       name="deleteDetails"
+                       [(ngModel)]="model.deleteDetails"
+                       value="true"> Delete my details once you've dealt with my enquiry
+              </label>
+            </div>
+          </li>
+          <li>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox"
+                       id="marketingOptOut"
+                       name="marketingOptOut"
+                       [(ngModel)]="model.marketingOptOut"
+                       value="true"> Opt out of direct marketing about Shadow Moses Developments' products or services
+              </label>
+            </div>
+          </li>
+        </ul>
+        <p><i class="fa fa-exclamation-circle"
+                   aria-hidden="true"></i> <a [routerLink]="['/privacy']" target="_blank"
+                   title="View privacy policy (opens in a new tab)"> We don't sell, lease or reveal any of your personal information to 3rd parties</a>.</p>
+      </div>
+    </div>
+
+    <div class="col-9">
+      <button type="submit"
+                    class="btn btn-primary pull-right">Send Message</button>
+    </div>
+  </form>
+
+  <!-- Success / Error -->
+  <div class="alert"
+       [ngClass]="{'alert-success': sent && !error, 'alert-danger': sent && error}"
+       role="alert">
+    <p [innerHtml]="messageHtml"></p>
+  </div>
+</div>
