@@ -2,9 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CookieLawModule } from 'angular2-cookie-law';
 import { NgStringPipesModule } from 'angular-pipes';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from 'app/app.component';
@@ -15,6 +17,8 @@ import { PrivacyComponent } from './components/pages/privacy/privacy.component';
 import { ShowArchiveComponent } from './components/pages/show-archive/show-archive.component';
 import { EthicsComponent } from './components/pages/ethics/ethics.component';
 import { ContactComponent } from './components/pages/contact/contact.component';
+import { FaqComponent } from './components/pages/faq/faq.component';
+
 
 
 @NgModule({
@@ -26,10 +30,14 @@ import { ContactComponent } from './components/pages/contact/contact.component';
     PrivacyComponent,
     ShowArchiveComponent,
     EthicsComponent,
-    ContactComponent
+    ContactComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'dni' }),
+    ReactiveFormsModule,
+    FormsModule,
+    NgxCaptchaModule,
     AppRoutingModule,
     NgStringPipesModule,
     HttpClientModule,

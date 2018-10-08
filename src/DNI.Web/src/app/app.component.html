@@ -26,7 +26,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <ul class="footer-links">
+                <ul class="footer-links list-unstyled">
                     <li>
                         <a [routerLink]="['/']" routerLinkActive="active">Home</a>
                     </li>
@@ -42,12 +42,15 @@
                     <li>
                         <a [routerLink]="['/privacy']" routerLinkActive="active">Privacy &amp; Cookies Policy</a>
                     </li>
+                    <li>
+                        <a [routerLink]="['/faq']" routerLinkActive="active">FAQ</a>
+                    </li>
                 </ul>
             </div>
             <div class="col">
                 <p>Website and content &copy; Documentation Not Included 2018. All 3rd party resources are used with consent and / or are licensed for reuse.</p>
 
-                <p>Web site by <a href="//www.shadowmoses.co.uk" target="_blank"><img src="assets/creators/smd.png" alt="Shadow Moses Developments Ltd" width="32" /></a></p>
+                <p>Website by <a href="//www.shadowmoses.co.uk" target="_blank"><img src="assets/creators/smd.png" alt="Shadow Moses Developments Ltd" width="32" /></a>. DNI v{{version}} - {{versionText}}.</p>
             </div>
         </div>
 

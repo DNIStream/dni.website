@@ -7,9 +7,11 @@ import { PrivacyComponent } from 'app/components/pages/privacy/privacy.component
 import { EthicsComponent } from 'app/components/pages/ethics/ethics.component';
 import { ShowArchiveComponent } from './components/pages/show-archive/show-archive.component';
 import { ContactComponent } from 'app/components/pages/contact/contact.component';
+import { FaqComponent } from 'app/components/pages/faq/faq.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'faq', component: FaqComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'show-archive', component: ShowArchiveComponent },
   { path: 'contact', component: ContactComponent },
