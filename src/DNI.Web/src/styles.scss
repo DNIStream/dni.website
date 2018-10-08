@@ -18,3 +18,30 @@ body {
     max-width: 490px;
     max-height: 550px;
 }
+
+footer {
+    border-top: 1px solid $dark;
+    margin-top: 3em;
+    padding: 3em 0;
+    width: 100%;
+    background-color: theme-color('primary');
+    color: theme-color('light');
+
+    a {
+        color: theme-color('secondary');
+        font-weight: bold;
+        &:hover {
+            color: theme-color('light');
+            text-decoration: none;
+        }
+    }
+
+    hr {
+        color: theme-color('secondary');
+        border-color: theme-color('secondary');
+    }
+
+    .footer-links {
+        list-style: none;
+    }
+}
