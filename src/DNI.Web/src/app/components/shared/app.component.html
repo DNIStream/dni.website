@@ -1,5 +1,5 @@
 <div class="container">
-    <ul class="nav justify-content-center font-weight-bold h5 my-3">
+    <ul class="nav justify-content-center font-weight-bold h5 py-3">
         <li class="nav-item">
             <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">Home</a>
         </li>
@@ -7,17 +7,12 @@
             <a class="nav-link" [routerLink]="['/show-archive']" routerLinkActive="active">Show Archive</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active">Contact</a>
+            <a class="nav-link" [routerLink]="['/ethics']" routerLinkActive="active">Code of Ethics</a>
         </li>
     </ul>
 
     <router-outlet></router-outlet>
 </div>
-
-<cookie-law name="dni-cookie-law"
-            awsomeCloseIcon="far fa-times-circle">
-    <p>We use cookies... <small class="text-muted">yadda, yadda,</small> ...your privacy... <small class="text-muted">mumble, mumble,</small> ...GDPR... <small class="text-muted">something, something, </small> ...customise your experience. Just press the little X on the right or <a [routerLink]="['privacy']">read more</a>.</p>
-</cookie-law>
 
 <footer>
     <div class="container">
@@ -53,6 +48,16 @@
                     </li>
                 </ul>
             </div>
+            <div class="col">
+                <h5>Social</h5>
+                <ul class="footer-links list-unstyled">
+                    <li><a href="https://www.linkedin.com/company/dnistream/" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in fa-fw"></i> LinkedIn</a></li>
+                    <li><a href="https://www.youtube.com/channel/UCvmKhmixJzc6Qe8mIqWn1pg" title="YouTube" target="_blank"><i class="fab fa-youtube fa-fw"></i> YouTube</a></li>
+                    <li><a href="https://twitter.com/dnistream" title="Twitter" target="_blank"><i class="fab fa-twitter fa-fw"></i> Twitter</a></li>
+                    <li><a href="https://www.twitch.tv/dnistream/" title="Twitch" target="_blank"><i class="fab fa-twitch fa-fw"></i> Twitch</a></li>
+                    <li><a href="https://discord.gg/xUxMJt6" title="Discord" target="_blank"><i class="fab fa-discord fa-fw"></i> Discord</a></li>
+                </ul>
+            </div>
             <div class="col small">
                 <p>Website and content &copy; Documentation Not Included 2018. All 3rd party resources are used with consent and / or are licensed for reuse.</p>
 
@@ -62,3 +67,9 @@
 
     </div>
 </footer>
+
+
+<cookie-law name="dni-cookie-law"
+            awsomeCloseIcon="far fa-times-circle">
+    <p>We use cookies... <small class="text-muted">yadda, yadda,</small> ...your privacy... <small class="text-muted">mumble, mumble,</small> ...GDPR... <small class="text-muted">something, something, </small> ...customise your experience. Just press the little X on the right or <a [routerLink]="['privacy']">read more</a>.</p>
+</cookie-law>

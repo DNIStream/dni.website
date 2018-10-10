@@ -10,7 +10,7 @@ import { NgxCaptchaModule } from 'ngx-captcha';
 import { TabsModule } from 'ngx-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from 'app/app.component';
+import { AppComponent } from './components/shared/app.component';
 import { HomeComponent } from 'app/components/pages/home/home.component';
 import { PageNotFoundComponent } from 'app/components/pages/page-not-found/page-not-found.component';
 import { MeetTheCreatorsComponent } from 'app/components/shared/meet-the-creators/meet-the-creators.component';

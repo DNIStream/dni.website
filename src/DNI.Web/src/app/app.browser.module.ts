@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { CookieLawModule } from 'angular2-cookie-law';
 
 import { AppModule } from 'app/app.module';
-import { AppComponent } from 'app/app.component';
+import { AppComponent } from './components/shared/app.component';
 
 @NgModule({
     imports: [
