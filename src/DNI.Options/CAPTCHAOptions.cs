@@ -1,4 +1,4 @@
-﻿namespace DNI.Services.Captcha {
+﻿namespace DNI.Options {
     /// <summary>
     ///     A class that holds CAPTCHA configuration options
     /// </summary>

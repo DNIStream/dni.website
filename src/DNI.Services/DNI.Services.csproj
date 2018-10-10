@@ -5,11 +5,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Email\EmailTemplates\contact.json" />
+    <None Remove="Email\EmailTemplates\layout.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Email\EmailTemplates\contact.json" />
+    <EmbeddedResource Include="Email\EmailTemplates\layout.html" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="NLog" Version="4.5.10" />
-    <PackageReference Include="RestSharp" Version="106.5.0" />
+    <PackageReference Include="RestSharp" Version="106.5.2" />
+    <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DNI.Options\DNI.Options.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿using DNI.Services.Captcha;
+﻿using DNI.Options;
+using DNI.Services.Captcha;
+using DNI.Services.Email;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +9,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using RestSharp;
+
+using SendGrid;
 
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -22,14 +26,18 @@ namespace DNI.API {
         public void ConfigureServices(IServiceCollection services) {
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
+            services.Configure<GeneralOptions>(Configuration.GetSection("General"));
 
             // 3rd Party Services
+            var sendGridAPIKey = Configuration.GetSection("SendGrid").GetValue("ApiKey", "");
             services
-                .AddTransient<IRestClient, RestClient>();
+                .AddTransient<IRestClient, RestClient>()
+                .AddTransient<ISendGridClient>(p => new SendGridClient(sendGridAPIKey));
 
             // Services
             services
-                .AddTransient<ICaptchaService, CaptchaService>();
+                .AddTransient<ICaptchaService, CaptchaService>()
+                .AddTransient<IEmailService, SendGridEmailService>();
 
             // MVC
             services

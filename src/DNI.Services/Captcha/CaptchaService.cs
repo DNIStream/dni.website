@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 
+using DNI.Options;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 

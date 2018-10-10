@@ -1,0 +1,10 @@
+﻿{
+    "from": "from@test.com",
+    "subject": "This is a {{test1}}",
+    "preHeaderHtml": "This is a {{test2}}",
+    "introHtml": "This is a {{test3}}",
+    "outroHtml": "This is a {{test4}}",
+    "actionLink": "http://www.test.com",
+    "actionText": "Test Link",
+    "plainTextBody": "This is a plain text body with {{test1}} and {{test4}} replacements"
+}

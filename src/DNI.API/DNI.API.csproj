@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.5" />
     <PackageReference Include="NLog" Version="4.5.10" />
     <PackageReference Include="NLog.Appsetting.Standard" Version="1.0.2" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.7.0" />
@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DNI.Options\DNI.Options.csproj" />
     <ProjectReference Include="..\DNI.Services\DNI.Services.csproj" />
   </ItemGroup>
 
