@@ -7,11 +7,29 @@
 // Import remiaining bootstrap functionality
 @import '~bootstrap/scss/bootstrap';
 
+$footer-height: 250px;
+$footer-margin: 40px;
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+html {
+    height: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 body {
     background-image: url('assets/moth-bg.png');
     background-repeat: no-repeat;
     background-position: bottom right;
     background-attachment: fixed;
+    position: relative;
+    margin: 0;
+    min-height: 100%;
+    padding-bottom: $footer-height + $footer-margin;
 }
 
 .card-img-top {
@@ -20,10 +38,14 @@ body {
 }
 
 footer {
-    border-top: 1px solid $dark;
-    margin-top: 3em;
-    padding: 3em 0;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    height: $footer-height;
+    border-top: 1px solid $dark;
+    padding: 3em 0;
     background-color: theme-color('primary');
     color: theme-color('light');
 

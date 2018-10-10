@@ -4,7 +4,7 @@ import { ModuleMapLoaderModule } from '@nguniversal/module-map-ngfactory-loader'
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppModule } from 'app/app.module';
-import { AppComponent } from 'app/app.component';
+import { AppComponent } from './components/shared/app.component';
 
 @NgModule({
     imports: [
