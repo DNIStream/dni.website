@@ -1,4 +1,6 @@
-﻿using DNI.Options;
+﻿using System;
+
+using DNI.Options;
 using DNI.Services.Captcha;
 using DNI.Services.Email;
 
@@ -7,6 +9,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+
+using NLog.Config;
+using NLog.Extensions.Logging;
+using NLog.Web;
 
 using RestSharp;
 
@@ -24,6 +31,9 @@ namespace DNI.API {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
+            // Nlog Target for SendGrid
+            //services.AddScoped<SendGridNLogWebTarget>();
+
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
             services.Configure<GeneralOptions>(Configuration.GetSection("General"));
@@ -54,7 +64,21 @@ namespace DNI.API {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
+            ILoggerFactory loggerFactory, IServiceProvider provider) {
+            // Nlog Target Injection
+            //var nlogProvider = ConfigurationItemFactory.Default.CreateInstance;
+            //ConfigurationItemFactory.Default.CreateInstance = type => {
+            //    try {
+            //        return nlogProvider(type);
+            //    } catch(Exception) {
+            //    }
+
+            //    return provider.GetService(type);
+            //};
+            //loggerFactory.AddNLog();
+            //env.ConfigureNLog("nlog.config");
+
             if(env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
 

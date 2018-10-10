@@ -12,24 +12,14 @@ using NLog.Targets;
 
 namespace DNI.API {
     /// <summary>
-    ///     Provides a SendGrid / Email target for the API layer, based on injection
-    /// </summary>
-    [Target("SendGrid")]
-    public class SendGridNLogWebTarget : SendGridNLogTargetBase {
-        /// <summary>
-        ///     Provides a SendGrid / Email target for the API layer, based on injection
-        /// </summary>
-        public SendGridNLogWebTarget() {
-            //EmailService = 
-            //Environment = 
-        }
-    }
-
-    /// <summary>
     ///     Custom NLog target for sending emails via SendGrid
     /// </summary>
     [Target("SendGrid")]
-    public abstract class SendGridNLogTargetBase : TargetWithLayout {
+    public class SendGridNLogWebTarget : TargetWithLayout {
+        public SendGridNLogWebTarget() {
+            // TODO: Inject EmailService and Environment
+        }
+
         /// <summary>
         ///     The email address to send the email to
         /// </summary>
