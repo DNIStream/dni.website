@@ -24,7 +24,7 @@ html {
 body {
     background-image: url('assets/moth-bg.png');
     background-repeat: no-repeat;
-    background-position: bottom right;
+    background-position: bottom $footer-height right;
     background-attachment: fixed;
     position: relative;
     margin: 0;
