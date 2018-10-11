@@ -1,0 +1,27 @@
+docker-compose.yml
+docker-compose.*.yml
+LICENSE
+.gitignore
+.gitattributes
+
+**/.*
+**/*.ps1
+**/*.DotSettings
+**/*.csproj.user
+**/*.md
+**/*.log
+**/Dockerfile
+**/bin
+**/obj
+**/node_modules
+**/.vs
+**/.vscode
+**/dist
+**/packages/
+**/wwwroot/
+
+# Only ignore .sh files in the root, so all docker entrypoints get copied
+/*.sh
+
+# App specific files (recursive .dockerignore not supported)
+

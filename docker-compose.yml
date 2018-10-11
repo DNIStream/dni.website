@@ -1,0 +1,51 @@
+version: '3.6'
+
+# Development docker-compose file. Do not use this file as a base file for other
+# configurations, and do not implement docker-compose.override.yml. Caching / DRY
+# yml files do not work well for multi-stage containers in production.
+
+# Use this file on your local machine with `docker-compose build` or `docker-compose up`
+
+services:
+  # WebAPI Container
+  dni.api:
+    image: dniapi/dev
+    container_name: dniapi.dev
+    depends_on:
+      - dni.smtpserver
+    ports:
+      - "12341:80"
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development
+    build:
+      context: .
+      dockerfile: src/DNI.API/Dockerfile
+      args:
+        - ASPNET_CONFIGURATION=Debug
+        - PROJECT_DIR=src/DNI.API/
+        - PROJECT_NAME=DNI.API
+
+  # Angular Container: NGINX Web Server
+  dni.web:
+    image: dniweb/dev
+    container_name: dniweb.dev
+    depends_on:
+      - dni.api
+    ports:
+     - "4200:80"
+    build:
+      context: src/DNI.Web/
+      args:
+        - ANGULAR_ENV=dev
+
+  # SMTP Server Container
+  dni.smtpserver:
+    image: dnismtp/dev
+    container_name: dnismtp.dev
+    environment:
+      - MAILNAME=localhost
+      - PORT=25
+      - DISABLE_IPV6=TRUE
+    build:
+      context: src/DNI.SMTP/
