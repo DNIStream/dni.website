@@ -3,8 +3,9 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0 --public-host spikeh.ddns.net",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0",
+    "build:dev": "ng build",
+    "build:prod": "ng build --prod -c prod",
     "test": "ng test dni --watch",
     "lint": "ng lint",
     "lint:w": "chokidar src/**/*.ts src/**/*.htm* src/**/*.scss src/**/*.css src/**/*.json *.json -c \"ng lint dni\" --initial",
