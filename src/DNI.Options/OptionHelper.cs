@@ -9,7 +9,7 @@ namespace DNI.Options {
         /// <returns></returns>
         public static string GetLogoUrl(this GeneralOptions opt) {
             var baseUri = new Uri(opt.WebBaseUri);
-            return new Uri(baseUri, opt.LogoPath).AbsolutePath;
+            return new Uri(baseUri, opt.LogoPath).AbsoluteUri;
         }
     }
 }
