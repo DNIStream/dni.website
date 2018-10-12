@@ -1,4 +1,5 @@
-param([string]$file = "docker-envs\dev.env")
+#param([string]$file = "docker-envs\dev.env")
+param([string]$file = ".env")
 $ErrorActionPreference = "Stop"
 
 $root = $PSScriptRoot

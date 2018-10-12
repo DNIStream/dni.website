@@ -22,6 +22,8 @@ ARG ASPNET_CONFIGURATION=
 ARG PROJECT_DIR=
 ARG PROJECT_NAME=
 
+RUN echo $ASPNET_CONFIGURATION
+
 COPY . ./
 
 RUN for dir in test/*.Tests/; do (cd "$dir" && dotnet test --filter TestType!=Integration); done
@@ -36,7 +38,6 @@ FROM microsoft/dotnet:2.1.2-aspnetcore-runtime-alpine3.7 as final
 WORKDIR /app
 EXPOSE 80
 VOLUME /app/logs
-VOLUME /app/files
 
 COPY --from=build /app .
 

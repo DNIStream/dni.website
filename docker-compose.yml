@@ -1,105 +1,53 @@
 version: '3.6'
 
 services:
-  # WebAPI Container - multi-stage, so full caching requires each stage to be built separately
-  dni.api.restore: &api-base
-    image: dniapi/${BUILD_ENVIRONMENT}:latest-restore
-    container_name: dniapi.${BUILD_ENVIRONMENT}.build
-    depends_on:
-      - dni.smtp
-    build: &api-base-build
-      context: .
-      dockerfile: src/DNI.API/Dockerfile
-      target: restore
-      args:
-        - PROJECT_DIR=src/DNI.API/
-        - PROJECT_NAME=DNI.API
-        - ASPNET_CONFIGURATION=${ASPNET_CONFIGURATION}
-      cache_from:
-        - dniapi/${BUILD_ENVIRONMENT}:latest-restore
-  dni.api.build:
-    <<: *api-base
-    image: dniapi/${BUILD_ENVIRONMENT}:latest-build
-    container_name: dniapi.${BUILD_ENVIRONMENT}.restore
-    depends_on:
-      - dni.api.restore
-    build:
-      <<: *api-base-build
-      target: build
-      cache_from:
-        - dniapi/${BUILD_ENVIRONMENT}:latest-restore
-        - dniapi/${BUILD_ENVIRONMENT}:latest-build
+  # Dotnet Core API
   dni.api:
-    <<: *api-base
     image: dniapi/${BUILD_ENVIRONMENT}:latest
     container_name: dniapi.${BUILD_ENVIRONMENT}
     depends_on:
-      - dni.api.build
+      - dni.smtp
     ports:
       - "${LOCAL_API_PORT}:80"
     environment:
       - ASPNETCORE_URLS=http://+:80
-      - ASPNETCORE_ENVIRONMENT=${BUILD_ENVIRONMENT}
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - CAPTCHA__SecretKey=${CAPTCHA_KEY}
       - SendGrid__ApiKey=${SENDGRID_KEY}
-      - General__SmtpServer=${SMTP_SERVER}
+      - General__SmtpServer=dni.smtp
       - General__ErrorEmailFrom=${ERROR_EMAIL_FROM}
       - General__ErrorEmailTo=${ERROR_EMAIL_TO}
       - General__ContactEmailTo=${CONTACT_EMAIL_TO}
     build:
-      <<: *api-base-build
-      target: final
-      cache_from:
-        - dniapi:latest-restore
-        - dniapi:latest-build
-        - dniapi:latest
-    #volumes:
-    #  - ${LOG_MOUNT_PATH}:/app/logs/
+      context: . # Nnnngh
+      dockerfile: src/DNI.API/Dockerfile
+      args:
+        - PROJECT_DIR=src/DNI.API/
+        - PROJECT_NAME=DNI.API
+        - ASPNET_CONFIGURATION=${ASPNET_CONFIGURATION}
+      # cache_from:
+        # - dniapi/${BUILD_ENVIRONMENT}:latest
+    volumes:
+      - ${LOG_MOUNT_PATH}:/app/logs/
     restart: unless-stopped
 
-  # Angular Container: NGINX Web Server - Another multi-stage build
-  dni.web.restore: &web-base
-    image: dniweb/${BUILD_ENVIRONMENT}:latest-restore
-    container_name: dniweb.${BUILD_ENVIRONMENT}.restore
-    depends_on:
-      - dni.api
-    build: &web-base-build
-      context: src/DNI.Web/
-      target: restore
-      args:
-        - ANGULAR_ENV=$BUILD_ENVIRONMENT
-      cache_from:
-        - dniweb/${BUILD_ENVIRONMENT}:latest-restore
-  dni.web.build:
-    <<: *web-base
-    image: dniweb/${BUILD_ENVIRONMENT}:latest-build
-    container_name: dniweb.${BUILD_ENVIRONMENT}.build
-    depends_on:
-      - dni.web.restore
-    build:
-      <<: *web-base-build
-      target: build
-      cache_from:
-        - dniweb/${BUILD_ENVIRONMENT}:latest-restore
-        - dniweb/${BUILD_ENVIRONMENT}:latest-build
+  # Angular Website
   dni.web:
-    <<: *web-base
     image: dniweb/${BUILD_ENVIRONMENT}:latest
     container_name: dniweb.${BUILD_ENVIRONMENT}
     depends_on:
-      - dni.web.build
+      - dni.api
     ports:
      - "${LOCAL_WEB_PORT}:80"
     build:
-      <<: *web-base-build
-      target: final
-      cache_from:
-        - dniweb/${BUILD_ENVIRONMENT}:latest-restore
-        - dniweb/${BUILD_ENVIRONMENT}:latest-build
-        - dniweb/${BUILD_ENVIRONMENT}:latest
+      context: src/DNI.Web/
+      args:
+        - ANGULAR_ENV=${BUILD_ENVIRONMENT}
+      # cache_from:
+        # - dniweb/${BUILD_ENVIRONMENT}:latest
     restart: unless-stopped
 
-  # SMTP Server Container
+  # SMTP Server
   dni.smtp:
     image: dnismtp/${BUILD_ENVIRONMENT}:latest
     container_name: dnismtp.${BUILD_ENVIRONMENT}
@@ -107,8 +55,13 @@ services:
       - MAILNAME=${SMTP_MAILNAME}
       - PORT=25
       - DISABLE_IPV6=TRUE
+      - SMARTHOST_ADDRESS=${SMARTHOST_ADDRESS}
+      - SMARTHOST_PORT=${SMARTHOST_PORT}
+      - SMARTHOST_USER=${SMARTHOST_USER}
+      - SMARTHOST_PASSWORD=${SMARTHOST_PASSWORD}
+      - SMARTHOST_ALIASES=${SMARTHOST_ALIASES}
     build:
       context: src/DNI.SMTP/
-      cache_from:
-        - dnismtp/${BUILD_ENVIRONMENT}:latest
+      # cache_from:
+        # - dnismtp/${BUILD_ENVIRONMENT}:latest
     restart: unless-stopped
