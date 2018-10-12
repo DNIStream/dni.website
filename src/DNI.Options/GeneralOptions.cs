@@ -20,5 +20,9 @@
         public string ContactTemplateResourceId { get; set; }
 
         public string LogoPath { get; set; }
+
+        public string SmtpServer { get; set; }
+
+        public int SmtpServerPort { get; set; }
     }
 }

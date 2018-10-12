@@ -3,7 +3,15 @@ docker-compose.*.yml
 LICENSE
 .gitignore
 .gitattributes
+.env
+README.md
+nginx
+packages
+docker-envs
+obj
+bin
 
+**/*.env
 **/.*
 **/*.ps1
 **/*.DotSettings
