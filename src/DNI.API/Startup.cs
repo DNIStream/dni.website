@@ -1,6 +1,4 @@
-﻿using System;
-
-using DNI.Options;
+﻿using DNI.Options;
 using DNI.Services.Captcha;
 using DNI.Services.Email;
 
@@ -11,10 +9,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-using NLog.Config;
-using NLog.Extensions.Logging;
-using NLog.Web;
-
 using RestSharp;
 
 using SendGrid;
@@ -23,7 +17,10 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace DNI.API {
     public class Startup {
-        public Startup(IConfiguration configuration) {
+        private readonly ILogger<Startup> _logger;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger) {
+            _logger = logger;
             Configuration = configuration;
         }
 
@@ -31,9 +28,6 @@ namespace DNI.API {
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) {
-            // Nlog Target for SendGrid
-            //services.AddScoped<SendGridNLogWebTarget>();
-
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
             services.Configure<GeneralOptions>(Configuration.GetSection("General"));
@@ -41,13 +35,15 @@ namespace DNI.API {
             // 3rd Party Services
             var sendGridAPIKey = Configuration.GetSection("SendGrid").GetValue("ApiKey", "");
             services
+                .AddTransient<ISmtpClient, SmtpClient>()
                 .AddTransient<IRestClient, RestClient>()
                 .AddTransient<ISendGridClient>(p => new SendGridClient(sendGridAPIKey));
 
             // Services
             services
                 .AddTransient<ICaptchaService, CaptchaService>()
-                .AddTransient<IEmailService, SendGridEmailService>();
+                // .AddTransient<IEmailService, SendGridEmailService>();
+                .AddTransient<IEmailService, SystemNetEmailService>();
 
             // MVC
             services
@@ -64,21 +60,7 @@ namespace DNI.API {
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env,
-            ILoggerFactory loggerFactory, IServiceProvider provider) {
-            // Nlog Target Injection
-            //var nlogProvider = ConfigurationItemFactory.Default.CreateInstance;
-            //ConfigurationItemFactory.Default.CreateInstance = type => {
-            //    try {
-            //        return nlogProvider(type);
-            //    } catch(Exception) {
-            //    }
-
-            //    return provider.GetService(type);
-            //};
-            //loggerFactory.AddNLog();
-            //env.ConfigureNLog("nlog.config");
-
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
             if(env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
 

@@ -1,51 +1,114 @@
 version: '3.6'
 
-# Development docker-compose file. Do not use this file as a base file for other
-# configurations, and do not implement docker-compose.override.yml. Caching / DRY
-# yml files do not work well for multi-stage containers in production.
-
-# Use this file on your local machine with `docker-compose build` or `docker-compose up`
-
 services:
-  # WebAPI Container
-  dni.api:
-    image: dniapi/dev
-    container_name: dniapi.dev
+  # WebAPI Container - multi-stage, so full caching requires each stage to be built separately
+  dni.api.restore: &api-base
+    image: dniapi/${BUILD_ENVIRONMENT}:latest-restore
+    container_name: dniapi.${BUILD_ENVIRONMENT}.build
     depends_on:
-      - dni.smtpserver
-    ports:
-      - "12341:80"
-    environment:
-      - ASPNETCORE_URLS=http://+:80
-      - ASPNETCORE_ENVIRONMENT=Development
-    build:
+      - dni.smtp
+    build: &api-base-build
       context: .
       dockerfile: src/DNI.API/Dockerfile
+      target: restore
       args:
-        - ASPNET_CONFIGURATION=Debug
         - PROJECT_DIR=src/DNI.API/
         - PROJECT_NAME=DNI.API
+        - ASPNET_CONFIGURATION=${ASPNET_CONFIGURATION}
+      cache_from:
+        - dniapi/${BUILD_ENVIRONMENT}:latest-restore
+  dni.api.build:
+    <<: *api-base
+    image: dniapi/${BUILD_ENVIRONMENT}:latest-build
+    container_name: dniapi.${BUILD_ENVIRONMENT}.restore
+    depends_on:
+      - dni.api.restore
+    build:
+      <<: *api-base-build
+      target: build
+      cache_from:
+        - dniapi/${BUILD_ENVIRONMENT}:latest-restore
+        - dniapi/${BUILD_ENVIRONMENT}:latest-build
+  dni.api:
+    <<: *api-base
+    image: dniapi/${BUILD_ENVIRONMENT}:latest
+    container_name: dniapi.${BUILD_ENVIRONMENT}
+    depends_on:
+      - dni.api.build
+    ports:
+      - "${LOCAL_API_PORT}:80"
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - ASPNETCORE_ENVIRONMENT=${BUILD_ENVIRONMENT}
+      - CAPTCHA__SecretKey=${CAPTCHA_KEY}
+      - SendGrid__ApiKey=${SENDGRID_KEY}
+      - General__SmtpServer=${SMTP_SERVER}
+      - General__ErrorEmailFrom=${ERROR_EMAIL_FROM}
+      - General__ErrorEmailTo=${ERROR_EMAIL_TO}
+      - General__ContactEmailTo=${CONTACT_EMAIL_TO}
+    build:
+      <<: *api-base-build
+      target: final
+      cache_from:
+        - dniapi:latest-restore
+        - dniapi:latest-build
+        - dniapi:latest
+    #volumes:
+    #  - ${LOG_MOUNT_PATH}:/app/logs/
+    restart: unless-stopped
 
-  # Angular Container: NGINX Web Server
-  dni.web:
-    image: dniweb/dev
-    container_name: dniweb.dev
+  # Angular Container: NGINX Web Server - Another multi-stage build
+  dni.web.restore: &web-base
+    image: dniweb/${BUILD_ENVIRONMENT}:latest-restore
+    container_name: dniweb.${BUILD_ENVIRONMENT}.restore
     depends_on:
       - dni.api
-    ports:
-     - "4200:80"
-    build:
+    build: &web-base-build
       context: src/DNI.Web/
+      target: restore
       args:
-        - ANGULAR_ENV=dev
+        - ANGULAR_ENV=$BUILD_ENVIRONMENT
+      cache_from:
+        - dniweb/${BUILD_ENVIRONMENT}:latest-restore
+  dni.web.build:
+    <<: *web-base
+    image: dniweb/${BUILD_ENVIRONMENT}:latest-build
+    container_name: dniweb.${BUILD_ENVIRONMENT}.build
+    depends_on:
+      - dni.web.restore
+    build:
+      <<: *web-base-build
+      target: build
+      cache_from:
+        - dniweb/${BUILD_ENVIRONMENT}:latest-restore
+        - dniweb/${BUILD_ENVIRONMENT}:latest-build
+  dni.web:
+    <<: *web-base
+    image: dniweb/${BUILD_ENVIRONMENT}:latest
+    container_name: dniweb.${BUILD_ENVIRONMENT}
+    depends_on:
+      - dni.web.build
+    ports:
+     - "${LOCAL_WEB_PORT}:80"
+    build:
+      <<: *web-base-build
+      target: final
+      cache_from:
+        - dniweb/${BUILD_ENVIRONMENT}:latest-restore
+        - dniweb/${BUILD_ENVIRONMENT}:latest-build
+        - dniweb/${BUILD_ENVIRONMENT}:latest
+    restart: unless-stopped
 
   # SMTP Server Container
-  dni.smtpserver:
-    image: dnismtp/dev
-    container_name: dnismtp.dev
+  dni.smtp:
+    image: dnismtp/${BUILD_ENVIRONMENT}:latest
+    container_name: dnismtp.${BUILD_ENVIRONMENT}
     environment:
-      - MAILNAME=localhost
+      - MAILNAME=${SMTP_MAILNAME}
       - PORT=25
       - DISABLE_IPV6=TRUE
     build:
       context: src/DNI.SMTP/
+      cache_from:
+        - dnismtp/${BUILD_ENVIRONMENT}:latest
+    restart: unless-stopped

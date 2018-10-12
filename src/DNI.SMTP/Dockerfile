@@ -9,7 +9,7 @@ RUN set -x \
     && find /var/log -type f | while read f; do echo -ne '' > $f; done;
 
 COPY docker-entrypoint.sh /bin/entrypoint.sh
-COPY set-exim4-update-conf /bin/
+COPY set-exim4-update-conf.conf /bin/set-exim4-update-conf
 
 RUN chmod a+x /bin/entrypoint.sh \
     && chmod a+x /bin/set-exim4-update-conf
