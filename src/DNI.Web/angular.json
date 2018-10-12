@@ -40,7 +40,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "prod": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -65,8 +65,8 @@
             "browserTarget": "dni:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "dni:build:production"
+            "prod": {
+              "browserTarget": "dni:build:prod"
             }
           }
         },
@@ -118,8 +118,8 @@
             "devServerTarget": "dni:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "dni:serve:production"
+            "prod": {
+              "devServerTarget": "dni:serve:prod"
             }
           }
         },
