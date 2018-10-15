@@ -16,8 +16,6 @@ $vars | % {
 
 # DotNet Core Env Variable overrides
 New-Item env:\CAPTCHA__SecretKey -Value $Env:CAPTCHA_KEY -Force
-New-Item env:\SendGrid__ApiKey -Value $Env:SENDGRID_KEY -Force
-# New-Item env:\General__SmtpServer -Value "localhost" -Force
 New-Item env:\General__SmtpServer -Value $Env:SMTP_SERVER -Force
 New-Item env:\General__ErrorEmailFrom -Value $Env:ERROR_EMAIL_FROM -Force
 New-Item env:\General__ErrorEmailTo -Value $Env:ERROR_EMAIL_TO -Force
