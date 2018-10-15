@@ -12,3 +12,23 @@ form {
 :host ::ng-deep .tab-content {
     padding-top: 2em;
 }
+
+:host ::ng-deep #contact-social ul.social-links {
+    i.fab {
+        font-size: 8em;
+        border: .08em solid #eee;
+        border-radius: .1em;
+        padding: .2em .25em .15em;
+    }
+    .social-text {
+        display: none;
+    }
+    padding: 0 4em;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    li {
+        padding: 1em;
+    }
+}
