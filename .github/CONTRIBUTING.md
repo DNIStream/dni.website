@@ -8,7 +8,7 @@ DNI accepts contributions from the community into all of its open-source reposit
 * Await approval / discussion from the project creators - you may well be working on something that's already in progress, or isn't a priority
 
 #### Once Approved
-* Branch and / or fork to **feature/<feature-name>**. Note that a **feature/** prefix is required in order for the CI process to detect your changes and build the app
+* Branch and / or fork to **feature/&lt;feature-name&gt;**. Note that a **feature/** prefix is required in order for the CI process to detect your changes and build the app
 * Do your work
 * Small commits are better than large ones
 * Ensure all your changes are covered with passing tests
