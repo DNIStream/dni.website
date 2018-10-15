@@ -13,7 +13,7 @@ DNI accepts contributions from the community into all of its open-source reposit
 * Small commits are better than large ones
 * Ensure all your changes are covered with passing tests
 * Push any changes to build and test your changes
-* Create a Pull Request and it will be reviewed and / or merged ASAP
+* Create a Pull Request into **master** and it will be reviewed and / or merged ASAP
 * Sit back and reap the benefits
   
 ## Release Process
