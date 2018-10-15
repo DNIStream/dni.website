@@ -7,8 +7,10 @@
 // Import remiaining bootstrap functionality
 @import '~bootstrap/scss/bootstrap';
 
-$footer-height: 250px;
-$footer-margin: 40px;
+$footer-height-xs: 470px;
+$footer-height-sm: 370px;
+$footer-height-md: 300px;
+$footer-pad: 40px;
 
 html, body {
     margin: 0;
@@ -24,12 +26,24 @@ html {
 body {
     background-image: url('assets/moth-bg.png');
     background-repeat: no-repeat;
-    background-position: bottom $footer-height right;
     background-attachment: fixed;
     position: relative;
     margin: 0;
     min-height: 100%;
-    padding-bottom: $footer-height + $footer-margin;
+    min-width: 360px;
+
+    @media (min-width: map-get($grid-breakpoints, 'xs')) {
+        background-position: bottom $footer-height-xs right;
+        padding-bottom: $footer-height-xs + $footer-pad;
+    }
+    @media (min-width: map-get($grid-breakpoints, 'sm')) {
+        background-position: bottom $footer-height-sm right;
+        padding-bottom: $footer-height-sm + $footer-pad;
+    }
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+        background-position: bottom $footer-height-md right;
+        padding-bottom: $footer-height-md + $footer-pad;
+    }
 }
 
 .card-img-top {
@@ -43,7 +57,15 @@ footer {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: $footer-height;
+    @media (min-width: map-get($grid-breakpoints, 'xs')) {
+        height: $footer-height-xs;
+    }
+    @media (min-width: map-get($grid-breakpoints, 'sm')) {
+        height: $footer-height-sm;
+    }
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+        height: $footer-height-md;
+    }
     border-top: 1px solid $dark;
     padding: 3em 0;
     background-color: theme-color('primary');
@@ -61,9 +83,6 @@ footer {
     hr {
         color: theme-color('secondary');
         border-color: theme-color('secondary');
-    }
-
-    .footer-links {
     }
 }
 
