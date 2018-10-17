@@ -21,6 +21,7 @@ import { ContactComponent } from './components/pages/contact/contact.component';
 import { FaqComponent } from './components/pages/faq/faq.component';
 import { CommunityGuidelinesComponent } from './components/pages/community-guidelines/community-guidelines.component';
 import { SocialLinksComponent } from './components/shared/social-links/social-links.component';
+import { LoadingComponent } from './components/shared/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { SocialLinksComponent } from './components/shared/social-links/social-li
     ContactComponent,
     FaqComponent,
     CommunityGuidelinesComponent,
-    SocialLinksComponent
+    SocialLinksComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'dni' }),

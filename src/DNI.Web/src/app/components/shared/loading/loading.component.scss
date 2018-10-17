@@ -1,0 +1,14 @@
+@import "~bootstrap/scss/functions";
+@import './src/_bootstrap-variables';
+
+.loader {
+    width: 100%;
+    text-align: center;
+    display: block;
+    i {
+        color: theme-color('primary');
+        display: block;
+        font-size: 11em;
+        text-shadow: 0 0 5px theme-color('secondary');
+    }
+}

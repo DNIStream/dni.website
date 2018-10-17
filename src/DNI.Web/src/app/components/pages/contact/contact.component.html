@@ -5,59 +5,61 @@
   <tabset [justified]="true">
     <tab heading="Email"
          id="tab-email">
-      <form name="contact-form"
-            id="contact-form"
-            (ngSubmit)="f.form.valid && captchaValid && onSubmit()"
-            #f="ngForm"
-            novalidate
-            class="form-horizontal"
-            *ngIf="state !== 'sent'">
+      <dni-loading *ngIf="!captchaReady"></dni-loading>
+      <div [hidden]="!captchaReady">
+        <form name="contact-form"
+              id="contact-form"
+              (ngSubmit)="f.form.valid && captchaValid && onSubmit()"
+              #f="ngForm"
+              novalidate
+              class="form-horizontal"
+              *ngIf="state !== 'sent'">
 
-        <!-- Name -->
-        <div class="form-group row"
-             [ngClass]="{ 'has-error': f.submitted && !name.valid }">
-          <label class="col-md-3 col-lg-3 col-form-label"
-                 for="name">Name:</label>
-          <div class="col-md-9 col-lg-5">
-            <input type="text"
-                   class="form-control"
-                   id="name"
-                   name="name"
-                   placeholder="Your full name"
-                   [(ngModel)]="model.name"
-                   #name="ngModel"
-                   required>
+          <!-- Name -->
+          <div class="form-group row"
+               [ngClass]="{ 'has-error': f.submitted && !name.valid }">
+            <label class="col-md-3 col-lg-3 col-form-label"
+                   for="name">Name:</label>
+            <div class="col-md-9 col-lg-5">
+              <input type="text"
+                     class="form-control"
+                     id="name"
+                     name="name"
+                     placeholder="Your full name"
+                     [(ngModel)]="model.name"
+                     #name="ngModel"
+                     required>
+            </div>
+            <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
+                 *ngIf="f.submitted && !name.valid">Name is required</div>
           </div>
-          <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
-               *ngIf="f.submitted && !name.valid">Name is required</div>
-        </div>
 
-        <!-- Email -->
-        <div class="form-group row"
-             [ngClass]="{ 'has-error': f.submitted && !email.valid }">
-          <label class="col-md-3 col-lg-3 col-form-label"
-                 for="email">Email Address:</label>
-          <div class="col-md-9 col-lg-5">
-            <input type="email"
-                   class="form-control"
-                   id="email"
-                   name="email"
-                   placeholder="Your Email Address"
-                   [(ngModel)]="model.email"
-                   #email="ngModel"
-                   required>
+          <!-- Email -->
+          <div class="form-group row"
+               [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+            <label class="col-md-3 col-lg-3 col-form-label"
+                   for="email">Email Address:</label>
+            <div class="col-md-9 col-lg-5">
+              <input type="email"
+                     class="form-control"
+                     id="email"
+                     name="email"
+                     placeholder="Your Email Address"
+                     [(ngModel)]="model.email"
+                     #email="ngModel"
+                     required>
+            </div>
+            <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
+                 *ngIf="f.submitted && !email.valid">Email is required</div>
           </div>
-          <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
-               *ngIf="f.submitted && !email.valid">Email is required</div>
-        </div>
 
-        <!-- Message -->
-        <div class="form-group row"
-             [ngClass]="{ 'has-error': f.submitted && !message.valid }">
-          <label class="col-md-3 col-lg-3 col-form-label"
-                 for="message">Message:</label>
-          <div class="col-md-9 col-lg-5">
-            <textarea rows="8"
+          <!-- Message -->
+          <div class="form-group row"
+               [ngClass]="{ 'has-error': f.submitted && !message.valid }">
+            <label class="col-md-3 col-lg-3 col-form-label"
+                   for="message">Message:</label>
+            <div class="col-md-9 col-lg-5">
+              <textarea rows="8"
                           cols="100"
                           class="form-control"
                           id="message"
@@ -69,78 +71,79 @@
                           maxlength="5000"
                           style="resize:none"
                           autocomplete="off"></textarea>
+            </div>
+            <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
+                 *ngIf="f.submitted && !message.valid">Message is required</div>
           </div>
-          <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
-               *ngIf="f.submitted && !message.valid">Message is required</div>
-        </div>
 
-        <!-- Recaptcha -->
-        <div class="form-group row"
-             [ngClass]="{ 'has-error': f.submitted && !captchaValid }">
-          <label for="recaptcha"
-                 class="col-md-3 col-lg-3 col-form-label">Do you human?</label>
-          <div class="col-md-9 col-lg-5">
-            <ngx-recaptcha2 [siteKey]="reCaptchaSiteKey"
-                            id="recaptcha"
-                            name="recaptcha"
-                            #ReCaptcha
-                            (success)="handleCaptchaResponse($event)"
-                            (expire)="handleCaptchaExpired()"
-                            (load)="handleCaptchaLoaded()">
-            </ngx-recaptcha2>
+          <!-- Recaptcha -->
+          <div class="form-group row"
+               [ngClass]="{ 'has-error': f.submitted && !captchaValid }">
+            <label for="recaptcha"
+                   class="col-md-3 col-lg-3 col-form-label">Do you human?</label>
+            <div class="col-md-9 col-lg-5">
+              <ngx-recaptcha2 [siteKey]="reCaptchaSiteKey"
+                              id="recaptcha"
+                              name="recaptcha"
+                              #ReCaptcha
+                              (success)="handleCaptchaResponse($event)"
+                              (expire)="handleCaptchaExpired()"
+                              (load)="handleCaptchaLoaded()"
+                              (ready)="handleCaptchaReady()">
+              </ngx-recaptcha2>
+            </div>
+            <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
+                 *ngIf="f.submitted && !captchaValid">CAPTCHA is required
+            </div>
           </div>
-          <div class="offset-md-3 col-md-9 offset-lg-0 col-lg-4 pt-2"
-               *ngIf="f.submitted && !captchaValid">CAPTCHA is required
-          </div>
-        </div>
 
-        <!-- Opt out -->
-        <div class="offset-md-3 col-md-9">
-          <div class="small">
-            <ul class="list-unstyled">
-              <li>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           id="deleteDetails"
-                           name="deleteDetails"
-                           [(ngModel)]="model.deleteDetails"
-                           value="true"> Delete my details once you've dealt with my enquiry
-                  </label>
-                </div>
-              </li>
-              <li>
-                <div class="checkbox">
-                  <label>
-                    <input type="checkbox"
-                           id="marketingOptOut"
-                           name="marketingOptOut"
-                           [(ngModel)]="model.marketingOptOut"
-                           value="true"> Opt out of direct marketing about products or services
-                  </label>
-                </div>
-              </li>
-            </ul>
-            <p><i class="fa fa-exclamation-circle"
+          <!-- Opt out -->
+          <div class="offset-md-3 col-md-9">
+            <div class="small">
+              <ul class="list-unstyled">
+                <li>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"
+                             id="deleteDetails"
+                             name="deleteDetails"
+                             [(ngModel)]="model.deleteDetails"
+                             value="true"> Delete my details once you've dealt with my enquiry
+                    </label>
+                  </div>
+                </li>
+                <li>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox"
+                             id="marketingOptOut"
+                             name="marketingOptOut"
+                             [(ngModel)]="model.marketingOptOut"
+                             value="true"> Opt out of direct marketing about products or services
+                    </label>
+                  </div>
+                </li>
+              </ul>
+              <p><i class="fa fa-exclamation-circle"
                      aria-hidden="true"></i> <a [routerLink]="['/privacy']" target="_blank"
                      title="View privacy policy (opens in a new tab)"> We don't sell, lease or reveal any of your personal information to 3rd parties</a>.</p>
+            </div>
           </div>
-        </div>
 
-        <!-- Submit button -->
-        <button type="submit"
+          <!-- Submit button -->
+          <button type="submit"
               class="btn btn-primary">Send Message</button>
-      </form>
+        </form>
 
-      <!-- Success / Error -->
-      <ng-container *ngIf="state === 'sent' || state === 'error'">
-        <div class="alert"
-             [ngClass]="{'alert-success': state === 'sent', 'alert-danger': state === 'error'}"
-             role="alert"
-             [innerHtml]="messageHtml">
-        </div>
-      </ng-container>
-
+        <!-- Success / Error -->
+        <ng-container *ngIf="state === 'sent' || state === 'error'">
+          <div class="alert"
+               [ngClass]="{'alert-success': state === 'sent', 'alert-danger': state === 'error'}"
+               role="alert"
+               [innerHtml]="messageHtml">
+          </div>
+        </ng-container>
+      </div>
     </tab>
     <tab heading="Discord"
          id="tab-discord">

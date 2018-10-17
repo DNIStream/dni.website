@@ -1,13 +1,16 @@
 import { ViewChild } from '@angular/core';
 
 import { ReCaptcha2Component } from 'ngx-captcha';
+
 import { CaptchaService } from 'app/services/captcha/captcha.service';
+
 
 export abstract class CaptchaBaseComponent {
     public captchaErrorMessage: string;
 
     public captchaValid = false;
     public captchaLoaded = false;
+    public captchaReady = false;
 
     @ViewChild('ReCaptcha')
     protected captcha: ReCaptcha2Component;
@@ -35,6 +38,13 @@ export abstract class CaptchaBaseComponent {
 
     public handleCaptchaLoaded() {
         this.captchaLoaded = true;
+    }
+
+    public handleCaptchaReady() {
+        // Short delay to make sure the CAPTCHA is fully loaded and rendered
+        setTimeout(() => {
+            this.captchaReady = true;
+        }, 1000);
     }
 }
 
