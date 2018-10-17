@@ -111,17 +111,46 @@ function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
 function Set-CSProjFileVersion() {
     [CmdletBinding()]
     param (
-        [Parameter(Position=0, Mandatory=$true, ValueFromPipeline)]
+        [Parameter(Mandatory=$true, ValueFromPipeline)]
         [string] $path,
         
-        [Parameter(Position=1, Mandatory=$true)]
+        [Parameter(Mandatory=$true)]
         [string] $version
     )
-    [xml]$xmlDoc = Get-Content $path
-    $xmlDoc.Project.PropertyGroup[0].AssemblyVersion = $version + ".0"
-    $xmlDoc.Project.PropertyGroup[0].FileVersion = $version + ".0"
-    $xmlDoc.Save($path)
+    Begin {
+        $v = $version + ".0";
+    }
+
+    Process {
+        Write-Verbose "Updating $path with version $v";
+
+        $versionNodeNames = "AssemblyVersion", "FileVersion", "Version"
+        [xml]$xmlDoc = Get-Content $path -Raw
+
+        $parent = (Select-Xml -Xml $xmlDoc -XPath "/Project/PropertyGroup[1]").Node;
+
+        $versionNodeNames | % {
+            $versionNode = $parent.SelectNodes($_);
+            if($versionNode.Count -gt 0) {
+                Write-Verbose "Update $_"
+                $versionNode[0].InnerText = $v;
+            } else {
+                Write-Verbose "Add $_"
+                $newNode = $xmlDoc.CreateElement($_);
+                $newNode.InnerText = $v;
+                $parent.AppendChild($newNode) | Out-Null;
+            }
+        }
+
+        $xmlDoc.Save($path)
+    }
+
+    End {
+        
+    }
 }
+
+Write-Verbose "Script start"
 
 Push-Location -Path $PSScriptRoot
 
@@ -129,7 +158,10 @@ $versionFile = Resolve-Path "VERSION"
 $packageJsonFile = Resolve-Path "src/*.Web/package.json"
 $packageLockJsonFile = Resolve-Path "src/*.Web/package-lock.json"
 $appsettingsFile = Resolve-Path "src/*.API/appsettings.json"
-$csProjSearchRoot = Resolve-Path "/"
+$csProjSearchRoot = $PSScriptRoot
+
+Write-Verbose "Reading .csproj files from '$csProjSearchRoot'"
+
 $csProjFiles = (Get-ChildItem $csProjSearchRoot -Recurse -Exclude "*\node_modules\*" -Filter "*.csproj")
 
 if(!$Force) {
@@ -158,7 +190,7 @@ if(!$Force) {
 $newVersion = "$Major.$Minor.$Patch"
 
 Write-Verbose "Writing new version '$newVersion'..."
-<#
+
 Write-Verbose "Writing '$versionFile'..."
 Out-FileNoBOM $versionFile $newVersion
 
@@ -171,11 +203,10 @@ Set-PackageJsonVersion $packageLockJsonFile $newVersion
 Write-Verbose "Writing '$appsettingsFile'..."
 Set-AppSettingsVersion $appsettingsFile $newVersion
 
-#>
 
 Write-Verbose "Writing $($csProjFiles.Length) .csproj files..."
 $csProjFiles | Set-CSProjFileVersion -version $newVersion
 
-Write-Host "Done. You should now stage + commit the changes, git tag, then push to publish"
+Write-Host "Done. You should now stage, commit, tag and push your changes."
 
 Pop-Location

@@ -1,19 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>0.2.0.0</AssemblyVersion>
+    <FileVersion>0.2.0.0</FileVersion>
+    <Version>0.2.0.0</Version>
   </PropertyGroup>
-
   <ItemGroup>
     <None Remove="Email\EmailTemplates\contact.json" />
     <None Remove="Email\EmailTemplates\layout.html" />
   </ItemGroup>
-
   <ItemGroup>
     <EmbeddedResource Include="Email\EmailTemplates\contact.json" />
     <EmbeddedResource Include="Email\EmailTemplates\layout.html" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
@@ -24,9 +23,7 @@
     <PackageReference Include="System.Net.Mail.Abstractions" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\DNI.Options\DNI.Options.csproj" />
   </ItemGroup>
-
 </Project>
