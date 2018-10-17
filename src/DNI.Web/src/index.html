@@ -9,6 +9,11 @@
       <meta name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+      <link rel="stylesheet"
+            href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+            crossorigin="anonymous" />
+
       <link rel="icon"
             type="image/x-icon"
             href="assets/icons/favicon.ico?v0.1">
@@ -42,15 +47,37 @@
 
 <body>
       <dni-root>
-            Loading...
+            <style type="text/css">
+                  body {
+                        background-color: #2b253b;
+                  }
+
+                  .app-loader {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        min-height: 100vh;
+                        color: #FFFFFF;
+                  }
+
+                  .app-loader i {
+                        color: #D66109;
+                        display: block;
+                        font-size: 50vw;
+                        text-shadow: 0 0 5px #2b253b;
+                  }
+
+            </style>
+            <div class="app-loader">
+                  <i class="fas fa-cog fa-spin"></i>
+                  <p>DNI is loading...</p>
+            </div>
       </dni-root>
       <noscript>
             This app does not work when JavaScript is disabled. Please enable JavaScript before continuing.
       </noscript>
-      <link rel="stylesheet"
-            href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
-            integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
-            crossorigin="anonymous" />
 
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async
