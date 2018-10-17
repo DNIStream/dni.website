@@ -20,7 +20,7 @@
 
     body {
         background-color: #f6f6f6;
-        font-family: 'PT Sans';
+        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
         -webkit-font-smoothing: antialiased;
         font-size: 14px;
         line-height: 1.4;
@@ -218,6 +218,11 @@
         Margin: 20px 0;
     }
 
+    .logo img {
+        width: 200px;
+        max-width: 200px;
+    }
+
     /* RESPONSIVE AND MOBILE FRIENDLY STYLES */
 
     @media only screen and (max-width: 620px) {
@@ -311,9 +316,24 @@
                                    cellspacing="0">
                                 <tr>
                                     <td>
-                                        <div class="logo">
-                                            <img src="{{logoUrl}}"/>
-                                        </div>
+                                        <table border="0"
+                                               cellpadding="0"
+                                               cellspacing="0"
+                                               width="100%"
+                                               align="center"
+                                               id="logo">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <img src="{{logoUrl}}" alt="Documentation Not Included logo" border="0" width="200"/>
+                                                </td>
+                                                <td style="vertical-align: middle;text-align: center;" valign="middle" align="center">
+                                                    <h2>DNI Contact Form Submission</h2>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+
                                         <br/> {{introHtml}}
                                         <table border="0"
                                                cellpadding="0"
@@ -321,7 +341,7 @@
                                                class="btn btn-primary">
                                             <tbody>
                                             <tr>
-                                                <td align="left">
+                                                <td align="center">
                                                     <table border="0"
                                                            cellpadding="0"
                                                            cellspacing="0">
@@ -343,7 +363,8 @@
                                         <br/>
                                         {{outroHtml}}
                                         <br/>
-                                        <p>&nbsp;&nbsp;&nbsp;Documentation Not Included Team</p>
+                                        <p>&nbsp;&nbsp;Regards</p>
+                                        <p>&nbsp;&nbsp;&nbsp;&nbsp;Documentation Not Included Team</p>
                                     </td>
                                 </tr>
                             </table>
