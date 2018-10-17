@@ -99,7 +99,11 @@ function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
       if($indent -lt 0) {
         $indent = 0
       }
-      $line = (" " * $indent * 2) + $_.TrimStart().Replace(":  ", ": ")
+      $lineValue = $_
+      # Undo selected ConvertTo-Json encoding
+      $lineValue = $lineValue.Replace('\u0026', '&');
+
+      $line = (" " * $indent * 2) + $lineValue.TrimStart().Replace(":  ", ": ")
       if ($_ -match '[\{\[]') {
         # This line contains [ or {, increment the indentation level
         $indent++
