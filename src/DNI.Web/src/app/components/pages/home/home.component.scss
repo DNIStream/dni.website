@@ -1,5 +1,49 @@
+@import './src/_bootstrap-variables';
+@import '~bootstrap/scss/bootstrap';
+
 #logo {
-    max-width: 350px;
-    padding-right: 40px;
-    padding-bottom: 40px;
+    img {
+        max-width: 350px;
+    }
+
+    @media (min-width: map-get($grid-breakpoints, 'xs')) {
+        float: none;
+        text-align: center;
+        padding-bottom: 2em;
+        display: block;
+        width: 100%;
+    }
+    @media (min-width: map-get($grid-breakpoints, 'md')) {
+        float: none;
+        text-align: initial;
+        display: inline;
+        width: auto !important;
+        padding-bottom: 0;
+        img {
+            float: left;
+            min-width: 200px;
+            padding-right: 2em;
+            padding-bottom: 2em;
+        }
+    }
+}
+
+:host ::ng-deep #home-social ul.social-links {
+    i.fab {
+        font-size: 2em;
+        // border: .08em solid #eee;
+        border-radius: .1em;
+        padding: .2em .25em .15em;
+    }
+    .social-text {
+        display: none;
+    }
+    padding: 0 1em;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    li {
+        padding: 1em;
+    }
 }
