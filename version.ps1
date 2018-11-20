@@ -154,6 +154,31 @@ function Set-CSProjFileVersion() {
     }
 }
 
+function Set-NGEnvironmentVersions() {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory=$true, ValueFromPipeline)]
+        [string] $path,
+        
+        [Parameter(Mandatory=$true)]
+        [string] $version
+    )
+    Begin {
+    }
+
+    Process {
+        Write-Verbose "Updating $path with version $v";
+
+        $ts = Get-Content $path -Raw
+        $ts = $ts -replace "version:([ \t]*)'[0-9\.]{3,}'", "version: '$version'"
+        Out-FileNoBOM -path $path -content $ts
+    }
+
+    End {
+        
+    }
+}
+
 Write-Verbose "Script start"
 
 Push-Location -Path $PSScriptRoot
@@ -162,10 +187,10 @@ $versionFile = Resolve-Path "VERSION"
 $packageJsonFile = Resolve-Path "src/*.Web/package.json"
 $packageLockJsonFile = Resolve-Path "src/*.Web/package-lock.json"
 $appsettingsFile = Resolve-Path "src/*.API/appsettings.json"
+$ngEnvironmentFiles = Resolve-Path "src/*.Web/src/environments/environment*.ts"
 $csProjSearchRoot = $PSScriptRoot
 
 Write-Verbose "Reading .csproj files from '$csProjSearchRoot'"
-
 $csProjFiles = (Get-ChildItem $csProjSearchRoot -Recurse -Exclude "*\node_modules\*" -Filter "*.csproj")
 
 if(!$Force) {
@@ -207,9 +232,11 @@ Set-PackageJsonVersion $packageLockJsonFile $newVersion
 Write-Verbose "Writing '$appsettingsFile'..."
 Set-AppSettingsVersion $appsettingsFile $newVersion
 
-
 Write-Verbose "Writing $($csProjFiles.Length) .csproj files..."
 $csProjFiles | Set-CSProjFileVersion -version $newVersion
+
+Write-Verbose "Writing $($ngEnvironmentFiles.Length) Angular Environment files..."
+$ngEnvironmentFiles | Set-NGEnvironmentVersions -version $newVersion
 
 Write-Host "Done. You should now stage, commit, tag and push your changes."
 
