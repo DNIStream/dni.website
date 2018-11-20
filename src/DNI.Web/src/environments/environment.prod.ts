@@ -1,9 +1,8 @@
-const pkgJson = require('../../package.json');
 export const environment = {
   production: true,
   webUri: 'https://www.dnistream.live/',
   apiBaseUri: 'https://api.dnistream.live/',
   recaptchaSiteKey: '6Lc2_XMUAAAAAOd_v5nbtAE_rxgbqspCJJpYQ9zn',
-  version: pkgJson.version,
+  version: '0.2.1',
   versionText: 'The MVP'
 };

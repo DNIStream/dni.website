@@ -1,8 +1,12 @@
+# This .dockerignore is for the DNI.API project / Dockerfile (we require files in the root to compile) but is ignored by the other Dockerfiles
+
+nginx/
+docker-envs/
+
 docker-compose.yml
 docker-compose.*.yml
 LICENSE
-nginx/
-docker-envs/
+VERSION
 
 **/.*
 **/.*/
@@ -18,3 +22,6 @@ docker-envs/
 **/dist/
 **/packages/
 **/wwwroot/
+
+src/DNI.SMTP/
+src/DNI.Web/

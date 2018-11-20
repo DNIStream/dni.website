@@ -1,7 +1,7 @@
 # Web NGINX Web Server Dockerfile
 
 #---------------------
-FROM node:8.11 AS restore
+FROM node:10.13-alpine AS restore
 
 WORKDIR /app
 
@@ -24,7 +24,7 @@ COPY . /app
 RUN npm run build:${ANGULAR_ENV}
 
 #---------------------
-FROM nginx:1.15.1-alpine AS final
+FROM nginx:1.15.6-alpine AS final
 
 EXPOSE 80
 

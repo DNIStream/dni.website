@@ -1,4 +1,3 @@
-const pkgJson = require('../../package.json');
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
@@ -8,7 +7,7 @@ export const environment = {
     webUri: 'http://localhost:4200/',
     apiBaseUri: 'http://localhost:12341/',
     recaptchaSiteKey: '6Lcv_3MUAAAAAPTlA1F3Jk2X3mc_Vnixqbgk3pgv',
-    version: pkgJson.version,
+    version: '0.2.1',
     versionText: 'The MVP'
 };
 
