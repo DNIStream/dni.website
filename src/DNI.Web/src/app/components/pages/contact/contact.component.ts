@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 
 import { CaptchaService } from 'app/services/captcha/captcha.service';
 import { ContactService } from 'app/services/contact/contact.service';
 import { CaptchaBaseComponent } from 'app/services/captcha/captcha-base.component';
 import { ContactModel } from 'app/services/contact/contact-model';
 import { environment } from 'environments/environment';
-
-
 
 @Component({
   selector: 'dni-contact',
@@ -28,9 +25,10 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
 
   constructor(
     protected captchaService: CaptchaService,
-    protected contactService: ContactService
+    protected contactService: ContactService,
+    @Inject(PLATFORM_ID) protected platformId: Object
   ) {
-    super(captchaService);
+    super(captchaService, platformId);
   }
 
   ngOnInit() {

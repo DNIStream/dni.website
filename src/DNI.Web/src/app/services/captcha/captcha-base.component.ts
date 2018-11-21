@@ -1,9 +1,9 @@
-import { ViewChild } from '@angular/core';
+import { ViewChild, Inject, PLATFORM_ID } from '@angular/core';
 
 import { ReCaptcha2Component } from 'ngx-captcha';
 
 import { CaptchaService } from 'app/services/captcha/captcha.service';
-
+import { isPlatformBrowser } from '@angular/common';
 
 export abstract class CaptchaBaseComponent {
     public captchaErrorMessage: string;
@@ -15,8 +15,13 @@ export abstract class CaptchaBaseComponent {
     @ViewChild('ReCaptcha')
     protected captcha: ReCaptcha2Component;
 
+    public get isBrowser(): boolean {
+        return isPlatformBrowser(this.platformId);
+    }
+
     constructor(
         protected captchaService: CaptchaService,
+        @Inject(PLATFORM_ID) protected platformId: Object
     ) { }
 
     public handleCaptchaResponse(userResponse: string) {
