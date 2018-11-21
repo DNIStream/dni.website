@@ -1,6 +1,4 @@
-import { Component, Inject, APP_ID, PLATFORM_ID, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 
 import { environment } from 'environments/environment';
 
@@ -15,10 +13,7 @@ export class AppComponent implements OnInit {
   public version: string;
   public versionText: string;
 
-  constructor(
-    @Inject(PLATFORM_ID) protected platformId: Object,
-    private router: Router
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     this.version = environment.version;

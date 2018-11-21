@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, timer } from 'rxjs';
+import { Observable, timer, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment-timezone';
 import { TickData } from 'app/services/countdown/tick-data';
@@ -8,8 +8,6 @@ import { TickData } from 'app/services/countdown/tick-data';
 export class CountdownService {
 
   //#region Private fields
-
-  private _timer$: Observable<number>;
   private _nextShowIn: moment.Duration;
   private _nextShowDate: moment.Moment;
   private _lastShowDate: moment.Moment;
@@ -89,7 +87,7 @@ export class CountdownService {
    * Ticks the timer, calculating the time until the next show,
    * and sets the showIsLive property based on the showDurationHours input
    */
-  private timerTick(): TickData {
+  public timerTick(): TickData {
     this.calculateIsLive();
     this.calculateTimeUntilNextShow();
     return new TickData(this._showIsLive, this._nextShowIn, this._nextShowDate, this._lastShowDate);
