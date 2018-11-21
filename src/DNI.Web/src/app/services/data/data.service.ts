@@ -14,6 +14,7 @@ export class DataService {
   ) { }
 
   public creators(): Observable<Creator[]> {
-    return this.http.get<Creator[]>(environment.webUri + 'assets/data/creators.json');
+    const uri = environment.webUri + 'assets/data/creators.json';
+    return this.http.get<Creator[]>(uri);
   }
 }
