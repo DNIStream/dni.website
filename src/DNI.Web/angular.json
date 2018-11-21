@@ -45,7 +45,8 @@
               "src/assets",
               "src/site.webmanifest",
               "src/robots.txt",
-              "src/browserconfig.xml"
+              "src/browserconfig.xml",
+              "src/sitemap.xml"
             ],
             "styles": [
               "src/styles.scss"
