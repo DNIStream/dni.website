@@ -1,13 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CookieLawModule } from 'angular2-cookie-law';
 import { NgStringPipesModule } from 'angular-pipes';
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { TabsModule } from 'ngx-bootstrap';
+// Replace this import and delete the code once the 3rd party component has been published to npm
+import { CookieLawModule } from 'app/components/shared/angular2-cookie-law/angular2-cookie-law.module';
+// import { CookieLawModule } from 'angular2-cookie-law';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/shared/app.component';
@@ -47,7 +48,6 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
     AppRoutingModule,
     NgStringPipesModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     CookieLawModule
   ],
   bootstrap: [AppComponent]

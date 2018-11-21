@@ -1,6 +1,8 @@
 import { Component, Inject, APP_ID, PLATFORM_ID, OnInit } from '@angular/core';
-import { environment } from 'environments/environment.prod';
 import { Router } from '@angular/router';
+import { isPlatformBrowser } from '@angular/common';
+
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'dni-root',
@@ -14,27 +16,12 @@ export class AppComponent implements OnInit {
   public versionText: string;
 
   constructor(
-    @Inject(PLATFORM_ID)
-    protected platformId: Object,
-    @Inject(APP_ID)
-    private appId: string,
+    @Inject(PLATFORM_ID) protected platformId: Object,
     private router: Router
-  ) {
-    console.log(platformId);
-  }
+  ) { }
 
   ngOnInit(): void {
     this.version = environment.version;
     this.versionText = environment.versionText;
-
-    this.registerRouteScroll();
-  }
-
-  private registerRouteScroll(): void {
-    this.router.events
-      .subscribe((evt) => {
-        // Scroll to the top of the page
-        window.scrollTo(0, 0);
-      });
   }
 }
