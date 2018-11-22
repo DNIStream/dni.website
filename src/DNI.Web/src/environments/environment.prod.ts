@@ -5,7 +5,8 @@ export const environment = {
   apiBaseUri: 'https://api.dnistream.live/',
   // apiBaseUri: 'http://localhost:12341/',
   recaptchaSiteKey: '6Lc2_XMUAAAAAOd_v5nbtAE_rxgbqspCJJpYQ9zn',
-  version: '0.3.0',
+  version: '0.3.1',
   versionText: 'The MVP'
 };
+
 
