@@ -24,5 +24,9 @@
         public string SmtpServer { get; set; }
 
         public int SmtpServerPort { get; set; }
+
+        public string PodcastServiceBaseUri { get; set; }
+
+        public string PodcastServiceResourceUri { get; set; }
     }
 }
