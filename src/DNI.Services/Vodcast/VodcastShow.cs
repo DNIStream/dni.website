@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 
 using RestSharp.Deserializers;
 
-namespace DNI.Services.Podcast {
-    public class PodcastShow {
+namespace DNI.Services.Vodcast {
+    public class VodcastShow {
         [DeserializeAs(Name = "id")] public Guid Id { get; set; }
 
         [DeserializeAs(Name = "title")] public string Title { get; set; }
@@ -19,7 +18,5 @@ namespace DNI.Services.Podcast {
 
         [DeserializeAs(Name = "date_published")]
         public DateTime DatePublished { get; set; }
-
-        [DeserializeAs(Name = "attachments")] public IEnumerable<PodcastFile> Files { get; set; }
     }
 }

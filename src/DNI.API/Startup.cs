@@ -1,6 +1,8 @@
 ﻿using DNI.Options;
 using DNI.Services.Captcha;
 using DNI.Services.Email;
+using DNI.Services.Podcast;
+using DNI.Services.Vodcast;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,7 @@ namespace DNI.API {
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
             services.Configure<GeneralOptions>(Configuration.GetSection("General"));
+            services.Configure<YouTubeOptions>(Configuration.GetSection("YouTube"));
 
             // 3rd Party Services
             var sendGridAPIKey = Configuration.GetSection("SendGrid").GetValue("ApiKey", "");
@@ -43,7 +46,9 @@ namespace DNI.API {
             services
                 .AddTransient<ICaptchaService, CaptchaService>()
                 // .AddTransient<IEmailService, SendGridEmailService>();
-                .AddTransient<IEmailService, SystemNetEmailService>();
+                .AddTransient<IEmailService, SystemNetEmailService>()
+                .AddTransient<IPodcastService, FiresidePodcastService>()
+                .AddTransient<IVodcastService, YouTubeVodcastService>();
 
             // MVC
             services
@@ -51,9 +56,7 @@ namespace DNI.API {
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Swagger
-            services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new Info {Title = "DNI API", Version = "v1"});
-            });
+            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new Info {Title = "DNI API", Version = "v1"}); });
 
             // CORS
             services.AddCors();

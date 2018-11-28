@@ -17,13 +17,13 @@ using Xunit.Abstractions;
 
 namespace DNI.Services.Tests {
     [Trait("TestType", "Unit")]
-    public class PodcastServiceTests {
+    public class FiresidePodcastServiceTests {
         private readonly ITestOutputHelper _output;
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
         private readonly Mock<IRestClient> _restClientMock;
         private readonly IOptions<GeneralOptions> _generalOptions;
 
-        public PodcastServiceTests(ITestOutputHelper output) {
+        public FiresidePodcastServiceTests(ITestOutputHelper output) {
             _output = output;
 
             _restClientMock = Mock.Get(_fixture.Create<IRestClient>());
@@ -36,7 +36,7 @@ namespace DNI.Services.Tests {
         }
 
         private IPodcastService GetService() {
-            return new PodcastService(_restClientMock.Object, _generalOptions);
+            return new FiresidePodcastService(_restClientMock.Object, _generalOptions);
         }
 
         [Trait("TestType", "Integration")]
@@ -44,7 +44,7 @@ namespace DNI.Services.Tests {
         public async Task GetAllAsync_ReturnsDataFromRemoteUri() {
             // Arrange
             var restClient = new RestClient();
-            var service = new PodcastService(restClient, _generalOptions);
+            var service = new FiresidePodcastService(restClient, _generalOptions);
 
             // Act
             var r = await service.GetAllAsync();

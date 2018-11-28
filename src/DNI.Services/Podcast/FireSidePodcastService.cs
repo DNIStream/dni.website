@@ -8,11 +8,11 @@ using Microsoft.Extensions.Options;
 using RestSharp;
 
 namespace DNI.Services.Podcast {
-    public class PodcastService : IPodcastService {
+    public class FiresidePodcastService : IPodcastService {
         private readonly IRestClient _restClient;
         private readonly GeneralOptions _options;
 
-        public PodcastService(IRestClient restClient, IOptions<GeneralOptions> options) {
+        public FiresidePodcastService(IRestClient restClient, IOptions<GeneralOptions> options) {
             _restClient = restClient;
             _options = options.Value;
         }

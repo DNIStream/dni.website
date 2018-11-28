@@ -14,6 +14,7 @@
     <EmbeddedResource Include="Email\EmailTemplates\layout.html" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Google.Apis.YouTube.v3" Version="1.36.1.1226" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.1.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />

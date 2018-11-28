@@ -27,6 +27,8 @@
 
         public string PodcastServiceBaseUri { get; set; }
 
+        public string VodcastServiceBaseUri { get; set; }
+
         public string PodcastServiceResourceUri { get; set; }
     }
 }
