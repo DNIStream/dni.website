@@ -2,6 +2,7 @@
 using DNI.Services.Captcha;
 using DNI.Services.Email;
 using DNI.Services.Podcast;
+using DNI.Services.ShowList;
 using DNI.Services.Vodcast;
 
 using Microsoft.AspNetCore.Builder;
@@ -48,7 +49,8 @@ namespace DNI.API {
                 // .AddTransient<IEmailService, SendGridEmailService>();
                 .AddTransient<IEmailService, SystemNetEmailService>()
                 .AddTransient<IPodcastService, FiresidePodcastService>()
-                .AddTransient<IVodcastService, YouTubeVodcastService>();
+                .AddTransient<IVodcastService, YouTubeVodcastService>()
+                .AddTransient<IShowListService, ShowListService>();
 
             // MVC
             services
