@@ -24,7 +24,7 @@ namespace DNI.Services.Vodcast {
         /// </summary>
         /// <returns></returns>
         public async Task<VodcastStream> GetAllAsync() {
-            var url = $"playlistItems?part=snippet&maxResults=25&playlistId=PLlLn7y8D9PIg19rUENZ-WsOQCtClCwYob&key={_youTubeOptions.ApiKey}";
+            var url = $"playlistItems?part=snippet&maxResults=50&playlistId=PLlLn7y8D9PIg19rUENZ-WsOQCtClCwYob&key={_youTubeOptions.ApiKey}";
             _restClient.BaseUrl = new Uri(_options.VodcastServiceBaseUri);
             var request = new RestRequest {
                 Method = Method.GET,

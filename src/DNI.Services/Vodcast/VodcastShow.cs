@@ -5,24 +5,21 @@ using RestSharp.Deserializers;
 namespace DNI.Services.Vodcast {
     public class VodcastShow {
         [DeserializeAs(Name = "id")]
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
-        [DeserializeAs(Name = "title")]
+        [DeserializeAs(Name = "snippet.title")]
         public string Title { get; set; }
 
-        [DeserializeAs(Name = "url")]
-        public string Url { get; set; }
+        [DeserializeAs(Name = "snippet.resourceId.videoId")]
+        public string VideoId { get; set; }
 
-        [DeserializeAs(Name = "content_text")]
+        [DeserializeAs(Name = "snippet.description")]
         public string Content { get; set; }
 
-        [DeserializeAs(Name = "content_html")]
-        public string ContentHtml { get; set; }
+        [DeserializeAs(Name = "snippet.thumbnails.maxres.url")]
+        public string Thumbnail { get; set; }
 
-        [DeserializeAs(Name = "summary")]
-        public string Summary { get; set; }
-
-        [DeserializeAs(Name = "date_published")]
+        [DeserializeAs(Name = "snippet.publishedAt")]
         public DateTime DatePublished { get; set; }
     }
 }

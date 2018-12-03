@@ -50,6 +50,7 @@ namespace DNI.Services.Tests {
             var r = await service.GetAllAsync();
 
             // Assert
+            Assert.NotNull(r.Shows);
             Assert.True(r.Shows.Count > 0);
         }
 
