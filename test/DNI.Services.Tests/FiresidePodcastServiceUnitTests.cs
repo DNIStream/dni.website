@@ -5,6 +5,7 @@ using AutoFixture.AutoMoq;
 
 using DNI.Options;
 using DNI.Services.Podcast;
+using DNI.Testing;
 
 using Microsoft.Extensions.Options;
 
@@ -16,42 +17,23 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace DNI.Services.Tests {
-    [Trait("TestType", "Unit")]
-    public class FiresidePodcastServiceTests {
+    [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
+    public class FiresidePodcastServiceUnitTests {
         private readonly ITestOutputHelper _output;
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
         private readonly Mock<IRestClient> _restClientMock;
-        private readonly IOptions<GeneralOptions> _generalOptions;
+        private readonly Mock<IOptions<GeneralOptions>> _generalOptions;
 
-        public FiresidePodcastServiceTests(ITestOutputHelper output) {
+        public FiresidePodcastServiceUnitTests(ITestOutputHelper output) {
             _output = output;
 
             _restClientMock = Mock.Get(_fixture.Create<IRestClient>());
-
-            // Set up default / valid options
-            var generalOptions = _fixture.Create<GeneralOptions>();
-            _generalOptions = Microsoft.Extensions.Options.Options.Create(generalOptions);
-            _generalOptions.Value.PodcastServiceResourceUri = "json";
-            _generalOptions.Value.PodcastServiceBaseUri = "https://podcast.dnistream.live";
+            _generalOptions = Mock.Get(_fixture.Create<IOptions<GeneralOptions>>());
         }
 
         private IPodcastService GetService() {
-            return new FiresidePodcastService(_restClientMock.Object, _generalOptions);
-        }
-
-        [Trait("TestType", "Integration")]
-        [Fact]
-        public async Task GetAllAsync_ReturnsDataFromRemoteUri() {
-            // Arrange
-            var restClient = new RestClient();
-            var service = new FiresidePodcastService(restClient, _generalOptions);
-
-            // Act
-            var r = await service.GetAllAsync();
-
-            // Assert
-            Assert.NotNull(r.Shows);
-            Assert.True(r.Shows.Count > 0);
+            _generalOptions.Object.Value.PodcastServiceBaseUri = "https://awebsite.com";
+            return new FiresidePodcastService(_restClientMock.Object, _generalOptions.Object);
         }
 
         [Fact]
@@ -65,7 +47,7 @@ namespace DNI.Services.Tests {
             // Assert
             _restClientMock
                 .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>
-                    r.Resource == _generalOptions.Value.PodcastServiceResourceUri
+                    r.Resource == _generalOptions.Object.Value.PodcastServiceResourceUri
                 )), Times.Once(), "Podcast Service Resource Uri expected");
             _restClientMock
                 .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>

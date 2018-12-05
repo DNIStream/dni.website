@@ -5,6 +5,7 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 
 using DNI.Services.Email;
+using DNI.Testing;
 
 using Xunit;
 
@@ -12,9 +13,9 @@ namespace DNI.Services.Tests {
     /// <summary>
     ///     Unit tests for <see cref="EmailTemplateServiceBase" /> base class / shared methods.
     /// </summary>
-    [Trait("TestType", "Unit")]
+    [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class EmailTemplateServiceBaseTests {
-        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
+        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
 
         private IEmailService GetService() {
             return _fixture.Create<EmailTemplateServiceBase>();

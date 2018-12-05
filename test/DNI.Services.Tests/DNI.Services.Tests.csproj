@@ -25,6 +25,7 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\DNI.Testing\DNI.Testing.csproj" />
     <ProjectReference Include="..\..\src\DNI.Services\DNI.Services.csproj" />
   </ItemGroup>
 </Project>

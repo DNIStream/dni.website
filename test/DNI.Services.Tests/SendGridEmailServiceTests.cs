@@ -8,6 +8,7 @@ using AutoFixture;
 using AutoFixture.AutoMoq;
 
 using DNI.Services.Email;
+using DNI.Testing;
 
 using Moq;
 
@@ -18,10 +19,10 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace DNI.Services.Tests {
-    [Trait("TestType", "Unit")]
+    [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class SendGridEmailServiceTests {
         private readonly ITestOutputHelper _output;
-        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
+        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
         private ISendGridClient _smtpClient;
         private Mock<ISendGridClient> _smtpClientMock;
 

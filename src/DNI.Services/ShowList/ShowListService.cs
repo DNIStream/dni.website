@@ -20,7 +20,10 @@ namespace DNI.Services.ShowList {
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Show>> GetShowsAsync() {
-            throw new NotImplementedException();
+            var podcastShows = await _podcastService.GetAllAsync();
+            var vodcastShows = await _vodcastService.GetAllAsync();
+
+            return null;
         }
     }
 }
