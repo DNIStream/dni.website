@@ -32,7 +32,7 @@ namespace DNI.Services.Tests {
 
             var youTubeOptions = _fixture.Create<YouTubeOptions>();
             _youTubeOptions = Microsoft.Extensions.Options.Options.Create(youTubeOptions);
-            _youTubeOptions.Value.ApiKey = ""; // Add API key to run integration tests (but don't check in!)
+            _youTubeOptions.Value.ApiKey = TestHelpers.GetKeyValue("YOUTUBE");
         }
 
         /// <summary>

@@ -20,7 +20,7 @@ namespace DNI.Services.Tests {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class YouTubeVodcastServiceUnitTests {
         private readonly ITestOutputHelper _output;
-        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
+        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = false});
         private readonly Mock<IRestClient> _restClientMock;
         private readonly Mock<IOptions<GeneralOptions>> _generalOptions;
         private readonly Mock<IOptions<YouTubeOptions>> _youTubeOptions;
