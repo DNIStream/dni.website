@@ -10,6 +10,8 @@ namespace DNI.Services.ShowList {
 
         public string Summary { get; set; }
 
-        public DateTime PublishedTime { get; set; }
+        public DateTime? PublishedTime { get; set; }
+
+        public decimal? Version { get; set; }
     }
 }
