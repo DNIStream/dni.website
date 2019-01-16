@@ -11,10 +11,12 @@ using DNI.Services.Vodcast;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 
 using RestSharp;
 
@@ -93,6 +95,9 @@ namespace DNI.API {
                 }
             });
 
+            // Response caching
+            // services.AddResponseCaching();
+
             // CORS
             services.AddCors();
         }
@@ -111,7 +116,7 @@ namespace DNI.API {
                 app.UseSwaggerUI(c => {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", $"DNI API v{GetVersion()}");
                     c.RoutePrefix = string.Empty;
-                    c.DocumentTitle = $"{APINameSpace} UI";
+                    c.DocumentTitle = $"{APINameSpace} v{GetVersion()} UI";
                     c.DocExpansion(DocExpansion.None);
                 });
             } else {
@@ -126,6 +131,9 @@ namespace DNI.API {
                 .AllowAnyMethod());
 
             app.UseHttpsRedirection();
+
+            // Response caching
+            // app.UseResponseCaching();
 
             // UseMVC Must come last otherwise CORS doesn't work
             app.UseMvc();

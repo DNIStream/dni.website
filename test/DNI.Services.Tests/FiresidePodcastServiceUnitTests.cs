@@ -7,6 +7,7 @@ using DNI.Options;
 using DNI.Services.Podcast;
 using DNI.Testing;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Moq;
@@ -23,17 +24,19 @@ namespace DNI.Services.Tests {
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
         private readonly Mock<IRestClient> _restClientMock;
         private readonly Mock<IOptions<GeneralOptions>> _generalOptions;
+        private readonly Mock<ILogger<FiresidePodcastService>> _loggerMock;
 
         public FiresidePodcastServiceUnitTests(ITestOutputHelper output) {
             _output = output;
 
             _restClientMock = Mock.Get(_fixture.Create<IRestClient>());
             _generalOptions = Mock.Get(_fixture.Create<IOptions<GeneralOptions>>());
+            _loggerMock = Mock.Get(_fixture.Create<ILogger<FiresidePodcastService>>());
         }
 
         private IPodcastService GetService() {
             _generalOptions.Object.Value.PodcastServiceBaseUri = "https://awebsite.com";
-            return new FiresidePodcastService(_restClientMock.Object, _generalOptions.Object);
+            return new FiresidePodcastService(_restClientMock.Object, _generalOptions.Object, _loggerMock.Object);
         }
 
         [Fact]

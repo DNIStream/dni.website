@@ -7,7 +7,10 @@ using DNI.Options;
 using DNI.Services.Podcast;
 using DNI.Testing;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+using Moq;
 
 using RestSharp;
 
@@ -20,9 +23,12 @@ namespace DNI.Services.Tests {
         private readonly ITestOutputHelper _output;
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
         private readonly IOptions<GeneralOptions> _generalOptions;
+        private readonly Mock<ILogger<FiresidePodcastService>> _loggerMock;
 
         public FiresidePodcastServiceIntegrationTests(ITestOutputHelper output) {
             _output = output;
+
+            _loggerMock = Mock.Get(_fixture.Create<ILogger<FiresidePodcastService>>());
 
             // Set up default / valid options
             var generalOptions = _fixture.Create<GeneralOptions>();
@@ -35,7 +41,7 @@ namespace DNI.Services.Tests {
         public async Task GetAllAsync_ReturnsDataFromRemoteUri() {
             // Arrange
             var restClient = new RestClient();
-            var service = new FiresidePodcastService(restClient, _generalOptions);
+            var service = new FiresidePodcastService(restClient, _generalOptions, _loggerMock.Object);
 
             // Act
             var r = await service.GetAllAsync();

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Services.Tests", "test\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Options", "src\DNI.Options\DNI.Options.csproj", "{A435837B-92E8-49EC-BC21-B732834641A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Testing", "DNI.Testing\DNI.Testing.csproj", "{2546627F-BF47-483E-982D-BCA0F0853B58}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Testing", "src\DNI.Testing\DNI.Testing.csproj", "{2546627F-BF47-483E-982D-BCA0F0853B58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

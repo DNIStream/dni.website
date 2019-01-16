@@ -29,8 +29,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\DNI.Testing\DNI.Testing.csproj" />
     <ProjectReference Include="..\..\src\DNI.Services\DNI.Services.csproj" />
+    <ProjectReference Include="..\..\src\DNI.Testing\DNI.Testing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="keys.cfg">
