@@ -6,6 +6,9 @@
     <FileVersion>0.3.1.0</FileVersion>
     <Version>0.3.1.0</Version>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.2\DNI.API.xml</DocumentationFile>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Remove="wwwroot\**" />
     <Content Remove="wwwroot\**" />

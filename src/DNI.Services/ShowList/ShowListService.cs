@@ -43,7 +43,8 @@ namespace DNI.Services.ShowList {
                         AudioUrl = x.Url,
                         VideoUrl = null,
                         PublishedTime = x.DatePublished,
-                        Version = GetPodcastVersion(x)
+                        Version = GetPodcastVersion(x),
+                        ImageUrl = null // TODO: 
                     });
             }
 
@@ -56,7 +57,8 @@ namespace DNI.Services.ShowList {
                         AudioUrl = null,
                         VideoUrl = GetVideoUrl(x.VideoId),
                         PublishedTime = x.DatePublished,
-                        Version = GetVodcastVersion(x)
+                        Version = GetVodcastVersion(x),
+                        ImageUrl = x.ImageUrl
                     });
             }
 
@@ -70,7 +72,8 @@ namespace DNI.Services.ShowList {
                             AudioUrl = p?.Url,
                             VideoUrl = GetVideoUrl(v?.VideoId),
                             PublishedTime = p?.DatePublished ?? v.DatePublished,
-                            Version = key
+                            Version = key,
+                            ImageUrl = v?.ImageUrl
                         });
             }
 

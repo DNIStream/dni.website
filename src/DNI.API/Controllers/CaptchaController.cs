@@ -8,9 +8,16 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DNI.API.Controllers {
+    /// <summary>
+    ///     Provides REST methods for CAPTCHA
+    /// </summary>
     public class CaptchaController : ControllerBase {
         private readonly ICaptchaService _captchaService;
 
+        /// <summary>
+        ///     Provides REST methods for CAPTCHA
+        /// </summary>
+        /// <param name="captchaService"></param>
         public CaptchaController(ICaptchaService captchaService) {
             _captchaService = captchaService;
         }

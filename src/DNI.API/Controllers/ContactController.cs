@@ -10,15 +10,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace DNI.API.Controllers {
+    /// <summary>
+    ///     Provides REST methods for contacting DNI
+    /// </summary>
     public class ContactController : ControllerBase {
         private readonly IEmailService _emailService;
         private readonly GeneralOptions _generalOptions;
 
+        /// <summary>
+        ///     Provides REST methods for contacting DNI
+        /// </summary>
+        /// <param name="emailService"></param>
+        /// <param name="generalOptions"></param>
         public ContactController(IEmailService emailService, IOptions<GeneralOptions> generalOptions) {
             _emailService = emailService;
             _generalOptions = generalOptions.Value;
         }
 
+        /// <summary>
+        ///     Sends a contact message to DNI
+        /// </summary>
+        /// <param name="req"></param>
+        /// <returns></returns>
+        /// <response code="204">No Content. The contact form submission was successful.</response>
+        /// <response code="400">
+        ///     A validation error occurred. See raised <see cref="DNI.API.Responses.APIErrorResponse" /> for more
+        ///     details.
+        /// </response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Route("contact")]

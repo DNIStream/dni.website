@@ -21,5 +21,8 @@ namespace DNI.Services.Vodcast {
 
         [DeserializeAs(Name = "snippet.publishedAt")]
         public DateTime DatePublished { get; set; }
+
+        [DeserializeAs(Name = "snippet.thumbnails.high.url")]
+        public string ImageUrl { get; set; }
     }
 }
