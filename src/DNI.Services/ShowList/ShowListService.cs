@@ -6,17 +6,23 @@ using System.Threading.Tasks;
 using DNI.Services.Podcast;
 using DNI.Services.Vodcast;
 
+using Google.Apis.Logging;
+
+using Microsoft.Extensions.Logging;
+
 namespace DNI.Services.ShowList {
     public class ShowListService : IShowListService {
         private readonly IPodcastService _podcastService;
         private readonly IVodcastService _vodcastService;
+        private readonly ILogger<ShowListService> _logger;
 
         private readonly Regex podcastUriMatcher = new Regex(@"/v(\d+-\d+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-        private readonly Regex vodcastTitleMatcher = new Regex(@"Documentation Not Included: Episode v(\d+\.\d+) -(.+)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
+        private readonly Regex vodcastTitleMatcher = new Regex(@"Documentation Not Included: Episode v(\d+\.\d+)( ?)-{1}(.+)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-        public ShowListService(IPodcastService podcastService, IVodcastService vodcastService) {
+        public ShowListService(IPodcastService podcastService, IVodcastService vodcastService, ILogger<ShowListService> logger) {
             _podcastService = podcastService;
             _vodcastService = vodcastService;
+            _logger = logger;
         }
 
         /// <summary>
@@ -24,11 +30,18 @@ namespace DNI.Services.ShowList {
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Show>> GetShowsAsync() {
-            // TODO: Run in parallel
-            var podcastShows = await _podcastService.GetAllAsync();
-            var vodcastShows = await _vodcastService.GetAllAsync();
+            // Run both data operations in parallel
+            PodcastStream podcastShows = null;
+            VodcastStream vodcastShows = null;
 
-            // TODO: Cache both sources until next week if they return data
+            var dataTasks = new Task[] {
+                Task.Run(async () => podcastShows = await _podcastService.GetAllAsync()),
+                Task.Run(async () => vodcastShows = await _vodcastService.GetAllAsync())
+            };
+
+            await Task.WhenAll(dataTasks);
+
+            // TODO: Cache both sources until next week, but only if they return data
 
             // Iterate shows from both sources, matching and merging where possible (full outer join)
             // Key matching works on the version strings in the following properties:
@@ -40,28 +53,40 @@ namespace DNI.Services.ShowList {
             if(vodcastShows?.Shows == null && podcastShows?.Shows != null) {
                 // No vodcasts, return podcast info only
                 shows = podcastShows.Shows
-                    .Select(x => new Show {
-                        Title = x.Title,
-                        Summary = x.Summary,
-                        AudioUrl = x.Url,
-                        VideoUrl = null,
-                        PublishedTime = x.DatePublished,
-                        Version = GetPodcastVersion(x),
-                        ImageUrl = null // TODO: 
+                    .Select(p => {
+                        var mp3File = p.Files.FirstOrDefault();
+
+                        return new Show {
+                            Title = p.Title,
+                            Summary = p.Summary,
+                            AudioUrl = mp3File?.Url,
+                            VideoUrl = null,
+                            PublishedTime = p.DatePublished,
+                            Version = GetPodcastVersion(p),
+                            ImageUrl = null,
+                            ShowNotes = p.Content,
+                            PodcastPageUrl = p.PageUrl,
+                            DurationSeconds = mp3File?.DurationSeconds,
+                            VodPageUrl = null
+                        };
                     });
             }
 
             if(podcastShows?.Shows == null && vodcastShows?.Shows != null) {
                 // No podcasts, return vodcast info only
                 shows = vodcastShows.Shows
-                    .Select(x => new Show {
-                        Title = x.Title,
-                        Summary = x.Content,
+                    .Select(v => new Show {
+                        Title = v.Title.Replace("Documentation Not Included: ", "").Trim(),
+                        Summary = null,
                         AudioUrl = null,
-                        VideoUrl = GetVideoUrl(x.VideoId),
-                        PublishedTime = x.DatePublished,
-                        Version = GetVodcastVersion(x),
-                        ImageUrl = x.ImageUrl
+                        VideoUrl = GetVideoUrl(v.VideoId),
+                        PublishedTime = v.DatePublished,
+                        Version = GetVodcastVersion(v),
+                        ImageUrl = v.ImageUrl,
+                        ShowNotes = v.Description,
+                        PodcastPageUrl = null,
+                        DurationSeconds = null,
+                        VodPageUrl = GetVideoPageUrl(v.VideoId)
                     });
             }
 
@@ -69,14 +94,21 @@ namespace DNI.Services.ShowList {
                 // At least one vodcast and one podcast exists, merge
                 shows = vodcastShows.Shows
                     .FullOuterJoin(podcastShows?.Shows, GetVodcastVersion, GetPodcastVersion,
-                        (v, p, key) => new Show {
-                            Title = p?.Title ?? v.Title,
-                            Summary = p?.Summary ?? v.Content,
-                            AudioUrl = p?.Url,
-                            VideoUrl = GetVideoUrl(v?.VideoId),
-                            PublishedTime = p?.DatePublished ?? v.DatePublished,
-                            Version = key,
-                            ImageUrl = v?.ImageUrl
+                        (v, p, key) => {
+                            var mp3File = p?.Files.FirstOrDefault();
+                            return new Show {
+                                Title = p?.Title ?? v?.Title.Replace("Documentation Not Included: ", "").Trim(),
+                                Summary = p?.Summary ?? v?.Description,
+                                AudioUrl = mp3File?.Url,
+                                VideoUrl = GetVideoUrl(v?.VideoId),
+                                PublishedTime = p?.DatePublished ?? v?.DatePublished,
+                                Version = key,
+                                ImageUrl = v?.ImageUrl,
+                                ShowNotes = p?.Content ?? v?.Description,
+                                PodcastPageUrl = p?.PageUrl,
+                                DurationSeconds = mp3File?.DurationSeconds,
+                                VodPageUrl = GetVideoPageUrl(v?.VideoId)
+                            };
                         });
             }
 
@@ -100,13 +132,21 @@ namespace DNI.Services.ShowList {
             return string.Concat("https://www.youtube.com/embed/", videoId);
         }
 
+        private static string GetVideoPageUrl(string videoId) {
+            if(string.IsNullOrWhiteSpace(videoId)) {
+                return null;
+            }
+
+            return string.Concat("https://www.youtube.com/watch?v=", videoId);
+        }
+
         /// <summary>
         ///     Extracts the version of the podcast as a decimal from the url property
         /// </summary>
         /// <param name="show"></param>
         /// <returns></returns>
         private decimal? GetPodcastVersion(PodcastShow show) {
-            var m = podcastUriMatcher.Match(show.Url);
+            var m = podcastUriMatcher.Match(show.PageUrl);
             if(!m.Success) {
                 return null;
             }

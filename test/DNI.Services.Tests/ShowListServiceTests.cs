@@ -9,6 +9,8 @@ using DNI.Services.ShowList;
 using DNI.Services.Vodcast;
 using DNI.Testing;
 
+using Microsoft.Extensions.Logging;
+
 using Moq;
 
 using Xunit;
@@ -21,6 +23,7 @@ namespace DNI.Services.Tests {
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
         private readonly Mock<IVodcastService> _vodcastClientMock;
         private readonly Mock<IPodcastService> _podcastClientMock;
+        private readonly Mock<ILogger<ShowListService>> _loggerMock;
 
         private VodcastStream vodcasts;
         private PodcastStream podcasts;
@@ -28,12 +31,14 @@ namespace DNI.Services.Tests {
         public ShowListServiceTests(ITestOutputHelper output) {
             _output = output;
 
+            _loggerMock = Mock.Get(_fixture.Create<ILogger<ShowListService>>());
+
             vodcasts = _fixture.Create<VodcastStream>();
             podcasts = _fixture.Create<PodcastStream>();
 
             for(var i = 0; i < vodcasts.Shows.Count; i++) {
                 vodcasts.Shows[i].Title = $"Documentation Not Included: Episode v{i+1}.0 - {vodcasts.Shows[i].Title}";
-                podcasts.Shows[i].Url = $"https://podcast.dnistream.live/v{i+1}-0";
+                podcasts.Shows[i].PageUrl = $"https://podcast.dnistream.live/v{i+1}-0";
             }
 
             _vodcastClientMock = Mock.Get(_fixture.Create<IVodcastService>());
@@ -48,7 +53,7 @@ namespace DNI.Services.Tests {
         }
 
         private IShowListService GetService() {
-            return new ShowListService(_podcastClientMock.Object, _vodcastClientMock.Object);
+            return new ShowListService(_podcastClientMock.Object, _vodcastClientMock.Object, _loggerMock.Object);
         }
 
         [Fact]
@@ -153,10 +158,10 @@ namespace DNI.Services.Tests {
         public async Task GetShowsAsync_CreatesUniqueEntriesForValidButNonMatchingElements() {
             // Arrange
 
-            // Just alter the first two entries sop they are valid, but don't match any other entries.
+            // Just alter the first two entries so they are valid, but don't match any other entries.
             // They should be added to the end of the results (2 matching results + 2 non matching results = 4 total records)
             vodcasts.Shows[0].Title = "Documentation Not Included: Episode v100.0 - Another Episode";
-            podcasts.Shows[0].Url = "https://podcast.dnistream.live/v100-1";
+            podcasts.Shows[0].PageUrl = "https://podcast.dnistream.live/v100-1";
 
             _vodcastClientMock
                 .Setup(x => x.GetAllAsync())

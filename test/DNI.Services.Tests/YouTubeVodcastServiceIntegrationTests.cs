@@ -7,7 +7,12 @@ using DNI.Options;
 using DNI.Services.Vodcast;
 using DNI.Testing;
 
+using Google.Apis.Logging;
+
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
+using Moq;
 
 using RestSharp;
 
@@ -21,9 +26,12 @@ namespace DNI.Services.Tests {
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
         private readonly IOptions<GeneralOptions> _generalOptions;
         private readonly IOptions<YouTubeOptions> _youTubeOptions;
+        private readonly Mock<ILogger<YouTubeVodcastService>> _loggerMock;
 
         public YouTubeVodcastServiceIntegrationTests(ITestOutputHelper output) {
             _output = output;
+
+            _loggerMock = Mock.Get(_fixture.Create<ILogger<YouTubeVodcastService>>());
 
             // Set up default / valid options
             var generalOptions = _fixture.Create<GeneralOptions>();
@@ -43,7 +51,7 @@ namespace DNI.Services.Tests {
         public async Task GetAllAsync_ReturnsDataFromRemoteUri() {
             // Arrange
             var restClient = new RestClient();
-            var service = new YouTubeVodcastService(restClient, _generalOptions, _youTubeOptions);
+            var service = new YouTubeVodcastService(restClient, _generalOptions, _youTubeOptions, _loggerMock.Object);
 
             // Act
             var r = await service.GetAllAsync();

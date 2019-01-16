@@ -12,7 +12,7 @@ namespace DNI.Services.Podcast {
         public string Title { get; set; }
 
         [DeserializeAs(Name = "url")]
-        public string Url { get; set; }
+        public string PageUrl { get; set; }
 
         [DeserializeAs(Name = "content_text")]
         public string Content { get; set; }
