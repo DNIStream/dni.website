@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Net;
+using System.Threading.Tasks;
 
 using AutoFixture;
 using AutoFixture.AutoMoq;
@@ -21,7 +23,7 @@ namespace DNI.Services.Tests {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class FiresidePodcastServiceUnitTests {
         private readonly ITestOutputHelper _output;
-        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization());
+        private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
         private readonly Mock<IRestClient> _restClientMock;
         private readonly Mock<IOptions<GeneralOptions>> _generalOptions;
         private readonly Mock<ILogger<FiresidePodcastService>> _loggerMock;
@@ -29,7 +31,13 @@ namespace DNI.Services.Tests {
         public FiresidePodcastServiceUnitTests(ITestOutputHelper output) {
             _output = output;
 
+            _fixture.Register(() => new CookieContainer(1));
+            _fixture.Register(() => new Uri("http://www.test.com"));
             _restClientMock = Mock.Get(_fixture.Create<IRestClient>());
+            _restClientMock
+                .Setup(x => x.BuildUri(It.IsAny<IRestRequest>()))
+                .Returns(() => new Uri("http://www.test.com"));
+
             _generalOptions = Mock.Get(_fixture.Create<IOptions<GeneralOptions>>());
             _loggerMock = Mock.Get(_fixture.Create<ILogger<FiresidePodcastService>>());
         }
@@ -42,6 +50,9 @@ namespace DNI.Services.Tests {
         [Fact]
         public async Task GetAllAsync_CallsRESTClientWithInjectedDataUrl() {
             // Arrange
+            _restClientMock
+                .Setup(x => x.ExecuteTaskAsync<PodcastStream>(It.IsAny<RestRequest>()))
+                .ReturnsAsync(() => _fixture.Create<IRestResponse<PodcastStream>>());
             var service = GetService();
 
             // Act

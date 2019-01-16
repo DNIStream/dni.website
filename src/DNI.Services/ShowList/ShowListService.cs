@@ -24,8 +24,11 @@ namespace DNI.Services.ShowList {
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Show>> GetShowsAsync() {
+            // TODO: Run in parallel
             var podcastShows = await _podcastService.GetAllAsync();
             var vodcastShows = await _vodcastService.GetAllAsync();
+
+            // TODO: Cache both sources until next week if they return data
 
             // Iterate shows from both sources, matching and merging where possible (full outer join)
             // Key matching works on the version strings in the following properties:
