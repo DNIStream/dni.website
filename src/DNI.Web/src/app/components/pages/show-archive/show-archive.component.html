@@ -1,4 +1,64 @@
 <div class="container bg-light rounded p-4">
   <h1>Show Archive</h1>
-  <p>No shows yet, check our YouTube channel for the latest uploads.</p>
+  <dni-loading *ngIf="!model || model.length <= 0"></dni-loading>
+  <ng-container *ngIf="model && model.length > 0">
+    <ng-container *ngFor="let show of model">
+      <div class="row pt-4">
+        <div class="col-12 mb-1">
+          <h4>{{show.title}}</h4>
+        </div>
+        <div class="col-md-3">
+          <img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" />
+          <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
+        </div>
+        <div class="col-md-5">
+          <p class="mt-2">{{show.summary}}</p>
+          <audio controls
+                 *ngIf="show.audioUrl">
+            <source [src]="show.audioUrl | safe"
+                    type="audio/mp3">
+            <p>Your browser does not support HTML5 Audio - click one of the social links to listen.</p>
+          </audio>
+        </div>
+        <div class="col-md-4">
+          <div>
+            <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
+            <strong>Duration</strong>: {{show.durationMinutes}}
+          </div>
+          <div>
+            <a [href]="show.vodPageUrl" target="_blank" title="View on YouTube" class="mr-2"><i class="fab fa-youtube fa-2x"></i></a>
+            <a [href]="show.podcastPageUrl" target="_blank" title="Listen on Fireside"><i class="fas fa-podcast fa-2x"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 pt-3">
+        <button type="button" class="btn btn-primary btn-block" (click)="show.shown = !show.shown"
+                [attr.aria-expanded]="show.shown" attr.aria-controls="'collapse-' + show.version">
+                {{show.title}} Show Notes &amp; VOD
+            </button>
+      </div>
+      <div id="collapse-{{show.version}}"
+           [collapse]="!show.shown">
+        <div class="row pt-3">
+          <div class="col-md-6">
+            <div class="embed-responsive embed-responsive-16by9 mb-3">
+              <iframe *ngIf="show.shown"
+                      width="560"
+                      height="315"
+                      [src]="show.videoUrl | safe"
+                      frameborder="0"
+                      allow="autoplay; encrypted-media"
+                      allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <p [innerHtml]="show.showNotesFormatted"
+               class="small"></p>
+          </div>
+        </div>
+        <hr />
+      </div>
+    </ng-container>
+  </ng-container>
 </div>
