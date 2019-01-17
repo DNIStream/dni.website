@@ -3,8 +3,8 @@
   <dni-loading *ngIf="!model || model.length <= 0"></dni-loading>
   <ng-container *ngIf="model && model.length > 0">
     <ng-container *ngFor="let show of model">
-      <div class="row pt-4">
-        <div class="col-12 mb-1">
+      <div class="row">
+        <div class="col-12 pb-2">
           <h4>{{show.title}}</h4>
         </div>
         <div class="col-md-3">
@@ -31,32 +31,37 @@
           </div>
         </div>
       </div>
-      <div class="col-12 pt-3">
+      <div class="col-12 py-3">
         <button type="button" class="btn btn-primary btn-block" (click)="show.shown = !show.shown"
                 [attr.aria-expanded]="show.shown" attr.aria-controls="'collapse-' + show.version">
                 {{show.title}} Show Notes &amp; VOD
             </button>
       </div>
       <div id="collapse-{{show.version}}"
+           class="expanded-info p-3"
            [collapse]="!show.shown">
-        <div class="row pt-3">
-          <div class="col-md-6">
-            <div class="embed-responsive embed-responsive-16by9 mb-3">
-              <iframe *ngIf="show.shown"
-                      width="560"
-                      height="315"
-                      [src]="show.videoUrl | safe"
-                      frameborder="0"
-                      allow="autoplay; encrypted-media"
-                      allowfullscreen>
-              </iframe>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <p [innerHtml]="show.showNotesFormatted"
-               class="small"></p>
-          </div>
+        <!-- <div class="row pt-3">
+          <div class="col-md-6"> -->
+        <div class="embed-responsive embed-responsive-16by9 mr-3 mb-2 yt-embed">
+          <iframe *ngIf="show.shown"
+                  width="560"
+                  height="315"
+                  [src]="show.videoUrl | safe"
+                  frameborder="0"
+                  allow="autoplay; encrypted-media"
+                  allowfullscreen>
+          </iframe>
         </div>
+        <!-- </div>
+          <div class="col-md-6 show-notes"> -->
+
+        <div class="show-notes">
+          <h5>{{show.title}} Show Notes</h5>
+          <div [innerHtml]="show.showNotesFormatted"
+               class="small"></div>
+        </div>
+        <!-- </div>
+        </div> -->
         <hr />
       </div>
     </ng-container>

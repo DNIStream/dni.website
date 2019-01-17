@@ -104,7 +104,7 @@ namespace DNI.Services.ShowList {
                                 PublishedTime = p?.DatePublished ?? v?.DatePublished,
                                 Version = key,
                                 ImageUrl = v?.ImageUrl,
-                                ShowNotes = p?.Content ?? v?.Description,
+                                ShowNotes = v?.Description ?? p?.Content,
                                 PodcastPageUrl = p?.PageUrl,
                                 DurationSeconds = mp3File?.DurationSeconds,
                                 VodPageUrl = GetVideoPageUrl(v?.VideoId)
