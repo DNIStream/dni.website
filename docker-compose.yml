@@ -14,6 +14,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - CAPTCHA__SecretKey=${CAPTCHA_KEY}
       - SendGrid__ApiKey=${SENDGRID_KEY}
+      - YouTube__ApiKey=${YOUTUBE_API_KEY}
       - General__SmtpServer=dni.smtp
       - General__ErrorEmailFrom=${ERROR_EMAIL_FROM}
       - General__ErrorEmailTo=${ERROR_EMAIL_TO}
