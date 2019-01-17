@@ -8,7 +8,14 @@ using NLog;
 using NLog.Web;
 
 namespace DNI.API {
+    /// <summary>
+    /// Entry point
+    /// </summary>
     public class Program {
+        /// <summary>
+        /// Entry point
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args) {
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try {
@@ -30,7 +37,7 @@ namespace DNI.API {
                 .Run();
         }
 
-        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .ConfigureLogging(logging => {

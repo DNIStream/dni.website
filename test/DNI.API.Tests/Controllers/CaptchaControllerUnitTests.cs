@@ -65,7 +65,7 @@ namespace DNI.API.Tests.Controllers {
             // Assert
             var httpResult = Assert.IsType<BadRequestObjectResult>(result);
             Assert.IsType<APIErrorResponse>(httpResult.Value);
-            Assert.Contains("The CAPTCHA could not be verified", ((APIErrorResponse) httpResult.Value).ValidationErrors);
+            Assert.Contains("The CAPTCHA could not be verified", ((APIErrorResponse)httpResult.Value).ValidationErrors);
         }
 
         [Fact]

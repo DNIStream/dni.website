@@ -2,7 +2,8 @@
     "from": "noreply@dnistream.live",
     "subject": "DNI Contact Form Submission",
     "preHeaderHtml": "DNI Contact Form Submission",
-    "introHtml": "<p><strong>{{name}}</strong> has sent us a message via the website:</p><hr/><p><em>{{message}}</em></p><hr/><p>Opt out of marketing: {{marketingOptOut}}</p><p>Delete details after query: {{deleteDetails}}</p>",
+    "introHtml":
+        "<p><strong>{{name}}</strong> has sent us a message via the website:</p><hr/><p><em>{{message}}</em></p><hr/><p>Opt out of marketing: {{marketingOptOut}}</p><p>Delete details after query: {{deleteDetails}}</p>",
     "outroHtml": "<p>You can reply to the sender by replying to this email.</p>",
     "actionLink": "https://www.dnistream.live",
     "actionText": "Website",

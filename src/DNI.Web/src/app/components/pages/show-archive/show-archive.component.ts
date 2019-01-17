@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ShowService } from 'app/services/show/show.service';
+import { Show } from 'app/model/show';
 
 @Component({
   selector: 'dni-show-archive',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShowArchiveComponent implements OnInit {
 
-  constructor() { }
+  public model: Show[];
+
+  constructor(
+    private showService: ShowService
+  ) { }
 
   ngOnInit() {
+    this.showService
+      .getShows()
+      .subscribe(shows => this.model = shows);
   }
 
 }

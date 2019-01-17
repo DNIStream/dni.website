@@ -20,5 +20,6 @@ New-Item env:\General__SmtpServer -Value $Env:SMTP_SERVER -Force
 New-Item env:\General__ErrorEmailFrom -Value $Env:ERROR_EMAIL_FROM -Force
 New-Item env:\General__ErrorEmailTo -Value $Env:ERROR_EMAIL_TO -Force
 New-Item env:\General__ContactEmailTo -Value $Env:CONTACT_EMAIL_TO -Force
+New-Item env:\YouTube__ApiKey -Value $Env:YOUTUBE_API_KEY -Force
 
 gci env:\

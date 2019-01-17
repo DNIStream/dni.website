@@ -1,0 +1,14 @@
+.show-notes {
+    word-wrap:break-word;
+}
+
+.expanded-info {
+    .yt-embed {
+        float: left;
+        max-width: 50%;
+    }
+    .show-notes {
+        text-align: justify;
+        text-justify: inter-word;
+    }
+}
