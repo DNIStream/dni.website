@@ -30,10 +30,10 @@ namespace DNI.Services.Vodcast {
         /// </summary>
         /// <returns></returns>
         public async Task<VodcastStream> GetAllAsync() {
-            var logPrefix = "YOUTUBE:";
+            const string logPrefix = "YOUTUBE:";
             _logger.LogInformation($"{logPrefix} Start data retrieval");
 
-            var url = $"playlistItems?part=snippet&maxResults=50&playlistId=PLlLn7y8D9PIg19rUENZ-WsOQCtClCwYob&key={_youTubeOptions.ApiKey}";
+            var url = $"playlistItems?part=snippet&maxResults=50&playlistId={_youTubeOptions.PlaylistId}&key={_youTubeOptions.ApiKey}";
             _restClient.BaseUrl = new Uri(_options.VodcastServiceBaseUri);
             var request = new RestRequest {
                 Method = Method.GET,
@@ -41,8 +41,8 @@ namespace DNI.Services.Vodcast {
                 RequestFormat = DataFormat.Json
             };
 
-            request.AddHeader("Referrer", "http://localhost:4200");
-            request.AddHeader("Origin", "http://localhost:4200");
+            request.AddHeader("Referrer", _youTubeOptions.Referrer);
+            request.AddHeader("Origin", _youTubeOptions.Origin);
 
             _logger.LogInformation($"{logPrefix} Prepared {request.Method.ToString()} request for Uri '{_restClient.BuildUri(request).AbsoluteUri}'");
             _logger.LogInformation($"{logPrefix} Sending API request");
