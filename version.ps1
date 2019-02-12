@@ -102,6 +102,8 @@ function Format-Json([Parameter(Mandatory, ValueFromPipeline)][String] $json) {
       $lineValue = $_
       # Undo selected ConvertTo-Json encoding
       $lineValue = $lineValue.Replace('\u0026', '&');
+      $lineValue = $lineValue.Replace('\u003e', '>');
+      $lineValue = $lineValue.Replace('\u003c', '<');
 
       $line = (" " * $indent * 2) + $lineValue.TrimStart().Replace(":  ", ": ")
       if ($_ -match '[\{\[]') {
