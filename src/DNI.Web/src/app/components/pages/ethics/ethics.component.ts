@@ -14,5 +14,6 @@ export class EthicsComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('Code of Ethics');
+    this.seoService.setDescription('Our code of business ethics outlining how we run the project and podcast');
   }
 }

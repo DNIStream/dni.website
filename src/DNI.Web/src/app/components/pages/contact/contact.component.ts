@@ -32,6 +32,7 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('Contact Us');
+    this.seoService.setDescription('The various different methods you can use to contact us - email, Discord and our social channels');
 
     this.reCaptchaSiteKey = environment.recaptchaSiteKey;
     this.state = 'init';

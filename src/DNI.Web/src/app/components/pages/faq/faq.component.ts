@@ -14,5 +14,6 @@ export class FaqComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('Frequently Asked Questions');
+    this.seoService.setDescription('Frequently Asked Questions about the site and the podcast');
   }
 }

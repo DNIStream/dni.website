@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.seoService.setTitle('Home');
+    this.seoService.setDescription('DNI is an English speaking, EU based, development podcast that covers a wide range of subjects - from development patterns, practices, standards and frameworks, to how to productise and gamify your software.');
 
     // Set up the initial timer properties
     this.timer$ = this.countdownService.createTimer(4, 19, 0);

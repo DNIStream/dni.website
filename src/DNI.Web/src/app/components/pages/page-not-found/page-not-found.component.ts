@@ -14,5 +14,6 @@ export class PageNotFoundComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('404 Page Not Found');
+    this.seoService.setDescription('404 Page Not Found');
   }
 }

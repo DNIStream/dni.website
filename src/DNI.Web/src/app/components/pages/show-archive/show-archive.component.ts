@@ -18,7 +18,8 @@ export class ShowArchiveComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.seoService.setTitle('Show Archive');
+    this.seoService.setTitle('Podcast Archive');
+    this.seoService.setDescription('The top-level list of our podcast and vodcast shows');
 
     this.showService
       .getShows()

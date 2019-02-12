@@ -14,5 +14,6 @@ export class CommunityGuidelinesComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('Community Guidelines');
+    this.seoService.setDescription('Guidelines for how we expect our hosts, guests and community members to behave');
   }
 }

@@ -14,5 +14,6 @@ export class PrivacyComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('Cookie and Privacy Policy');
+    this.seoService.setDescription('The lega stuff - our cookie and privacy policy covering how we gather and process your data');
   }
 }

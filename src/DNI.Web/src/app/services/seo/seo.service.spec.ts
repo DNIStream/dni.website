@@ -11,14 +11,33 @@ describe('SEOService', () => {
   });
 
   it('#setTitle should prefix passed title to site name', () => {
+    // Arrange
     const titleServiceSpy = jasmine.createSpyObj('Title', ['setTitle']);
-    const service: SEOService = new SEOService(titleServiceSpy);
+    const metaServiceSpy = jasmine.createSpyObj('Meta', ['updateTag']);
+    const service: SEOService = new SEOService(titleServiceSpy, metaServiceSpy);
     const expectedSuffix = ': Documentation Not Included Development Podcast';
     const expectedTitle = 'A page title';
 
+    // Act
     service.setTitle(expectedTitle);
 
+    // Assert
     expect(titleServiceSpy.setTitle)
       .toHaveBeenCalledWith(expectedTitle + expectedSuffix);
+  });
+
+  it('#setDescription should update description tag with passed description', () => {
+    // Arrange
+    const titleServiceSpy = jasmine.createSpyObj('Title', ['setTitle']);
+    const metaServiceSpy = jasmine.createSpyObj('Meta', ['updateTag']);
+    const service: SEOService = new SEOService(titleServiceSpy, metaServiceSpy);
+    const expectedDescription = 'A meta description';
+
+    // Act
+    service.setDescription(expectedDescription);
+
+    // Assert
+    expect(metaServiceSpy.updateTag)
+      .toHaveBeenCalledWith({ name: 'description', content: expectedDescription });
   });
 });
