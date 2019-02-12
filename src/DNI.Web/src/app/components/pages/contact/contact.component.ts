@@ -1,19 +1,17 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 
+import { environment } from 'environments/environment';
+
 import { CaptchaService } from 'app/services/captcha/captcha.service';
 import { ContactService } from 'app/services/contact/contact.service';
 import { CaptchaBaseComponent } from 'app/services/captcha/captcha-base.component';
 import { ContactModel } from 'app/services/contact/contact-model';
-import { environment } from 'environments/environment';
+import { SEOService } from 'app/services/seo/seo.service';
+
 
 @Component({
-  selector: 'dni-contact',
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss'],
-  providers: [
-    CaptchaService,
-    ContactService
-  ]
+  styleUrls: ['./contact.component.scss']
 })
 export class ContactComponent extends CaptchaBaseComponent implements OnInit {
 
@@ -26,12 +24,16 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
   constructor(
     protected captchaService: CaptchaService,
     protected contactService: ContactService,
-    @Inject(PLATFORM_ID) protected platformId: Object
+    @Inject(PLATFORM_ID) protected platformId: Object,
+    private seoService: SEOService
   ) {
     super(captchaService, platformId);
   }
 
   ngOnInit() {
+    this.seoService.setTitle('Contact Us');
+    this.seoService.setDescription('The various different methods you can use to contact us - email, Discord and our social channels');
+
     this.reCaptchaSiteKey = environment.recaptchaSiteKey;
     this.state = 'init';
   }

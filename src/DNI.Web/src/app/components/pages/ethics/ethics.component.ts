@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
+import { SEOService } from 'app/services/seo/seo.service';
+
 @Component({
-  selector: 'dni-ethics',
   templateUrl: './ethics.component.html',
   styleUrls: ['./ethics.component.scss']
 })
 export class EthicsComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private seoService: SEOService
+  ) { }
 
   ngOnInit() {
+    this.seoService.setTitle('Code of Ethics');
+    this.seoService.setDescription('Our code of business ethics outlining how we run the project and podcast');
   }
-
 }

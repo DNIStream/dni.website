@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CommunityGuidelinesComponent } from './community-guidelines.component';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('CommunityGuidelinesComponent', () => {
   let component: CommunityGuidelinesComponent;
@@ -8,9 +9,12 @@ describe('CommunityGuidelinesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CommunityGuidelinesComponent ]
+      declarations: [CommunityGuidelinesComponent],
+      imports: [
+        RouterTestingModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

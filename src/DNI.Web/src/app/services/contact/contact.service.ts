@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 import { ContactModel } from 'app/services/contact/contact-model';
 import { environment } from 'environments/environment';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ContactService {
   constructor(
     private http: HttpClient

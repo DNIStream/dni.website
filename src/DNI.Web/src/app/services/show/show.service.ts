@@ -12,7 +12,6 @@ import { Show } from 'app/model/show';
   providedIn: 'root'
 })
 export class ShowService {
-
   constructor(
     private http: HttpClient
   ) { }

@@ -2,11 +2,17 @@ import { TestBed } from '@angular/core/testing';
 
 import { DataService } from 'app/services/data/data.service';
 
+let httpClientSpy: { get: jasmine.Spy };
+let service: DataService;
+
 describe('DataService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    service = new DataService(<any>httpClientSpy);
+  });
 
   it('should be created', () => {
-    const service: DataService = TestBed.get(DataService);
     expect(service).toBeTruthy();
   });
 });
