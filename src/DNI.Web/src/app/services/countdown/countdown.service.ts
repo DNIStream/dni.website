@@ -4,7 +4,9 @@ import { map } from 'rxjs/operators';
 import * as moment from 'moment-timezone';
 import { TickData } from 'app/services/countdown/tick-data';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CountdownService {
 
   //#region Private fields

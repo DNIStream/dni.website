@@ -11,7 +11,7 @@ import { FaqComponent } from 'app/components/pages/faq/faq.component';
 import { CommunityGuidelinesComponent } from 'app/components/pages/community-guidelines/community-guidelines.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, data: { title: 'fuuuuuu' } },
   { path: 'community-guidelines', component: CommunityGuidelinesComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'privacy', component: PrivacyComponent },

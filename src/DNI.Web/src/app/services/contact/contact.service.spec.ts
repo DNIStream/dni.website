@@ -2,11 +2,17 @@ import { TestBed } from '@angular/core/testing';
 
 import { ContactService } from './contact.service';
 
+let httpClientSpy: { get: jasmine.Spy };
+let service: ContactService;
+
 describe('ContactService', () => {
-  beforeEach(() => TestBed.configureTestingModule({}));
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
+    service = new ContactService(<any>httpClientSpy);
+  });
 
   it('should be created', () => {
-    const service: ContactService = TestBed.get(ContactService);
     expect(service).toBeTruthy();
   });
 });

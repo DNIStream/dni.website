@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
+import { SEOService } from 'app/services/seo/seo.service';
+
 @Component({
-  selector: 'dni-community-guidelines',
   templateUrl: './community-guidelines.component.html',
   styleUrls: ['./community-guidelines.component.scss']
 })
 export class CommunityGuidelinesComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private seoService: SEOService
+  ) { }
 
   ngOnInit() {
+    this.seoService.setTitle('Community Guidelines');
   }
-
 }
