@@ -7,8 +7,6 @@ using DNI.Options;
 using DNI.Services.Vodcast;
 using DNI.Testing;
 
-using Google.Apis.Logging;
-
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
