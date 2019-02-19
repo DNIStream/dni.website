@@ -12,9 +12,9 @@ This solution consists of the following:
 
 * A .Net Core 2.2.1 RESTful Web API ([src/DNI.API](src/DNI.API))
 * An Angular 7.2 front-end (with a small number of Karma / Jasmine tests) ([src/DNI.Web](src/DNI.Web))
-* An SMTP Server for sending emails [src/DNI.SMTP](src/DNI.SMTP))
-* A docker / docker-compose configuration for production deployment [docker-compose.yml](docker-compose.yml)
-* NGINX configuration files for deployment [NGINX folder](nginx)
+* An SMTP Server for sending emails ([src/DNI.SMTP](src/DNI.SMTP))
+* A docker / docker-compose configuration for production deployment ([docker-compose.yml](docker-compose.yml))
+* NGINX configuration files for deployment ([NGINX folder](nginx))
 
 All data comes from Fireside and YouTube APIs, so there is no data persistence - caching will be implemented in the near future.
 
@@ -51,7 +51,7 @@ YOUTUBE_API_KEY=<REDACTED>
 YOUTUBE_REFERRER=https://www.dnistream.live
 YOUTUBE_ORIGIN=https://www.dnistream.live
 ```
-##### Development values (local Windows deployment for testing, NOT development):
+##### Development values (local Windows development and docker deployment testing):
 ```
 BUILD_ENVIRONMENT=dev
 ASPNETCORE_ENVIRONMENT=Development
