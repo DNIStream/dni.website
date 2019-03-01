@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ShowService } from 'app/services/show/show.service';
 import { Show } from 'app/model/show';
@@ -8,14 +8,16 @@ import { SEOService } from 'app/services/seo/seo.service';
   templateUrl: './show-archive.component.html',
   styleUrls: ['./show-archive.component.scss']
 })
-export class ShowArchiveComponent implements OnInit {
+export class ShowArchiveComponent implements OnInit, OnDestroy {
 
   public model: Show[];
 
   constructor(
     private showService: ShowService,
     private seoService: SEOService
-  ) { }
+  ) {
+    this.model = null;
+  }
 
   ngOnInit() {
     this.seoService.setTitle('Podcast Archive');
@@ -26,4 +28,7 @@ export class ShowArchiveComponent implements OnInit {
       .subscribe(shows => this.model = shows);
   }
 
+  ngOnDestroy(): void {
+    this.model = null;
+  }
 }
