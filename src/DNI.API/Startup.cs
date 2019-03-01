@@ -18,6 +18,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+
 using RestSharp;
 
 using SendGrid;
@@ -75,7 +79,17 @@ namespace DNI.API {
             // MVC
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+                .AddJsonOptions(options => {
+                    // Configure request / response json serialization options
+                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    options.SerializerSettings.Formatting = Formatting.None;
+                    options.SerializerSettings.Converters.Clear();
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter {
+                        NamingStrategy = new DefaultNamingStrategy(),
+                        AllowIntegerValues = true
+                    });
+                });
 
             // Swagger
             services.AddSwaggerGen(c => {
@@ -132,7 +146,6 @@ namespace DNI.API {
 
             app.UseHttpsRedirection();
 
-            // Response caching
             // app.UseResponseCaching();
 
             // UseMVC Must come last otherwise CORS doesn't work
