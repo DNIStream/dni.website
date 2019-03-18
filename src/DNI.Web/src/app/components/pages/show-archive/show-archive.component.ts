@@ -12,6 +12,21 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
 
   public model: Show[];
 
+  public filterFields: string[] = [
+    'PublishedTime',
+    'Version'
+  ];
+
+  public filterOrders: string[] = [
+    'Descending',
+    'Ascending'
+  ];
+
+  public filters = {
+    orderByField: this.filterFields[0],
+    orderByOrder: this.filterOrders[0]
+  };
+
   constructor(
     private showService: ShowService,
     private seoService: SEOService
@@ -23,12 +38,25 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
     this.seoService.setTitle('Podcast Archive');
     this.seoService.setDescription('The top-level list of our podcast and vodcast shows');
 
-    this.showService
-      .getShows()
-      .subscribe(shows => this.model = shows);
+    this.refreshShows();
   }
 
   ngOnDestroy(): void {
     this.model = null;
+  }
+
+  public onSubmit(): void {
+    this.refreshShows();
+  }
+
+  private refreshShows(): void {
+    this.model = null;
+
+    this.showService
+      .getShows(this.filters.orderByField, this.filters.orderByOrder)
+      .subscribe(shows => this.model = shows,
+        e => {
+          this.model = null;
+        });
   }
 }
