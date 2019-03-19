@@ -7,7 +7,7 @@ export const environment = {
     webUri: 'http://localhost:4200/',
     apiBaseUri: 'http://localhost:12341/',
     recaptchaSiteKey: '6Lcv_3MUAAAAAPTlA1F3Jk2X3mc_Vnixqbgk3pgv',
-    version: '1.1.0',
+    version: '1.2.0',
     versionText: 'The MVP'
 };
 
@@ -19,6 +19,7 @@ export const environment = {
  * on performance if an error is thrown.
  */
 import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
 
 
 
