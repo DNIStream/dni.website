@@ -16,7 +16,7 @@ namespace DNI.Services.Vodcast {
         [DeserializeAs(Name = "snippet.description")]
         public string Description { get; set; }
 
-        [DeserializeAs(Name = "snippet.publishedAt")]
+        [DeserializeAs(Name = "contentDetails.videoPublishedAt")]
         public DateTime DatePublished { get; set; }
 
         [DeserializeAs(Name = "snippet.thumbnails.high.url")]

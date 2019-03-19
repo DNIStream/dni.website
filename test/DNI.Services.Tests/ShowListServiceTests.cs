@@ -56,6 +56,8 @@ namespace DNI.Services.Tests {
             return new ShowListService(_podcastClientMock.Object, _vodcastClientMock.Object, _loggerMock.Object);
         }
 
+        #region GetShowsAsync
+
         [Fact]
         public async Task GetShowsAsync_RetrievesDataFromPodcastService() {
             // Arrange
@@ -178,5 +180,71 @@ namespace DNI.Services.Tests {
             // Assert
             Assert.Equal(4, results.Count());
         }
+
+        #endregion
+
+        #region GetShowsAsync(field, order)
+
+        [Fact]
+        public async Task GetShowsAsyncOrdered_ReturnsExpectedCountOfShows() {
+            // Arrange
+            var service = GetService();
+
+            // Act
+            var results = await service.GetShowsAsync(ShowOrderField.PublishedTime, ShowOrderFieldOrder.Descending);
+
+            // Assert
+            Assert.Equal(3, results.Count());
+        }
+
+        [Fact]
+        public async Task GetShowsAsyncOrdered_ReturnsShowsInShowDateDescendingOrder() {
+            // Arrange
+            var service = GetService();
+
+            // Act
+            var results = (await service.GetShowsAsync(ShowOrderField.PublishedTime, ShowOrderFieldOrder.Descending)).ToArray();
+
+            // Assert
+            Assert.True(results.SequenceEqual(results.OrderByDescending(s => s.PublishedTime)));
+        }
+
+        [Fact]
+        public async Task GetShowsAsyncOrdered_ReturnsShowsInShowDateAscendingOrder() {
+            // Arrange
+            var service = GetService();
+
+            // Act
+            var results = (await service.GetShowsAsync(ShowOrderField.PublishedTime, ShowOrderFieldOrder.Ascending)).ToArray();
+
+            // Assert
+            Assert.True(results.SequenceEqual(results.OrderBy(s => s.PublishedTime)));
+        }
+
+        [Fact]
+        public async Task GetShowsAsyncOrdered_ReturnsShowsInVersionDescendingOrder() {
+            // Arrange
+            var service = GetService();
+
+            // Act
+            var results = (await service.GetShowsAsync(ShowOrderField.Version, ShowOrderFieldOrder.Descending)).ToArray();
+
+            // Assert
+            Assert.True(results.SequenceEqual(results.OrderByDescending(s => s.Version)));
+        }
+
+        [Fact]
+        public async Task GetShowsAsyncOrdered_ReturnsShowsInVersionAscendingOrder() {
+            // Arrange
+            var service = GetService();
+
+            // Act
+            var results = (await service.GetShowsAsync(ShowOrderField.Version, ShowOrderFieldOrder.Ascending)).ToArray();
+
+            // Assert
+            Assert.True(results.SequenceEqual(results.OrderBy(s => s.Version)));
+        }
+
+        #endregion
     }
 }

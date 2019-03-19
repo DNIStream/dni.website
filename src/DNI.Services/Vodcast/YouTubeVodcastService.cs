@@ -33,7 +33,7 @@ namespace DNI.Services.Vodcast {
             const string logPrefix = "YOUTUBE:";
             _logger.LogInformation($"{logPrefix} Start data retrieval");
 
-            var url = $"playlistItems?part=snippet&maxResults=50&playlistId={_youTubeOptions.PlaylistId}&key={_youTubeOptions.ApiKey}";
+            var url = $"playlistItems?part=snippet,contentDetails&maxResults=50&playlistId={_youTubeOptions.PlaylistId}&key={_youTubeOptions.ApiKey}";
             _restClient.BaseUrl = new Uri(_options.VodcastServiceBaseUri);
             var request = new RestRequest {
                 Method = Method.GET,

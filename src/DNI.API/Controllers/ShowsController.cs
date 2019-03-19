@@ -33,12 +33,12 @@ namespace DNI.API.Controllers {
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(Show[]), StatusCodes.Status200OK)]
         [Route("shows")]
-        public async Task<IActionResult> GetShowsAsync() {
+        public async Task<IActionResult> GetShowsAsync([FromQuery] ShowOrderField orderByField = ShowOrderField.PublishedTime, [FromQuery] ShowOrderFieldOrder orderByOrder = ShowOrderFieldOrder.Descending) {
             if(!ModelState.IsValid) {
                 return ModelValidationBadRequest();
             }
 
-            var shows = await _showListService.GetShowsAsync();
+            var shows = await _showListService.GetShowsAsync(orderByField, orderByOrder);
 
             if(!shows.Any()) {
                 return NoContent();
