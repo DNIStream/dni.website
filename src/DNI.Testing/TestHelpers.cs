@@ -1,6 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Linq;
+
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DNI.Testing {
     /// <summary>
@@ -8,22 +9,32 @@ namespace DNI.Testing {
     /// </summary>
     public static class TestHelpers {
         /// <summary>
-        ///     Used in tests to secure API keys. Retrieves the string value of the specified key in a key / value pair file named
-        ///     'keys.cfg'. keys.cfg should not be checked in to the repository. File should contain a simple KVP list in the
-        ///     format KEY=VALUE i.e. YOUTUBE=MYREALAPIKEY
+        ///     Retrieves a configuration file for the current environment
         /// </summary>
-        /// <param name="key"></param>
         /// <returns></returns>
-        public static string GetKeyValue(string key) {
-            var contents = File.ReadAllText("keys.cfg");
-            var lines = contents.Split(new[] {"/r/n"}, StringSplitOptions.RemoveEmptyEntries);
-            var line = lines.FirstOrDefault(x => x.StartsWith(key));
-            if(line == null) {
-                throw new ArgumentOutOfRangeException(nameof(key), $"'{key}' does not exist in 'keys.cfg'");
-            }
+        public static IConfiguration GetConfigFromFile() {
+            var envVariable = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-            var value = line.Substring(line.IndexOf('=') + 1);
-            return value;
+            var config = new ConfigurationBuilder()
+                .AddEnvironmentVariables()
+                .AddJsonFile("appsettings.json")
+                .AddJsonFile($"appsettings.{envVariable}.json", optional: true)
+                .Build();
+            return config;
+        }
+
+        /// <summary>
+        ///     Creates Options at the specified path, from the specified configuration
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="config"></param>
+        /// <param name="configPath"></param>
+        /// <returns></returns>
+        public static IOptions<T> CreateOptions<T>(this IConfiguration config, string configPath)
+            where T: class, new() {
+            var options = new T();
+            config.Bind(configPath, options);
+            return Options.Create(options);
         }
     }
 }

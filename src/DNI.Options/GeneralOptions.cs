@@ -1,4 +1,6 @@
-﻿namespace DNI.Options {
+﻿using System.Security;
+
+namespace DNI.Options {
     /// <summary>
     ///     A class that holds general / shared configuration options
     /// </summary>
@@ -24,6 +26,12 @@
         public string SmtpServer { get; set; }
 
         public int SmtpServerPort { get; set; }
+
+        public bool SmtpEnableSSL { get; set; }
+
+        public string SmtpUsername { get; set; }
+
+        public string SmtpPassword { get; set; }
 
         public string PodcastServiceBaseUri { get; set; }
 
