@@ -16,7 +16,7 @@
         id="orderByField"
         name="orderByField"
         [(ngModel)]="filters.orderByField"
-        #name="ngModel">
+        #orderByField="ngModel">
         <option *ngFor="let f of filterFields" [value]="f">{{f}}</option>
       </select>
       <label class="sr-only"
@@ -26,7 +26,7 @@
         id="orderByOrder"
         name="orderByOrder"
         [(ngModel)]="filters.orderByOrder"
-        #name="ngModel">
+        #orderByOrder="ngModel">
         <option *ngFor="let o of filterOrders" [value]="o">{{o}}</option>
       </select>
 
