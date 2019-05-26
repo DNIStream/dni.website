@@ -7,6 +7,7 @@ using DNI.Options;
 using DNI.Services.Vodcast;
 using DNI.Testing;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -26,6 +27,8 @@ namespace DNI.Services.Tests {
         private readonly IOptions<YouTubeOptions> _youTubeOptions;
         private readonly Mock<ILogger<YouTubeVodcastService>> _loggerMock;
 
+        private readonly IConfiguration config;
+
         public YouTubeVodcastServiceIntegrationTests(ITestOutputHelper output) {
             _output = output;
 
@@ -36,9 +39,8 @@ namespace DNI.Services.Tests {
             _generalOptions = Microsoft.Extensions.Options.Options.Create(generalOptions);
             _generalOptions.Value.VodcastServiceBaseUri = "https://www.googleapis.com/youtube/v3";
 
-            var youTubeOptions = _fixture.Create<YouTubeOptions>();
-            _youTubeOptions = Microsoft.Extensions.Options.Options.Create(youTubeOptions);
-            _youTubeOptions.Value.ApiKey = TestHelpers.GetKeyValue("YOUTUBE");
+            config = TestHelpers.GetConfigFromFile();
+            _youTubeOptions = config.CreateOptions<YouTubeOptions>("YouTubeOptions");
         }
 
         /// <summary>
