@@ -29,7 +29,7 @@ sudo apt-get install nginx
 Generate SSL Certificate:
 
 ```
-sudo certbot --nginx -d www.dnistream.live -d dnistream.live -d api.dnistream.live certonly
+sudo certbot --nginx -d www.dnistream.live -d dnistream.live -d api.dnistream.live -d discord.dnistream.live -d youtube.dnistream.live certonly
 ```
 
 Once the SSL cert is generated and authed, disable the default NGINX website
@@ -47,7 +47,8 @@ N.B. The SSL certificates must already exist on the server before any sites will
 ```
 sudo ln -s /etc/nginx/sites-available/http-to-https.conf /etc/nginx/sites-enabled \
 && sudo ln -s /etc/nginx/sites-available/prod-api.dnistream.live.conf /etc/nginx/sites-enabled \
-&& sudo ln -s /etc/nginx/sites-available/prod-www.dnistream.live.conf /etc/nginx/sites-enabled
+&& sudo ln -s /etc/nginx/sites-available/prod-www.dnistream.live.conf /etc/nginx/sites-enabled \
+&& sudo ln -s /etc/nginx/sites-available/prod-social.dnistream.live.conf /etc/nginx/sites-enabled
 ```
 
 ##### Restart NGINX
