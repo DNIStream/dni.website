@@ -1,0 +1,56 @@
+[
+    {
+        "name": "Apple Podcasts",
+        "img": "assets/3rd-party-icons/apple_podcast_icon.png",
+        "title": "Listen on Apple Podcasts",
+        "url": "https://podcasts.apple.com/gb/podcast/documentation-not-included/id1468075833"
+    },
+    {
+        "name": "Google Podcasts",
+        "img": "assets/3rd-party-icons/google_podcast_icon.png",
+        "title": "Listen on Google Podcasts",
+        "url": "https://podcasts.google.com/?feed=aHR0cHM6Ly9mZWVkcy5maXJlc2lkZS5mbS9kbmlzdHJlYW0vcnNz"
+    },
+    {
+        "name": "Castro",
+        "img": "assets/3rd-party-icons/castro_icon.png",
+        "title": "Listen on Castro",
+        "url": "https://castro.fm/podcast/040fe34e-74f3-4983-a497-29529a6fd581"
+    },
+    {
+        "name": "Castbox",
+        "img": "assets/3rd-party-icons/castbox_icon.png",
+        "title": "Listen on Castbox",
+        "url": "https://castbox.fm/ch/2166220"
+    },
+    {
+        "name": "Overcast",
+        "img": "assets/3rd-party-icons/overcast_icon.png",
+        "title": "Listen on Overcast",
+        "url": "https://overcast.fm/itunes1468075833/documentation-not-included"
+    },
+    {
+        "name": "Pocket Casts",
+        "img": "assets/3rd-party-icons/pocket_casts_icon.png",
+        "title": "Listen on Pocket Casts",
+        "url": "https://pca.st/8g0R"
+    },
+    {
+        "name": "Spotify",
+        "img": "assets/3rd-party-icons/spotify_icon.png",
+        "title": "Listen on Spotify",
+        "url": "https://open.spotify.com/show/21KuGIBltgawtEqlXHSuGd?si=QePgKJf-S1e1kUejzkEYMw"
+    },
+    {
+        "name": "Stitcher",
+        "img": "assets/3rd-party-icons/stitcher_icon.png",
+        "title": "Listen on Stitcher",
+        "url": "https://www.stitcher.com/podcast/documentation-not-included"
+    },
+    {
+        "name": "TuneIn",
+        "img": "assets/3rd-party-icons/tunein_icon.png",
+        "title": "Listen on TuneIn",
+        "url": "https://tunein.com/podcasts/Technology-Podcasts/Documentation-Not-Included-p1229542/"
+    }
+]
