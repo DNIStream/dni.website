@@ -1,16 +1,28 @@
 <div class="container">
-    <ul class="nav justify-content-center font-weight-bold h5 py-3 text-shadow">
-        <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/show-archive']" routerLinkActive="active">Podcast Archive</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active">Contact Us</a>
-        </li>
-    </ul>
+    <nav class="navbar justify-content-center">
+        <ul class="nav font-weight-bold h5 py-3 text-shadow">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/']" routerLinkActive="active">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/show-archive']" routerLinkActive="active">Podcast Archive</a>
+            </li>
+            <li class="nav-item dropdown">
+                <span class="nav-link dropdown-toggle nav-link-coloured" id="listenDropdown" data-toggle="dropdown" (click)="!showListenMenu=!showListenMenu">Listen / Subscribe</span>
+                <div class="dropdown-menu"
+                     aria-labelledby="listenDropdown"
+                     [ngClass]="{show: showListenMenu === true}">
+                    <a *ngFor="let p of discoveryPlatforms" class="dropdown-item nav-link-colored no-text-shadow" [href]="p.url" target="_blank"><img [src]="p.img" [title]="p.title" [alt]="p.name" class="mr-3" />{{p.name}}</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/contact']" routerLinkActive="active">Contact Us</a>
+            </li>
+        </ul>
+    </nav>
+</div>
 
+<div class="container">
     <router-outlet></router-outlet>
 </div>
 

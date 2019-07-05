@@ -11,12 +11,11 @@ Code coverage is slightly lower than normal as this is a personal project, thoug
 This solution consists of the following:
 
 * A .Net Core 2.2.1 RESTful Web API ([src/DNI.API](src/DNI.API))
-* An Angular 7.2 front-end (with a small number of Karma / Jasmine tests) ([src/DNI.Web](src/DNI.Web))
-* An SMTP Server for sending emails ([src/DNI.SMTP](src/DNI.SMTP))
+* An Angular front-end (with a small number of Karma / Jasmine tests) ([src/DNI.Web](src/DNI.Web))
 * A docker / docker-compose configuration for production deployment ([docker-compose.yml](docker-compose.yml))
 * NGINX configuration files for deployment ([NGINX folder](nginx))
 
-All data comes from Fireside and YouTube APIs, so there is no data persistence - caching will be implemented in the near future.
+All data comes from Fireside and YouTube APIs, so there is no data persistence - caching will be implemented in the near future. there is currently a bug surrounding the display of information, see #8, #31 & #33.
 
 ## How to run
 
@@ -34,13 +33,9 @@ BUILD_ENVIRONMENT=prod
 ASPNETCORE_ENVIRONMENT=Production
 CAPTCHA_KEY=<REDACTED>
 ASPNET_CONFIGURATION=Release
-SMTP_SERVER=dni.smtp
-SMTP_MAILNAME=dniapi.prod.website_default
-SMARTHOST_ADDRESS=<REDACTED>
-SMARTHOST_PORT=25
-SMARTHOST_USER=<REDACTED>
-SMARTHOST_PASSWORD=<REDACTED>
-SMARTHOST_ALIASES=*.<REDACTED>
+SMTP_SERVER=<REDACTED>
+SMTP_USERNAME=<REDACTED>
+SMTP_PASSWORD=<REDACTED>
 LOG_MOUNT_PATH=/app/api.dnistream.live/logs
 LOCAL_WEB_PORT=8080
 LOCAL_API_PORT=8181
@@ -58,12 +53,8 @@ ASPNETCORE_ENVIRONMENT=Development
 CAPTCHA_KEY=<REDACTED>
 ASPNET_CONFIGURATION=Debug
 SMTP_SERVER=localhost
-SMTP_MAILNAME=localhost
-SMARTHOST_ADDRESS=<REDACTED>
-SMARTHOST_PORT=25
-SMARTHOST_USER=<REDACTED>
-SMARTHOST_PASSWORD=<REDACTED>
-SMARTHOST_ALIASES=*.<REDACTED>
+SMTP_USERNAME=
+SMTP_PASSWORD=
 LOG_MOUNT_PATH=f:/docker-mounts/dni/apilogs
 LOCAL_WEB_PORT=4200
 LOCAL_API_PORT=12341
@@ -117,8 +108,8 @@ For example, to update the app to version 3.4.5, run the following commands on a
 
 Generally this project uses the latest releases. At the time of writing, the following versions are in use:
 
-* Node.js LTS 10.13.0
-* Angular CLI 7.2.2
-* Dotnet Core SDK 2.2.102
-* Docker 18.09.0 (Windows)
+* Node.js LTS 10.16.0
+* Angular CLI 8.1.0
+* Dotnet Core SDK 2.2.300
+* Docker 18.09.2 (Windows)
 * Docker-Compose 1.23.2 (Windows)

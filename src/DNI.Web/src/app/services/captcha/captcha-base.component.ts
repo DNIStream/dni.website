@@ -12,7 +12,7 @@ export abstract class CaptchaBaseComponent {
     public captchaLoaded = false;
     public captchaReady = false;
 
-    @ViewChild('ReCaptcha')
+    @ViewChild('ReCaptcha', { static: false })
     protected captcha: ReCaptcha2Component;
 
     public get isBrowser(): boolean {
