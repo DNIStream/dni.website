@@ -39,7 +39,7 @@ export class CookieLawContainerComponent implements OnInit {
   @HostBinding('attr.seen')
   public seen: boolean;
 
-  @ViewChild(CookieLawComponent)
+  @ViewChild(CookieLawComponent, { static: false })
   public cookieLawComponent: CookieLawComponent;
 
   @Input()
