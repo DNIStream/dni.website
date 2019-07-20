@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using DNI.Services.Podcast;
@@ -14,9 +13,6 @@ namespace DNI.Services.ShowList {
         private readonly IPodcastService _podcastService;
         private readonly IVodcastService _vodcastService;
         private readonly ILogger<ShowListService> _logger;
-
-        private readonly Regex podcastUriMatcher = new Regex(@"/v(\d+-\d+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
-        private readonly Regex vodcastTitleMatcher = new Regex(@"Documentation Not Included: Episode v(\d+\.\d+)( ?)-{1}(.+)", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         public ShowListService(IPodcastService podcastService, IVodcastService vodcastService, ILogger<ShowListService> logger) {
             _podcastService = podcastService;
@@ -61,7 +57,7 @@ namespace DNI.Services.ShowList {
                             AudioUrl = mp3File?.Url,
                             VideoUrl = null,
                             PublishedTime = p.DatePublished,
-                            Version = GetPodcastVersion(p),
+                            Version = p.Version,
                             ImageUrl = null,
                             ShowNotes = p.Content,
                             PodcastPageUrl = p.PageUrl,
@@ -78,41 +74,41 @@ namespace DNI.Services.ShowList {
                         Title = v.Title.Replace("Documentation Not Included: ", "").Trim(),
                         Summary = null,
                         AudioUrl = null,
-                        VideoUrl = GetVideoUrl(v.VideoId),
+                        VideoUrl = v.VideoUrl,
                         PublishedTime = v.DatePublished,
-                        Version = GetVodcastVersion(v),
+                        Version = v.Version,
                         ImageUrl = v.ImageUrl,
                         ShowNotes = v.Description,
                         PodcastPageUrl = null,
                         DurationSeconds = null,
-                        VodPageUrl = GetVideoPageUrl(v.VideoId)
+                        VodPageUrl = v.VideoPageUrl
                     });
             }
 
             if(podcastShows?.Shows != null && vodcastShows?.Shows != null) {
                 // At least one vodcast and one podcast exists, merge
                 shows = vodcastShows.Shows
-                    .FullOuterJoin(podcastShows?.Shows, GetVodcastVersion, GetPodcastVersion,
+                    .FullOuterJoin(podcastShows?.Shows, v => v.Version, p => p.Version,
                         (v, p, key) => {
                             var mp3File = p?.Files.FirstOrDefault();
                             return new Show {
                                 Title = p?.Title ?? v?.Title.Replace("Documentation Not Included: ", "").Trim(),
                                 Summary = p?.Summary ?? v?.Description,
                                 AudioUrl = mp3File?.Url,
-                                VideoUrl = GetVideoUrl(v?.VideoId),
+                                VideoUrl = v?.VideoUrl,
                                 PublishedTime = p?.DatePublished ?? v?.DatePublished,
                                 Version = key,
                                 ImageUrl = v?.ImageUrl,
                                 ShowNotes = v?.Description ?? p?.Content,
                                 PodcastPageUrl = p?.PageUrl,
                                 DurationSeconds = mp3File?.DurationSeconds,
-                                VodPageUrl = GetVideoPageUrl(v?.VideoId)
+                                VodPageUrl = v?.VideoPageUrl
                             };
                         });
             }
 
             return shows?
-                .Where(x => x.Version.HasValue) // Omit results with invalid version strings
+                .Where(x => !string.IsNullOrWhiteSpace(x.Version)) // Omit results with invalid version strings
                 .OrderByDescending(x => x.Version);
         }
 
@@ -159,73 +155,5 @@ namespace DNI.Services.ShowList {
                     return null;
             }
         }
-
-        #region Helpers
-
-        /// <summary>
-        ///     Returns a YouTube embed video url
-        /// </summary>
-        /// <param name="videoId"></param>
-        /// <returns></returns>
-        private static string GetVideoUrl(string videoId) {
-            if(string.IsNullOrWhiteSpace(videoId)) {
-                return null;
-            }
-
-            return string.Concat("https://www.youtube.com/embed/", videoId);
-        }
-
-        private static string GetVideoPageUrl(string videoId) {
-            if(string.IsNullOrWhiteSpace(videoId)) {
-                return null;
-            }
-
-            return string.Concat("https://www.youtube.com/watch?v=", videoId);
-        }
-
-        /// <summary>
-        ///     Extracts the version of the podcast as a decimal from the url property
-        /// </summary>
-        /// <param name="show"></param>
-        /// <returns></returns>
-        private decimal? GetPodcastVersion(PodcastShow show) {
-            var m = podcastUriMatcher.Match(show.PageUrl);
-            if(!m.Success) {
-                return null;
-            }
-
-            var version = m.Groups[1].Value.Replace("-", ".").Trim();
-            return ConvertVersion(version);
-        }
-
-        /// <summary>
-        ///     Extracts the version of the vodcast as a decimal from the title property
-        /// </summary>
-        /// <param name="show"></param>
-        /// <returns></returns>
-        private decimal? GetVodcastVersion(VodcastShow show) {
-            var m = vodcastTitleMatcher.Match(show.Title);
-            if(!m.Success) {
-                return null;
-            }
-
-            var version = m.Groups[1].Value.Trim();
-            return ConvertVersion(version);
-        }
-
-        /// <summary>
-        ///     Converts a string to a nullable decimal
-        /// </summary>
-        /// <param name="version"></param>
-        /// <returns></returns>
-        private static decimal? ConvertVersion(string version) {
-            if(decimal.TryParse(version, out var dVersion)) {
-                return dVersion;
-            }
-
-            return null;
-        }
-
-        #endregion
     }
 }

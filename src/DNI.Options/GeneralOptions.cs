@@ -1,6 +1,4 @@
-﻿using System.Security;
-
-namespace DNI.Options {
+﻿namespace DNI.Options {
     /// <summary>
     ///     A class that holds general / shared configuration options
     /// </summary>

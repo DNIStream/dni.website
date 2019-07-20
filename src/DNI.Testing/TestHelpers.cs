@@ -31,7 +31,7 @@ namespace DNI.Testing {
         /// <param name="configPath"></param>
         /// <returns></returns>
         public static IOptions<T> CreateOptions<T>(this IConfiguration config, string configPath)
-            where T: class, new() {
+            where T : class, new() {
             var options = new T();
             config.Bind(configPath, options);
             return Options.Create(options);

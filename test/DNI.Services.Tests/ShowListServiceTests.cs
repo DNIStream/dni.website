@@ -25,8 +25,8 @@ namespace DNI.Services.Tests {
         private readonly Mock<IPodcastService> _podcastClientMock;
         private readonly Mock<ILogger<ShowListService>> _loggerMock;
 
-        private VodcastStream vodcasts;
-        private PodcastStream podcasts;
+        private readonly VodcastStream vodcasts;
+        private readonly PodcastStream podcasts;
 
         public ShowListServiceTests(ITestOutputHelper output) {
             _output = output;
@@ -37,8 +37,8 @@ namespace DNI.Services.Tests {
             podcasts = _fixture.Create<PodcastStream>();
 
             for(var i = 0; i < vodcasts.Shows.Count; i++) {
-                vodcasts.Shows[i].Title = $"Documentation Not Included: Episode v{i+1}.0 - {vodcasts.Shows[i].Title}";
-                podcasts.Shows[i].PageUrl = $"https://podcast.dnistream.live/v{i+1}-0";
+                vodcasts.Shows[i].Title = $"Documentation Not Included: Episode v{i + 1}.0 - {vodcasts.Shows[i].Title}";
+                podcasts.Shows[i].PageUrl = $"https://podcast.dnistream.live/v{i + 1}-0";
             }
 
             _vodcastClientMock = Mock.Get(_fixture.Create<IVodcastService>());
@@ -179,6 +179,32 @@ namespace DNI.Services.Tests {
 
             // Assert
             Assert.Equal(4, results.Count());
+        }
+
+        [Fact]
+        public async Task GetShowsAsync_MatchesSingleShowForDoubleDigitMinorVersions() {
+            // Arrange
+            // Modify the first two entries so they may possibly conflict on matching strings
+            vodcasts.Shows[0].Title = "Documentation Not Included: Episode v2.1 - Another Episode";
+            podcasts.Shows[0].PageUrl = "https://podcast.dnistream.live/v2-1";
+
+            vodcasts.Shows[1].Title = "Documentation Not Included: Episode v2.10 - Another Episode";
+            podcasts.Shows[1].PageUrl = "https://podcast.dnistream.live/v2-10";
+
+            _vodcastClientMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => vodcasts);
+            _podcastClientMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => podcasts);
+
+            var service = GetService();
+
+            // Act
+            var results = await service.GetShowsAsync();
+
+            // Assert
+            Assert.Equal(3, results.Count());
         }
 
         #endregion

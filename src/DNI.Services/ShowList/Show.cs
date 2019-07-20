@@ -14,7 +14,7 @@ namespace DNI.Services.ShowList {
 
         public DateTime? PublishedTime { get; set; }
 
-        public decimal? Version { get; set; }
+        public string Version { get; set; }
 
         public string ImageUrl { get; set; }
 

@@ -9,11 +9,11 @@ using NLog.Web;
 
 namespace DNI.API {
     /// <summary>
-    /// Entry point
+    ///     Entry point
     /// </summary>
     public class Program {
         /// <summary>
-        /// Entry point
+        ///     Entry point
         /// </summary>
         /// <param name="args"></param>
         public static void Main(string[] args) {
