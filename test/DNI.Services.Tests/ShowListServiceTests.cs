@@ -25,8 +25,8 @@ namespace DNI.Services.Tests {
         private readonly Mock<IPodcastService> _podcastClientMock;
         private readonly Mock<ILogger<ShowListService>> _loggerMock;
 
-        private VodcastStream vodcasts;
-        private PodcastStream podcasts;
+        private readonly VodcastStream vodcasts;
+        private readonly PodcastStream podcasts;
 
         public ShowListServiceTests(ITestOutputHelper output) {
             _output = output;
@@ -37,8 +37,8 @@ namespace DNI.Services.Tests {
             podcasts = _fixture.Create<PodcastStream>();
 
             for(var i = 0; i < vodcasts.Shows.Count; i++) {
-                vodcasts.Shows[i].Title = $"Documentation Not Included: Episode v{i+1}.0 - {vodcasts.Shows[i].Title}";
-                podcasts.Shows[i].PageUrl = $"https://podcast.dnistream.live/v{i+1}-0";
+                vodcasts.Shows[i].Title = $"Documentation Not Included: Episode v{i + 1}.0 - {vodcasts.Shows[i].Title}";
+                podcasts.Shows[i].PageUrl = $"https://podcast.dnistream.live/v{i + 1}-0";
             }
 
             _vodcastClientMock = Mock.Get(_fixture.Create<IVodcastService>());
@@ -191,17 +191,6 @@ namespace DNI.Services.Tests {
             vodcasts.Shows[1].Title = "Documentation Not Included: Episode v2.10 - Another Episode";
             podcasts.Shows[1].PageUrl = "https://podcast.dnistream.live/v2-10";
 
-            _output.WriteLine("Vod");
-            foreach(var v in vodcasts.Shows) {
-                _output.WriteLine(v.Version + " " + v.Title);
-            }
-
-            _output.WriteLine("Pod");
-
-            foreach(var p in podcasts.Shows) {
-                _output.WriteLine(p.Version + " " + p.PageUrl);
-            }
-
             _vodcastClientMock
                 .Setup(x => x.GetAllAsync())
                 .ReturnsAsync(() => vodcasts);
@@ -213,11 +202,6 @@ namespace DNI.Services.Tests {
 
             // Act
             var results = await service.GetShowsAsync();
-
-            _output.WriteLine("Actual");
-            foreach(var s in results) {
-                _output.WriteLine(s.Version + " " + s.PodcastPageUrl);
-            }
 
             // Assert
             Assert.Equal(3, results.Count());
