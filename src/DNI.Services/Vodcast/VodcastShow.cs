@@ -4,13 +4,19 @@ using System.Text.RegularExpressions;
 
 using RestSharp.Deserializers;
 
-namespace DNI.Services.Vodcast {
-    public class VodcastShow {
+using static System.Decimal;
+using static System.String;
 
+namespace DNI.Services.Vodcast {
+    /// <summary>
+    ///     Represents a single Vodcast
+    /// </summary>
+    public class VodcastShow {
         private readonly Regex vodcastTitleMatcher = new Regex(@"Documentation Not Included: Episode v(\d+\.\d+)( ?)-{1}(.+)",
             RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
-        [DeserializeAs(Name = "id")] public string Id { get; set; }
+        [DeserializeAs(Name = "id")]
+        public string Id { get; set; }
 
         [DeserializeAs(Name = "snippet.title")]
         public string Title { get; set; }
@@ -28,7 +34,7 @@ namespace DNI.Services.Vodcast {
         public string ImageUrl { get; set; }
 
         [IgnoreDataMember]
-        public decimal? Version {
+        public string Version {
             get {
                 var m = vodcastTitleMatcher.Match(Title);
                 if(!m.Success) {
@@ -36,12 +42,24 @@ namespace DNI.Services.Vodcast {
                 }
 
                 var version = m.Groups[1].Value.Trim();
-                if(decimal.TryParse(version, out var dVersion)) {
-                    return dVersion;
+                if(TryParse(version, out _)) {
+                    return version;
                 }
 
                 return null;
             }
         }
+
+        /// <summary>
+        ///     Returns the YouTube embed video url
+        /// </summary>
+        [IgnoreDataMember]
+        public string VideoUrl => IsNullOrWhiteSpace(Id) ? null : Concat("https://www.youtube.com/embed/", Id);
+
+        /// <summary>
+        ///     Returns the YouTube video watch url
+        /// </summary>
+        [IgnoreDataMember]
+        public string VideoPageUrl => IsNullOrWhiteSpace(Id) ? null : Concat("https://www.youtube.com/watch?v=", Id);
     }
 }

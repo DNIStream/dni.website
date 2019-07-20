@@ -74,14 +74,14 @@ namespace DNI.Services.ShowList {
                         Title = v.Title.Replace("Documentation Not Included: ", "").Trim(),
                         Summary = null,
                         AudioUrl = null,
-                        VideoUrl = GetVideoUrl(v.VideoId),
+                        VideoUrl = v.VideoUrl,
                         PublishedTime = v.DatePublished,
                         Version = v.Version,
                         ImageUrl = v.ImageUrl,
                         ShowNotes = v.Description,
                         PodcastPageUrl = null,
                         DurationSeconds = null,
-                        VodPageUrl = GetVideoPageUrl(v.VideoId)
+                        VodPageUrl = v.VideoPageUrl
                     });
             }
 
@@ -95,20 +95,20 @@ namespace DNI.Services.ShowList {
                                 Title = p?.Title ?? v?.Title.Replace("Documentation Not Included: ", "").Trim(),
                                 Summary = p?.Summary ?? v?.Description,
                                 AudioUrl = mp3File?.Url,
-                                VideoUrl = GetVideoUrl(v?.VideoId),
+                                VideoUrl = v?.VideoUrl,
                                 PublishedTime = p?.DatePublished ?? v?.DatePublished,
                                 Version = key,
                                 ImageUrl = v?.ImageUrl,
                                 ShowNotes = v?.Description ?? p?.Content,
                                 PodcastPageUrl = p?.PageUrl,
                                 DurationSeconds = mp3File?.DurationSeconds,
-                                VodPageUrl = GetVideoPageUrl(v?.VideoId)
+                                VodPageUrl = v?.VideoPageUrl
                             };
                         });
             }
 
             return shows?
-                .Where(x => x.Version.HasValue) // Omit results with invalid version strings
+                .Where(x => !string.IsNullOrWhiteSpace(x.Version)) // Omit results with invalid version strings
                 .OrderByDescending(x => x.Version);
         }
 
@@ -155,30 +155,5 @@ namespace DNI.Services.ShowList {
                     return null;
             }
         }
-
-        #region Helpers
-
-        /// <summary>
-        ///     Returns a YouTube embed video url
-        /// </summary>
-        /// <param name="videoId"></param>
-        /// <returns></returns>
-        private static string GetVideoUrl(string videoId) {
-            if(string.IsNullOrWhiteSpace(videoId)) {
-                return null;
-            }
-
-            return string.Concat("https://www.youtube.com/embed/", videoId);
-        }
-
-        private static string GetVideoPageUrl(string videoId) {
-            if(string.IsNullOrWhiteSpace(videoId)) {
-                return null;
-            }
-
-            return string.Concat("https://www.youtube.com/watch?v=", videoId);
-        }
-
-        #endregion
     }
 }
