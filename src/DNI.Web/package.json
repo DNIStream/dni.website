@@ -51,7 +51,7 @@
     "@types/jasminewd2": "~2.0.6",
     "@types/moment-timezone": "^0.5.10",
     "@types/node": "~10.12.18",
-    "chokidar-cli": "^1.2.2",
+    "chokidar-cli": "^2.1.0",
     "codelyzer": "^5.0.1",
     "jasmine-core": "~3.3.0",
     "jasmine-spec-reporter": "~4.2.1",
