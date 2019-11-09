@@ -42,22 +42,5 @@
                 "alt": "Chris's Twitter"
             }
         ]
-    },
-    {
-        "name": "Patryk Kowalik",
-        "img": "assets/creators/patryk.jpg",
-        "desc": "Patryk is the product of a rogue Polish AI and a libertarian Vincent van Gogh who couldn't decide between art and programming, so he did both! He's our go to 'graphics guy' and has worked across game development, AR, VR and CG programming. You'll love the way he pronounces his R's.",
-        "links": [
-            {
-                "icon": "fab fa-linkedin",
-                "uri": "//www.linkedin.com/in/patryk-kowalik/",
-                "alt": "Patryk's LinkedIn"
-            },
-            {
-                "icon": "fab fa-twitter",
-                "uri": "//twitter.com/imrooniel",
-                "alt": "Patryk's Twitter"
-            }
-        ]
     }
 ]
