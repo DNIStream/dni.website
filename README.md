@@ -1,6 +1,6 @@
 # Documentation Not Included Website
 
-This repository contains the source code for https://www.dnistream.live - a platform agnostic development podcast hosted by [Chris Sebok](https://github.com/Bidthedog), [Josey Howarth](https://github.com/sudomistress) and [Patryk Kowalik](https://github.com/imrooniel).
+This repository contains the source code for https://www.dnistream.live - a platform agnostic development podcast hosted by [Chris Sebok](https://github.com/Bidthedog) and [Josey Howarth](https://github.com/sudomistress).
 
 ## Code Coverage
 
@@ -108,8 +108,8 @@ For example, to update the app to version 3.4.5, run the following commands on a
 
 Generally this project uses the latest releases. At the time of writing, the following versions are in use:
 
-* Node.js LTS 10.16.0
-* Angular CLI 8.1.0
+* Node.js LTS 12.13.0
+* Angular CLI 8.3.18
 * Dotnet Core SDK 2.2.300
-* Docker 18.09.2 (Windows)
-* Docker-Compose 1.23.2 (Windows)
+* Docker 19.03.4 (Windows)
+* Docker-Compose 1.24.1, build 4667896b (Windows)
