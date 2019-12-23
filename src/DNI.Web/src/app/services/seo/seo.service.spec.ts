@@ -15,7 +15,7 @@ describe('SEOService', () => {
     const titleServiceSpy = jasmine.createSpyObj('Title', ['setTitle']);
     const metaServiceSpy = jasmine.createSpyObj('Meta', ['updateTag']);
     const service: SEOService = new SEOService(titleServiceSpy, metaServiceSpy);
-    const expectedSuffix = ': Documentation Not Included Development Podcast';
+    const expectedSuffix = ': DNI Stream Development Podcast';
     const expectedTitle = 'A page title';
 
     // Act
