@@ -26,4 +26,4 @@ New-Item env:\YouTube__ApiKey -Value $Env:YOUTUBE_API_KEY -Force
 New-Item env:\YouTube__Referrer -Value $Env:YOUTUBE_REFERRER -Force
 New-Item env:\YouTube__Origin -Value $Env:YOUTUBE_ORIGIN -Force
 
-gci env:\
+# gci env:\
