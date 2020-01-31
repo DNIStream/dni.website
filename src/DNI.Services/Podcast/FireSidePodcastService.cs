@@ -44,7 +44,6 @@ namespace DNI.Services.Podcast {
             _logger.LogInformation($"{logPrefix} Sending request");
 
             var response = await _restClient.ExecuteTaskAsync<PodcastStream>(request);
-            //var responseGraph = _restClient.Deserialize<PodcastStream>(response);
 
             _logger.LogInformation($"{logPrefix} Finished request. Response Uri is '{response.ResponseUri.AbsoluteUri}'");
             _logger.LogInformation($"{logPrefix} Response status: {response.StatusCode.ToString()}");

@@ -19,7 +19,7 @@ using RestSharp;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DNI.Services.Tests {
+namespace DNI.Services.Tests.Vodcast {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class YouTubeVodcastServiceUnitTests {
         private readonly ITestOutputHelper _output;

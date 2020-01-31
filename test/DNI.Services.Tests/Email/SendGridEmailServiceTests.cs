@@ -18,7 +18,7 @@ using SendGrid.Helpers.Mail;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DNI.Services.Tests {
+namespace DNI.Services.Tests.Email {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class SendGridEmailServiceTests {
         private readonly ITestOutputHelper _output;

@@ -9,7 +9,7 @@ using DNI.Testing;
 
 using Xunit;
 
-namespace DNI.Services.Tests {
+namespace DNI.Services.Tests.Email {
     /// <summary>
     ///     Unit tests for <see cref="EmailTemplateServiceBase" /> base class / shared methods.
     /// </summary>
@@ -32,7 +32,7 @@ namespace DNI.Services.Tests {
                 preHeaderHtml = "This is a {{test2}}",
                 introHtml = "This is a {{test3}}",
                 outroHtml = "This is a {{test4}}",
-                from = "from@test.com",
+                @from = "from@test.com",
                 actionLink = "http://www.test.com",
                 actionText = "Test Link",
                 plainTextBody = "This is a plain text body with {{test1}} and {{test4}} replacements"
@@ -99,7 +99,7 @@ namespace DNI.Services.Tests {
                 outroHtml = "Outro with a {{outro}}",
                 preHeaderHtml = "PreHeader with a {{preheader}}",
                 actionLink = "Action with a {{actionLink}}",
-                from = "From with a {{from}}",
+                @from = "From with a {{from}}",
                 actionText = "Action text with a {{actionText}}",
                 plainTextBody = "Plain text body with a {{testReplacement}}"
             };
@@ -160,7 +160,7 @@ namespace DNI.Services.Tests {
                 introHtml = "test intro",
                 preHeaderHtml = "test preheader",
                 actionLink = "test action link",
-                from = "test from",
+                @from = "test from",
                 actionText = "test action text",
                 subject = "test subject"
             };
@@ -223,7 +223,7 @@ namespace DNI.Services.Tests {
                 introHtml = "test intro",
                 preHeaderHtml = "test preheader",
                 actionLink = "test action link",
-                from = "test from",
+                @from = "test from",
                 actionText = "test action text",
                 subject = "test subject"
             };

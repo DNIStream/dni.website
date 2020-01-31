@@ -14,7 +14,7 @@ using RestSharp;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DNI.Services.Tests {
+namespace DNI.Services.Tests.Podcast {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class FiresideRssDeserializerUnitTests {
         private readonly ITestOutputHelper _output;

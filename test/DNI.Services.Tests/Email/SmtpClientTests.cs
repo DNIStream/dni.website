@@ -10,7 +10,7 @@ using Microsoft.Extensions.Options;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DNI.Services.Tests {
+namespace DNI.Services.Tests.Email {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeIntegration)]
     public class SmtpClientTests {
         private readonly ITestOutputHelper _output;
@@ -46,7 +46,7 @@ namespace DNI.Services.Tests {
             message.Body = "Test Body";
             message.ReplyToList.Add(contactFrom);
 
-            var client = new Email.SmtpClient(opts);
+            var client = new Services.Email.SmtpClient(opts);
 
             // Act & Asset
             client.Send(message);

@@ -6,7 +6,7 @@ namespace DNI.Services.Podcast {
     ///     Represents a single podcast
     /// </summary>
     public class PodcastShow {
-        private readonly Regex podcastUriMatcher =
+        private readonly Regex podcastUriVersionMatcher =
             new Regex(@"/v(\d+-\d+)$", RegexOptions.Compiled | RegexOptions.CultureInvariant | RegexOptions.IgnoreCase);
 
         public Guid Id { get; set; }
@@ -27,7 +27,7 @@ namespace DNI.Services.Podcast {
 
         public string Version {
             get {
-                var m = podcastUriMatcher.Match(PageUrl);
+                var m = podcastUriVersionMatcher.Match(PageUrl);
                 if(!m.Success) {
                     return null;
                 }

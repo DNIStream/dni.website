@@ -16,7 +16,7 @@ using Moq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DNI.Services.Tests {
+namespace DNI.Services.Tests.ShowList {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class ShowListServiceTests {
         private readonly ITestOutputHelper _output;
