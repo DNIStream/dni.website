@@ -22,6 +22,6 @@ namespace DNI.Services.ShowList {
 
         public string PodcastPageUrl { get; set; }
 
-        public long? DurationSeconds { get; set; }
+        public string Duration { get; set; }
     }
 }

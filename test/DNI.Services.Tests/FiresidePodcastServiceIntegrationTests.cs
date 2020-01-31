@@ -33,8 +33,8 @@ namespace DNI.Services.Tests {
             // Set up default / valid options
             var generalOptions = _fixture.Create<GeneralOptions>();
             _generalOptions = Microsoft.Extensions.Options.Options.Create(generalOptions);
-            _generalOptions.Value.PodcastServiceResourceUri = "json";
-            _generalOptions.Value.PodcastServiceBaseUri = "https://dnistream.fireside.fm";
+            _generalOptions.Value.PodcastServiceResourceUri = "dnistream/rss";
+            _generalOptions.Value.PodcastServiceBaseUri = "https://feeds.fireside.fm";
         }
 
         [Fact]

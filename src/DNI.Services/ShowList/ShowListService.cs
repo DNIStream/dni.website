@@ -49,19 +49,17 @@ namespace DNI.Services.ShowList {
                 // No vodcasts, return podcast info only
                 shows = podcastShows.Shows
                     .Select(p => {
-                        var mp3File = p.Files.FirstOrDefault();
-
                         return new Show {
                             Title = p.Title,
                             Summary = p.Summary,
-                            AudioUrl = mp3File?.Url,
+                            AudioUrl = p.AudioFile?.Url,
                             VideoUrl = null,
                             PublishedTime = p.DatePublished,
                             Version = p.Version,
                             ImageUrl = null,
                             ShowNotes = p.Content,
                             PodcastPageUrl = p.PageUrl,
-                            DurationSeconds = mp3File?.DurationSeconds,
+                            Duration = p.AudioFile?.Duration,
                             VodPageUrl = null
                         };
                     });
@@ -80,7 +78,7 @@ namespace DNI.Services.ShowList {
                         ImageUrl = v.ImageUrl,
                         ShowNotes = v.Description,
                         PodcastPageUrl = null,
-                        DurationSeconds = null,
+                        Duration = null,
                         VodPageUrl = v.VideoPageUrl
                     });
             }
@@ -90,18 +88,17 @@ namespace DNI.Services.ShowList {
                 shows = vodcastShows.Shows
                     .FullOuterJoin(podcastShows?.Shows, v => v.Version, p => p.Version,
                         (v, p, key) => {
-                            var mp3File = p?.Files.FirstOrDefault();
                             return new Show {
                                 Title = p?.Title ?? v?.Title.Replace("Documentation Not Included: ", "").Trim(),
                                 Summary = p?.Summary ?? v?.Description,
-                                AudioUrl = mp3File?.Url,
+                                AudioUrl = p?.AudioFile?.Url,
                                 VideoUrl = v?.VideoUrl,
                                 PublishedTime = p?.DatePublished ?? v?.DatePublished,
                                 Version = key,
                                 ImageUrl = v?.ImageUrl,
                                 ShowNotes = v?.Description ?? p?.Content,
                                 PodcastPageUrl = p?.PageUrl,
-                                DurationSeconds = mp3File?.DurationSeconds,
+                                Duration = p?.AudioFile?.Duration,
                                 VodPageUrl = v?.VideoPageUrl
                             };
                         });

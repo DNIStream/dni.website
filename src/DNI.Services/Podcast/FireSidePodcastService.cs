@@ -29,22 +29,24 @@ namespace DNI.Services.Podcast {
         /// <returns></returns>
         public async Task<PodcastStream> GetAllAsync() {
             const string logPrefix = "FIRESIDE:";
-            _logger.LogInformation($"{logPrefix} Start JSON Communication");
+            _logger.LogInformation($"{logPrefix} Start Communication");
 
             _restClient.BaseUrl = new Uri(_options.PodcastServiceBaseUri);
+            _restClient.AddHandler("application/xml", () => new FiresideRssDeserializer());
+
             var request = new RestRequest {
                 Method = Method.GET,
-                Resource = _options.PodcastServiceResourceUri,
-                RequestFormat = DataFormat.Json
+                Resource = _options.PodcastServiceResourceUri
             };
 
             _logger.LogInformation($"{logPrefix} Prepared {request.Method.ToString()} request for Uri '{_restClient.BuildUri(request).AbsoluteUri}'");
 
-            _logger.LogInformation($"{logPrefix} Sending JSON request");
+            _logger.LogInformation($"{logPrefix} Sending request");
 
             var response = await _restClient.ExecuteTaskAsync<PodcastStream>(request);
+            //var responseGraph = _restClient.Deserialize<PodcastStream>(response);
 
-            _logger.LogInformation($"{logPrefix} Finished JSON request. Response Uri is '{response.ResponseUri.AbsoluteUri}'");
+            _logger.LogInformation($"{logPrefix} Finished request. Response Uri is '{response.ResponseUri.AbsoluteUri}'");
             _logger.LogInformation($"{logPrefix} Response status: {response.StatusCode.ToString()}");
             _logger.LogInformation($"{logPrefix} Response content length: {response.ContentLength}");
 

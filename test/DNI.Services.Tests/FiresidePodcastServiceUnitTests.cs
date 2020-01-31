@@ -65,8 +65,8 @@ namespace DNI.Services.Tests {
                 )), Times.Once(), "Podcast Service Resource Uri expected");
             _restClientMock
                 .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>
-                    r.RequestFormat == DataFormat.Json
-                )), Times.Once(), "Podcast Service Data format should be JSON");
+                    r.RequestFormat == DataFormat.Xml
+                )), Times.Once(), "Podcast Service Data format should be XML");
             _restClientMock
                 .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>
                     r.Method == Method.GET

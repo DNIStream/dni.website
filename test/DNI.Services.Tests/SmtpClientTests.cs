@@ -33,7 +33,7 @@ namespace DNI.Services.Tests {
         public void Send_SendsSSLMailMessage() {
             // Arrange
             var settings = config.CreateOptions<SMTPTestOptions>("SMTPTestOptions").Value;
-            opts.Value.SmtpEnableSSL = true;
+            opts.Value.SmtpEnableSSL = false;
             opts.Value.SmtpServer = settings.SMTPServer;
             opts.Value.SmtpServerPort = settings.SMTPPort;
             opts.Value.SmtpUsername = settings.SMTPUsername;

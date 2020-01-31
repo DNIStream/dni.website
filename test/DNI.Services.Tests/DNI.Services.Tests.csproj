@@ -9,10 +9,12 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="TestResources\contact.json" />
+    <None Remove="TestResources\FiresideRss.xml" />
     <None Remove="TestResources\layout.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestResources\contact.json" />
+    <EmbeddedResource Include="TestResources\FiresideRss.xml" />
     <EmbeddedResource Include="TestResources\layout.html" />
   </ItemGroup>
   <ItemGroup>

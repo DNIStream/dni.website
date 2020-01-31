@@ -21,6 +21,7 @@
       </select>
       <label class="sr-only"
              for="orderByOrder">Order:</label>
+
       <select
         class="form-control mr-3"
         id="orderByOrder"
@@ -42,7 +43,7 @@
           <img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" />
           <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
         </div>
-        <div class="col-md-5">
+        <!-- <div class="col-md-5">
           <p class="mt-2">{{show.summary}}</p>
           <audio controls
                  *ngIf="show.audioUrl">
@@ -50,7 +51,7 @@
                     type="audio/mp3">
             <p>Your browser does not support HTML5 Audio - click one of the social links to listen.</p>
           </audio>
-        </div>
+        </div> -->
         <div class="col-md-4">
           <div>
             <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
@@ -62,6 +63,7 @@
           </div>
         </div>
       </div>
+      <!--
       <div class="col-12 py-3">
         <button type="button" class="btn btn-primary btn-block" (click)="show.shown = !show.shown"
                 [attr.aria-expanded]="show.shown" attr.aria-controls="'collapse-' + show.version">
@@ -71,8 +73,6 @@
       <div id="collapse-{{show.version}}"
            class="expanded-info p-3"
            [collapse]="!show.shown">
-        <!-- <div class="row pt-3">
-          <div class="col-md-6"> -->
         <div class="embed-responsive embed-responsive-16by9 mr-3 mb-2 yt-embed">
           <iframe *ngIf="show.shown"
                   width="560"
@@ -83,18 +83,14 @@
                   allowfullscreen>
           </iframe>
         </div>
-        <!-- </div>
-          <div class="col-md-6 show-notes"> -->
 
         <div class="show-notes">
           <h5>{{show.title}} Show Notes</h5>
           <div [innerHtml]="show.showNotesFormatted"
                class="small"></div>
         </div>
-        <!-- </div>
-        </div> -->
         <hr />
-      </div>
+      </div> -->
     </ng-container>
   </ng-container>
 </div>
