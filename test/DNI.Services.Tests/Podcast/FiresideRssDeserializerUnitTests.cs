@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Reflection;
 
@@ -88,6 +89,8 @@ namespace DNI.Services.Tests.Podcast {
             Assert.Equal(new DateTime(2020, 1, 24, 5, 15, 0), itemUnderTest.DatePublished);
             Assert.Equal(new Guid("9fba4db0-ff9b-4364-baa6-0d14eabc1ab7"), itemUnderTest.Id);
             Assert.Equal("https://dnistream.fireside.fm/49", itemUnderTest.PageUrl);
+            // <itunes:image href="https://assets.fireside.fm/myimage.jpg"/>
+            Assert.Equal("https://assets.fireside.fm/myimage.jpg", itemUnderTest.HeaderImage);
         }
 
         [Fact]
@@ -107,6 +110,26 @@ namespace DNI.Services.Tests.Podcast {
             Assert.Equal("1:05:52", itemUnderTest.AudioFile.Duration);
             Assert.Equal("audio/mpeg", itemUnderTest.AudioFile.MimeType);
             Assert.Equal(48168849, itemUnderTest.AudioFile.SizeInBytes);
+        }
+
+        [Fact]
+        public void Deserialize_RssKeywordsAreMappedToEnumerable() {
+            // Arrange
+            var service = GetDeserializer();
+            var response = GetMockResponse();
+
+            // Act
+            var objectGraph = service.Deserialize<PodcastStream>(response);
+            var itemUnderTest = objectGraph.Shows[0];
+
+            // Assert
+            // development, app development, game development, website development
+            Assert.NotNull(itemUnderTest.Keywords);
+            Assert.Equal(4, itemUnderTest.Keywords.Count());
+            Assert.Contains("development", itemUnderTest.Keywords);
+            Assert.Contains("app development", itemUnderTest.Keywords);
+            Assert.Contains("game development", itemUnderTest.Keywords);
+            Assert.Contains("website development", itemUnderTest.Keywords);
         }
 
         #region Helper Methods

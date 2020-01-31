@@ -43,7 +43,7 @@ We stream live every Thursday at 7PM GMT (https://twitch.tv/dnistream) on Twitch
       <itunes:subtitle>This is the expected subtitle</itunes:subtitle>
       <itunes:duration>1:05:52</itunes:duration>
       <itunes:explicit>no</itunes:explicit>
-      <itunes:image href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/episodes/9/9fba4db0-ff9b-4364-baa6-0d14eabc1ab7/cover.jpg?v=2"/>
+      <itunes:image href="https://assets.fireside.fm/myimage.jpg"/>
       <description>TEST
 PLAIN TEXT
 Content

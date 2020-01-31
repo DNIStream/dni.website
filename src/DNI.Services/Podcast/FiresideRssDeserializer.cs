@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using System.Xml.Linq;
@@ -44,6 +46,8 @@ namespace DNI.Services.Podcast {
                         Summary = doc.GetElementValue("itunes:subtitle"),
                         DatePublished = DateTime.TryParse(doc.GetElementValue("pubDate"), out var datePublished) ? datePublished : DateTime.MinValue,
                         PageUrl = doc.GetElementValue("link"),
+                        HeaderImage = doc.GetAttributeValue("itunes:image", "href"),
+                        Keywords = doc.GetElementValue("itunes:keywords")?.Split(',').Select(x => x.Trim()),
                         AudioFile = new PodcastFile {
                             Url = doc.GetAttributeValue("enclosure", "url"),
                             Duration = doc.GetElementValue("itunes:duration"),
