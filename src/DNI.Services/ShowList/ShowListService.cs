@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,7 +27,6 @@ namespace DNI.Services.ShowList {
 
             // TODO: Caching
             // TODO: Paging
-            // TODO: Keyword aggregation
 
             var shows = podcastShows.Shows
                 .Select(p => new Show {
@@ -42,10 +42,17 @@ namespace DNI.Services.ShowList {
                     Duration = p.AudioFile?.Duration,
                     Slug = p.Slug,
                     Keywords = p.Keywords
-                });
+                })
+                .ToArray();
+
+            var keywordCounts = shows
+                .SelectMany(x => x.Keywords)
+                .GroupBy(k => k, (keyword, keywords) => new {Keyword = keyword, Count = keywords.Count()})
+                .ToDictionary(k => k.Keyword, v => v.Count);
 
             return new ShowList {
-                Shows = shows.OrderByDescending(x => x.Version)
+                Shows = shows.OrderByDescending(x => x.Version),
+                TotalKeywordCounts = keywordCounts
             };
         }
 

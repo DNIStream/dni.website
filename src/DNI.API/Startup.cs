@@ -7,7 +7,6 @@ using DNI.Services.Captcha;
 using DNI.Services.Email;
 using DNI.Services.Podcast;
 using DNI.Services.ShowList;
-using DNI.Services.Vodcast;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,8 +20,6 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 using RestSharp;
-
-using SendGrid;
 
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;

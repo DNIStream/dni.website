@@ -6,5 +6,7 @@ namespace DNI.Services.ShowList {
     /// </summary>
     public class ShowList {
         public IEnumerable<Show> Shows { get; set; }
+
+        public IDictionary<string, int> TotalKeywordCounts { get; set; }
     }
 }

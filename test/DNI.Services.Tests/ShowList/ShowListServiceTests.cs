@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 using AutoFixture;
@@ -6,7 +7,6 @@ using AutoFixture.AutoMoq;
 
 using DNI.Services.Podcast;
 using DNI.Services.ShowList;
-using DNI.Services.Vodcast;
 using DNI.Testing;
 
 using Microsoft.Extensions.Logging;
@@ -67,6 +67,50 @@ namespace DNI.Services.Tests.ShowList {
 
             // Assert
             Assert.Equal(3, results.Shows.Count());
+        }
+
+        [Fact]
+        public async Task GetShowsAsync_ReturnsAggregatedKeywordsInParent() {
+            // Arrange
+            var service = GetService();
+            var showList = _fixture.Create<PodcastStream>();
+            var show1 = _fixture.Build<PodcastShow>()
+                .With(x => x.Keywords, () => new List<string> {
+                    "tag1", "tag2", "tag3"
+                })
+                .Create();
+            var show2 = _fixture.Build<PodcastShow>()
+                .With(x => x.Keywords, () => new List<string> {
+                    "tag2"
+                })
+                .Create();
+            var show3 = _fixture.Build<PodcastShow>()
+                .With(x => x.Keywords, () => new List<string> {
+                    "tag3"
+                })
+                .Create();
+            var show4 = _fixture.Build<PodcastShow>()
+                .With(x => x.Keywords, () => new List<string> {
+                    "tag3", "tag4"
+                })
+                .Create();
+            showList.Shows = new List<PodcastShow> {
+                show1, show2, show3, show4
+            };
+
+            _podcastClientMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => showList);
+
+            // Act
+            var results = await service.GetShowListAsync();
+
+            // Assert
+            // tag1 = 1, tag2 = 2, tag3 = 3, tag4 = 1
+            Assert.Equal(1, results.TotalKeywordCounts["tag1"]);
+            Assert.Equal(2, results.TotalKeywordCounts["tag2"]);
+            Assert.Equal(3, results.TotalKeywordCounts["tag3"]);
+            Assert.Equal(1, results.TotalKeywordCounts["tag4"]);
         }
 
         #endregion
