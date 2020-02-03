@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace DNI.Services.ShowList {
     public interface IShowListService {
-        Task<IEnumerable<Show>> GetShowsAsync();
+        Task<ShowList> GetShowListAsync();
 
-        Task<IEnumerable<Show>> GetShowsAsync(ShowOrderField orderByField, ShowOrderFieldOrder orderByOrder);
+        Task<ShowList> GetShowListAsync(ShowOrderField orderByField, ShowOrderFieldOrder orderByOrder);
     }
 }

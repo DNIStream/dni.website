@@ -56,22 +56,17 @@ namespace DNI.API {
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
             services.Configure<GeneralOptions>(Configuration.GetSection("General"));
-            services.Configure<YouTubeOptions>(Configuration.GetSection("YouTube"));
 
             // 3rd Party Services
-            var sendGridAPIKey = Configuration.GetSection("SendGrid").GetValue("ApiKey", "");
             services
                 .AddTransient<ISmtpClient, SmtpClient>()
-                .AddTransient<IRestClient, RestClient>()
-                .AddTransient<ISendGridClient>(p => new SendGridClient(sendGridAPIKey));
+                .AddTransient<IRestClient, RestClient>();
 
             // Services
             services
                 .AddTransient<ICaptchaService, CaptchaService>()
-                // .AddTransient<IEmailService, SendGridEmailService>();
                 .AddTransient<IEmailService, SystemNetEmailService>()
                 .AddTransient<IPodcastService, FiresidePodcastService>()
-                .AddTransient<IVodcastService, YouTubeVodcastService>()
                 .AddTransient<IShowListService, ShowListService>();
 
             // MVC
@@ -126,7 +121,7 @@ namespace DNI.API {
                 // Swagger
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"DNI API v{GetVersion()}");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"DNI Stream API v{GetVersion()}");
                     c.RoutePrefix = string.Empty;
                     c.DocumentTitle = $"{APINameSpace} v{GetVersion()} UI";
                     c.DocExpansion(DocExpansion.None);

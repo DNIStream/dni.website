@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DNI.Services.ShowList {
     public class Show {
-        public string VideoUrl { get; set; }
-
         public string AudioUrl { get; set; }
 
         public string Title { get; set; }
@@ -12,16 +11,20 @@ namespace DNI.Services.ShowList {
 
         public string ShowNotes { get; set; }
 
-        public DateTime? PublishedTime { get; set; }
+        public string ShowNotesHtml { get; set; }
+
+        public DateTime PublishedTime { get; set; }
 
         public string Version { get; set; }
 
-        public string ImageUrl { get; set; }
+        public string Slug { get; set; }
 
-        public string VodPageUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         public string PodcastPageUrl { get; set; }
 
         public string Duration { get; set; }
+
+        public IEnumerable<string> Keywords { get; set; }
     }
 }

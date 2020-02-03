@@ -31,7 +31,7 @@ namespace DNI.API.Controllers {
         /// <response code="204">OK - No Content. No shows were found.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(Show[]), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ShowList), StatusCodes.Status200OK)]
         [Route("shows")]
         public async Task<IActionResult> GetShowsAsync([FromQuery] ShowOrderField orderByField = ShowOrderField.PublishedTime,
             [FromQuery] ShowOrderFieldOrder orderByOrder = ShowOrderFieldOrder.Descending) {
@@ -39,13 +39,13 @@ namespace DNI.API.Controllers {
                 return ModelValidationBadRequest();
             }
 
-            var shows = await _showListService.GetShowsAsync(orderByField, orderByOrder);
+            var showList = await _showListService.GetShowListAsync(orderByField, orderByOrder);
 
-            if(!shows.Any()) {
+            if(!showList.Shows.Any()) {
                 return NoContent();
             }
 
-            return Ok(shows);
+            return Ok(showList);
         }
     }
 }

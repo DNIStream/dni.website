@@ -4,119 +4,59 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using DNI.Services.Podcast;
-using DNI.Services.Vodcast;
 
 using Microsoft.Extensions.Logging;
 
 namespace DNI.Services.ShowList {
     public class ShowListService : IShowListService {
         private readonly IPodcastService _podcastService;
-        private readonly IVodcastService _vodcastService;
         private readonly ILogger<ShowListService> _logger;
 
-        public ShowListService(IPodcastService podcastService, IVodcastService vodcastService, ILogger<ShowListService> logger) {
+        public ShowListService(IPodcastService podcastService, ILogger<ShowListService> logger) {
             _podcastService = podcastService;
-            _vodcastService = vodcastService;
             _logger = logger;
         }
 
         /// <summary>
-        ///     Retrieves aggregated vodcast and podcast shows, ordered in descending published version order.
+        ///     Retrieves all shows, ordered in descending published version order.
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<Show>> GetShowsAsync() {
-            // Run both data operations in parallel
-            PodcastStream podcastShows = null;
-            VodcastStream vodcastShows = null;
+        public async Task<ShowList> GetShowListAsync() {
+            var podcastShows = await _podcastService.GetAllAsync();
 
-            var dataTasks = new Task[] {
-                Task.Run(async () => podcastShows = await _podcastService.GetAllAsync()),
-                Task.Run(async () => vodcastShows = await _vodcastService.GetAllAsync())
+            // TODO: Caching
+            // TODO: Paging
+            // TODO: Keyword aggregation
+
+            var shows = podcastShows.Shows
+                .Select(p => new Show {
+                    Title = p.Title,
+                    Summary = p.Summary,
+                    AudioUrl = p.AudioFile?.Url,
+                    PublishedTime = p.DatePublished,
+                    Version = p.Version,
+                    ImageUrl = p.HeaderImage,
+                    ShowNotes = p.Content,
+                    ShowNotesHtml = p.ContentHtml,
+                    PodcastPageUrl = p.PageUrl,
+                    Duration = p.AudioFile?.Duration,
+                    Slug = p.Slug,
+                    Keywords = p.Keywords
+                });
+
+            return new ShowList {
+                Shows = shows.OrderByDescending(x => x.Version)
             };
-
-            await Task.WhenAll(dataTasks);
-
-            // TODO: Cache both sources until next week, but only if they return data
-
-            // Iterate shows from both sources, matching and merging where possible (full outer join)
-            // Key matching works on the version strings in the following properties:
-            //      Fireside / podcast: show.url = https://podcast.dnistream.live/v9-0
-            //      YouTube / vodcast: show.title = Documentation Not Included: Episode v9.0 - Shifting Security
-
-            IEnumerable<Show> shows = null;
-
-            if(vodcastShows?.Shows == null && podcastShows?.Shows != null) {
-                // No vodcasts, return podcast info only
-                shows = podcastShows.Shows
-                    .Select(p => {
-                        return new Show {
-                            Title = p.Title,
-                            Summary = p.Summary,
-                            AudioUrl = p.AudioFile?.Url,
-                            VideoUrl = null,
-                            PublishedTime = p.DatePublished,
-                            Version = p.Version,
-                            ImageUrl = null,
-                            ShowNotes = p.Content,
-                            PodcastPageUrl = p.PageUrl,
-                            Duration = p.AudioFile?.Duration,
-                            VodPageUrl = null
-                        };
-                    });
-            }
-
-            if(podcastShows?.Shows == null && vodcastShows?.Shows != null) {
-                // No podcasts, return vodcast info only
-                shows = vodcastShows.Shows
-                    .Select(v => new Show {
-                        Title = v.Title.Replace("Documentation Not Included: ", "").Trim(),
-                        Summary = null,
-                        AudioUrl = null,
-                        VideoUrl = v.VideoUrl,
-                        PublishedTime = v.DatePublished,
-                        Version = v.Version,
-                        ImageUrl = v.ImageUrl,
-                        ShowNotes = v.Description,
-                        PodcastPageUrl = null,
-                        Duration = null,
-                        VodPageUrl = v.VideoPageUrl
-                    });
-            }
-
-            if(podcastShows?.Shows != null && vodcastShows?.Shows != null) {
-                // At least one vodcast and one podcast exists, merge
-                shows = vodcastShows.Shows
-                    .FullOuterJoin(podcastShows?.Shows, v => v.Version, p => p.Version,
-                        (v, p, key) => {
-                            return new Show {
-                                Title = p?.Title ?? v?.Title.Replace("Documentation Not Included: ", "").Trim(),
-                                Summary = p?.Summary ?? v?.Description,
-                                AudioUrl = p?.AudioFile?.Url,
-                                VideoUrl = v?.VideoUrl,
-                                PublishedTime = p?.DatePublished ?? v?.DatePublished,
-                                Version = key,
-                                ImageUrl = v?.ImageUrl,
-                                ShowNotes = v?.Description ?? p?.Content,
-                                PodcastPageUrl = p?.PageUrl,
-                                Duration = p?.AudioFile?.Duration,
-                                VodPageUrl = v?.VideoPageUrl
-                            };
-                        });
-            }
-
-            return shows?
-                .Where(x => !string.IsNullOrWhiteSpace(x.Version)) // Omit results with invalid version strings
-                .OrderByDescending(x => x.Version);
         }
 
         /// <summary>
-        ///     Retrieves aggregated vodcast and podcast shows, ordered by the specified field and order.
+        ///     Retrieves shows, ordered by the specified field and order.
         /// </summary>
         /// <param name="orderByField"></param>
         /// <param name="orderByOrder"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<Show>> GetShowsAsync(ShowOrderField orderByField, ShowOrderFieldOrder orderByOrder) {
-            var shows = await GetShowsAsync();
+        public async Task<ShowList> GetShowListAsync(ShowOrderField orderByField, ShowOrderFieldOrder orderByOrder) {
+            var shows = (await GetShowListAsync()).Shows;
 
             // No need to use a reflection based / dynamic implementation as there are
             // currently only two fields to order by. When new fields are added, this
@@ -132,7 +72,9 @@ namespace DNI.Services.ShowList {
                     throw new ArgumentOutOfRangeException(nameof(orderByOrder), orderByOrder, "Specified order not supported");
             }
 
-            return shows;
+            return new ShowList {
+                Shows = shows
+            };
         }
 
         /// <summary>
