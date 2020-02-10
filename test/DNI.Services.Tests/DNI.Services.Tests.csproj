@@ -20,6 +20,7 @@
   <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.8.0" />
     <PackageReference Include="AutoFixture.AutoMoq" Version="4.8.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.2.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.1.0" />
@@ -32,6 +33,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\DNI.API\DNI.API.csproj" />
     <ProjectReference Include="..\..\src\DNI.Services\DNI.Services.csproj" />
     <ProjectReference Include="..\..\src\DNI.Testing\DNI.Testing.csproj" />
   </ItemGroup>

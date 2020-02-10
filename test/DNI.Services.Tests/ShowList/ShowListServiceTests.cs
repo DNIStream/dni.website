@@ -5,7 +5,11 @@ using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoMoq;
 
+using DNI.API.Requests;
 using DNI.Services.Podcast;
+using DNI.Services.Shared.Mapping;
+using DNI.Services.Shared.Paging;
+using DNI.Services.Shared.Sorting;
 using DNI.Services.ShowList;
 using DNI.Testing;
 
@@ -21,7 +25,11 @@ namespace DNI.Services.Tests.ShowList {
     public class ShowListServiceTests {
         private readonly ITestOutputHelper _output;
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
-        private readonly Mock<IPodcastService> _podcastClientMock;
+        private readonly Mock<IPodcastService> _podcastServiceMock;
+        private readonly Mock<IPagingCalculator<Show>> _pagingCalculatorMock;
+        private readonly Mock<IShowKeywordAggregationService> _showKeywordAggregationServiceMock;
+        private readonly Mock<IMapper<PodcastShow, Show>> _podcastShowMapperMock;
+        private readonly Mock<ISorter> _sorterMock;
         private readonly Mock<ILogger<ShowListService>> _loggerMock;
 
         private readonly PodcastStream podcasts;
@@ -33,150 +41,149 @@ namespace DNI.Services.Tests.ShowList {
 
             podcasts = _fixture.Create<PodcastStream>();
 
-            _podcastClientMock = Mock.Get(_fixture.Create<IPodcastService>());
-            _podcastClientMock
+            _showKeywordAggregationServiceMock = Mock.Get(_fixture.Create<IShowKeywordAggregationService>());
+            _pagingCalculatorMock = Mock.Get(_fixture.Create<IPagingCalculator<Show>>());
+            _podcastShowMapperMock = Mock.Get(_fixture.Create<IMapper<PodcastShow, Show>>());
+            _sorterMock = Mock.Get(_fixture.Create<ISorter>());
+
+            _podcastServiceMock = Mock.Get(_fixture.Create<IPodcastService>());
+            _podcastServiceMock
                 .Setup(x => x.GetAllAsync())
                 .ReturnsAsync(() => podcasts);
         }
 
         private IShowListService GetService() {
-            return new ShowListService(_podcastClientMock.Object, _loggerMock.Object);
+            return new ShowListService(_podcastServiceMock.Object, _showKeywordAggregationServiceMock.Object,
+                _pagingCalculatorMock.Object, _podcastShowMapperMock.Object, _sorterMock.Object, _loggerMock.Object);
         }
 
-        #region GetShowListAsync
-
         [Fact]
-        public async Task GetShowsAsync_RetrievesDataFromPodcastService() {
+        public async Task GetShowListAsync_RetrievesDataFromPodcastService() {
             // Arrange
             var service = GetService();
+            var request = new GetShowsRequest();
 
             // Act
-            await service.GetShowListAsync();
+            await service.GetShowListAsync(request, request);
 
             // Assert
-            _podcastClientMock.Verify(x => x.GetAllAsync(), Times.Once());
+            _podcastServiceMock.Verify(x => x.GetAllAsync(), Times.Once());
         }
 
         [Fact]
-        public async Task GetShowsAsync_ReturnsExpectedPodcastShows() {
+        public async Task GetShowListAsync_MapsEachPodcastShowToAShow() {
             // Arrange
             var service = GetService();
-
-            // Act
-            var results = await service.GetShowListAsync();
-
-            // Assert
-            Assert.Equal(3, results.Shows.Count());
-        }
-
-        [Fact]
-        public async Task GetShowsAsync_ReturnsAggregatedKeywordsInParent() {
-            // Arrange
-            var service = GetService();
-            var showList = _fixture.Create<PodcastStream>();
-            var show1 = _fixture.Build<PodcastShow>()
-                .With(x => x.Keywords, () => new List<string> {
-                    "tag1", "tag2", "tag3"
-                })
-                .Create();
-            var show2 = _fixture.Build<PodcastShow>()
-                .With(x => x.Keywords, () => new List<string> {
-                    "tag2"
-                })
-                .Create();
-            var show3 = _fixture.Build<PodcastShow>()
-                .With(x => x.Keywords, () => new List<string> {
-                    "tag3"
-                })
-                .Create();
-            var show4 = _fixture.Build<PodcastShow>()
-                .With(x => x.Keywords, () => new List<string> {
-                    "tag3", "tag4"
-                })
-                .Create();
-            showList.Shows = new List<PodcastShow> {
-                show1, show2, show3, show4
-            };
-
-            _podcastClientMock
+            var request = new GetShowsRequest();
+            var podcastShows = _fixture.CreateMany<PodcastShow>(6).ToList();
+            _podcastServiceMock
                 .Setup(x => x.GetAllAsync())
-                .ReturnsAsync(() => showList);
+                .ReturnsAsync(() => new PodcastStream {
+                    Shows = podcastShows
+                });
 
             // Act
-            var results = await service.GetShowListAsync();
+            await service.GetShowListAsync(request, request);
 
             // Assert
-            // tag1 = 1, tag2 = 2, tag3 = 3, tag4 = 1
-            Assert.Equal(1, results.TotalKeywordCounts["tag1"]);
-            Assert.Equal(2, results.TotalKeywordCounts["tag2"]);
-            Assert.Equal(3, results.TotalKeywordCounts["tag3"]);
-            Assert.Equal(1, results.TotalKeywordCounts["tag4"]);
-        }
-
-        #endregion
-
-        #region GetShowListAsync(field, order)
-
-        [Fact]
-        public async Task GetShowsAsyncOrdered_ReturnsExpectedCountOfShows() {
-            // Arrange
-            var service = GetService();
-
-            // Act
-            var results = await service.GetShowListAsync(ShowOrderField.PublishedTime, ShowOrderFieldOrder.Descending);
-
-            // Assert
-            Assert.Equal(3, results.Shows.Count());
+            _podcastShowMapperMock
+                .Verify(x => x.Map(It.IsIn<PodcastShow>(podcastShows)), Times.Exactly(6));
         }
 
         [Fact]
-        public async Task GetShowsAsyncOrdered_ReturnsShowsInShowDateDescendingOrder() {
+        public async Task GetShowListAsync_ReturnsExpectedPagedResponse_AndExpectedNumberOfShows() {
             // Arrange
             var service = GetService();
+            var request = new GetShowsRequest();
+            var shows = _fixture.CreateMany<Show>(34);
+            var sortingResponse = _fixture.CreateMany<Show>().ToArray();
+            var pagedResponse = _fixture
+                .Build<Services.ShowList.ShowList>()
+                .With(x => x.Items, shows)
+                .Create();
+            _sorterMock
+                .Setup(x => x.SortAsync(It.IsAny<IEnumerable<Show>>(), It.IsAny<ISortingInfo>()))
+                .ReturnsAsync(sortingResponse);
+
+            _pagingCalculatorMock
+                .Setup(x => x.PageItemsAsync<Services.ShowList.ShowList>(It.Is<IPagingInfo>(r => r == request),
+                    It.Is<Show[]>(s => Equals(s, sortingResponse))))
+                .ReturnsAsync(() => pagedResponse)
+                .Verifiable();
 
             // Act
-            var results = (await service.GetShowListAsync(ShowOrderField.PublishedTime, ShowOrderFieldOrder.Descending)).Shows.ToArray();
+            var actualResponse = await service.GetShowListAsync(request, request);
 
             // Assert
-            Assert.True(results.SequenceEqual(results.OrderByDescending(s => s.PublishedTime)));
+            _pagingCalculatorMock.Verify();
+            Assert.Equal(pagedResponse, actualResponse);
+            Assert.Equal(shows.Count(), actualResponse.Items.Count());
         }
 
         [Fact]
-        public async Task GetShowsAsyncOrdered_ReturnsShowsInShowDateAscendingOrder() {
+        public async Task GetShowListAsync_CallsGetKeywordDictionaryAsync_WithEnumeratedShows() {
             // Arrange
             var service = GetService();
+            var request = new GetShowsRequest();
+            var show1 = _fixture.Create<Show>();
+            var show2 = _fixture.Create<Show>();
+            var show3 = _fixture.Create<Show>();
+
+            _podcastShowMapperMock
+                .SetupSequence(x => x.Map(It.IsAny<PodcastShow>()))
+                .Returns(show1)
+                .Returns(show2)
+                .Returns(show3);
 
             // Act
-            var results = (await service.GetShowListAsync(ShowOrderField.PublishedTime, ShowOrderFieldOrder.Ascending)).Shows.ToArray();
+            await service.GetShowListAsync(request, request);
 
             // Assert
-            Assert.True(results.SequenceEqual(results.OrderBy(s => s.PublishedTime)));
+            _showKeywordAggregationServiceMock
+                .Verify(x => x.GetKeywordDictionaryAsync(It.Is<IEnumerable<Show>>(k => k.Contains(show1) && k.Contains(show2) && k.Contains(show3))),
+                    Times.Once());
         }
 
         [Fact]
-        public async Task GetShowsAsyncOrdered_ReturnsShowsInVersionDescendingOrder() {
+        public async Task GetShowListAsync_ReturnsKeywordsFromKeywordAggregationService() {
             // Arrange
             var service = GetService();
+            var request = new GetShowsRequest();
+            var keywords = _fixture.Create<IDictionary<string, int>>();
+
+            _showKeywordAggregationServiceMock
+                .Setup(x => x.GetKeywordDictionaryAsync(It.IsAny<IEnumerable<Show>>()))
+                .ReturnsAsync(() => keywords);
 
             // Act
-            var results = (await service.GetShowListAsync(ShowOrderField.Version, ShowOrderFieldOrder.Descending)).Shows.ToArray();
+            var result = await service.GetShowListAsync(request, request);
 
             // Assert
-            Assert.True(results.SequenceEqual(results.OrderByDescending(s => s.Version)));
+            Assert.Equal(keywords, result.TotalKeywordCounts);
         }
 
         [Fact]
-        public async Task GetShowsAsyncOrdered_ReturnsShowsInVersionAscendingOrder() {
+        public async Task GetShowListAsync_CallsSorter_WithEnumeratedShows_AndSortingRequest() {
             // Arrange
             var service = GetService();
+            var request = new GetShowsRequest();
+            var show1 = _fixture.Create<Show>();
+            var show2 = _fixture.Create<Show>();
+            var show3 = _fixture.Create<Show>();
+
+            _podcastShowMapperMock
+                .SetupSequence(x => x.Map(It.IsAny<PodcastShow>()))
+                .Returns(show1)
+                .Returns(show2)
+                .Returns(show3);
 
             // Act
-            var results = (await service.GetShowListAsync(ShowOrderField.Version, ShowOrderFieldOrder.Ascending)).Shows.ToArray();
+            await service.GetShowListAsync(request, request);
 
             // Assert
-            Assert.True(results.SequenceEqual(results.OrderBy(s => s.Version)));
+            _sorterMock
+                .Verify(x => x.SortAsync(It.Is<IEnumerable<Show>>(k => k.Contains(show1) && k.Contains(show2) && k.Contains(show3)),
+                    It.Is<ISortingInfo>(r => r == request)), Times.Once());
         }
-
-        #endregion
     }
 }

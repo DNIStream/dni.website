@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 using DNI.Services.Podcast;
+using DNI.Services.Shared.Mapping;
+using DNI.Services.Shared.Paging;
+using DNI.Services.Shared.Sorting;
 
 using Microsoft.Extensions.Logging;
 
@@ -12,94 +12,45 @@ namespace DNI.Services.ShowList {
     public class ShowListService : IShowListService {
         private readonly IPodcastService _podcastService;
         private readonly ILogger<ShowListService> _logger;
+        private readonly IShowKeywordAggregationService _showKeywordAggregationService;
+        private readonly IPagingCalculator<Show> _pagingCalculator;
+        private readonly IMapper<PodcastShow, Show> _podcastShowMapper;
+        private readonly ISorter _sorter;
 
-        public ShowListService(IPodcastService podcastService, ILogger<ShowListService> logger) {
+        public ShowListService(IPodcastService podcastService, IShowKeywordAggregationService showKeywordAggregationService,
+            IPagingCalculator<Show> pagingCalculator, IMapper<PodcastShow, Show> podcastShowMapper, ISorter sorter, ILogger<ShowListService> logger) {
             _podcastService = podcastService;
             _logger = logger;
+            _showKeywordAggregationService = showKeywordAggregationService;
+            _pagingCalculator = pagingCalculator;
+            _podcastShowMapper = podcastShowMapper;
+            _sorter = sorter;
         }
 
         /// <summary>
         ///     Retrieves all shows, ordered in descending published version order.
         /// </summary>
         /// <returns></returns>
-        public async Task<ShowList> GetShowListAsync() {
+        public async Task<ShowList> GetShowListAsync(IPagingInfo pageInfo, ISortingInfo sortingInfo) {
             var podcastShows = await _podcastService.GetAllAsync();
 
-            // TODO: Caching
-            // TODO: Paging
-
-            var shows = podcastShows.Shows
-                .Select(p => new Show {
-                    Title = p.Title,
-                    Summary = p.Summary,
-                    AudioUrl = p.AudioFile?.Url,
-                    PublishedTime = p.DatePublished,
-                    Version = p.Version,
-                    ImageUrl = p.HeaderImage,
-                    ShowNotes = p.Content,
-                    ShowNotesHtml = p.ContentHtml,
-                    PodcastPageUrl = p.PageUrl,
-                    Duration = p.AudioFile?.Duration,
-                    Slug = p.Slug,
-                    Keywords = p.Keywords
-                })
+            // Domain object mapping
+            var allShows = podcastShows.Shows
+                .Select(x => _podcastShowMapper.Map(x))
                 .ToArray();
 
-            var keywordCounts = shows
-                .SelectMany(x => x.Keywords)
-                .GroupBy(k => k, (keyword, keywords) => new {Keyword = keyword, Count = keywords.Count()})
-                .ToDictionary(k => k.Keyword, v => v.Count);
+            // Keyword aggregation
+            var keywordCounts = await _showKeywordAggregationService.GetKeywordDictionaryAsync(allShows);
 
-            return new ShowList {
-                Shows = shows.OrderByDescending(x => x.Version),
-                TotalKeywordCounts = keywordCounts
-            };
-        }
+            // TODO: Caching
 
-        /// <summary>
-        ///     Retrieves shows, ordered by the specified field and order.
-        /// </summary>
-        /// <param name="orderByField"></param>
-        /// <param name="orderByOrder"></param>
-        /// <returns></returns>
-        public async Task<ShowList> GetShowListAsync(ShowOrderField orderByField, ShowOrderFieldOrder orderByOrder) {
-            var shows = (await GetShowListAsync()).Shows;
+            // Perform sorting
+            var orderedShows = await _sorter.SortAsync(allShows, sortingInfo);
 
-            // No need to use a reflection based / dynamic implementation as there are
-            // currently only two fields to order by. When new fields are added, this
-            // switch should not need expanding - update the OrderShow() method instead.
-            switch(orderByOrder) {
-                case ShowOrderFieldOrder.Ascending:
-                    shows = shows.OrderBy(s => OrderShow(s, orderByField));
-                    break;
-                case ShowOrderFieldOrder.Descending:
-                    shows = shows.OrderByDescending(s => OrderShow(s, orderByField));
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(orderByOrder), orderByOrder, "Specified order not supported");
-            }
-
-            return new ShowList {
-                Shows = shows
-            };
-        }
-
-        /// <summary>
-        ///     Basic field selection method for ordering. This could get cumbersome if more fields are introduced, so may be
-        ///     refactored as necessary in the future.
-        /// </summary>
-        /// <param name="show"></param>
-        /// <param name="orderByField"></param>
-        /// <returns></returns>
-        private static object OrderShow(Show show, ShowOrderField orderByField) {
-            switch(orderByField) {
-                case ShowOrderField.PublishedTime:
-                    return show.PublishedTime;
-                case ShowOrderField.Version:
-                    return show.Version;
-                default:
-                    return null;
-            }
+            // Perform paging
+            var showListResponse = await _pagingCalculator.PageItemsAsync<ShowList>(pageInfo, orderedShows);
+            showListResponse.TotalKeywordCounts = keywordCounts;
+            return showListResponse;
         }
     }
 }

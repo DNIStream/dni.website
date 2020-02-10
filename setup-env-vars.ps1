@@ -22,9 +22,6 @@ New-Item env:\General__SmtpPassword -Value "$Env:SMTP_PASSWORD" -Force | Out-Nul
 New-Item env:\General__ErrorEmailFrom -Value $Env:ERROR_EMAIL_FROM -Force | Out-Null
 New-Item env:\General__ErrorEmailTo -Value $Env:ERROR_EMAIL_TO -Force | Out-Null
 New-Item env:\General__ContactEmailTo -Value $Env:CONTACT_EMAIL_TO -Force | Out-Null
-New-Item env:\YouTube__ApiKey -Value $Env:YOUTUBE_API_KEY -Force | Out-Null
-New-Item env:\YouTube__Referrer -Value $Env:YOUTUBE_REFERRER -Force | Out-Null
-New-Item env:\YouTube__Origin -Value $Env:YOUTUBE_ORIGIN -Force | Out-Null
 
 Write-Host "======================================================="
 Write-Host "="

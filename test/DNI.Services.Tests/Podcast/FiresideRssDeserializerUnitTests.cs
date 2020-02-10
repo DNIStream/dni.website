@@ -112,24 +112,53 @@ namespace DNI.Services.Tests.Podcast {
             Assert.Equal(48168849, itemUnderTest.AudioFile.SizeInBytes);
         }
 
-        [Fact]
-        public void Deserialize_RssKeywordsAreMappedToEnumerable() {
+        [Theory]
+        [InlineData(" dev, dev, test,antelope")]
+        [InlineData("dev, dev, test,antelope")]
+        [InlineData(" dev, DEV, test,antelope")]
+        [InlineData("Dev , dev, test,antelope")]
+        [InlineData("dev , ,dev, test,antelope")]
+        [InlineData("dev ,,dev, test,antelope")]
+        public void Deserialize_RssKeywordsAreDeserialized_And_DuplicateRssKeywordsAreDistinct(string keywords) {
             // Arrange
             var service = GetDeserializer();
             var response = GetMockResponse();
+            response.Content = response.Content
+                .Replace("REPLACE IN TEST", keywords);
 
             // Act
             var objectGraph = service.Deserialize<PodcastStream>(response);
-            var itemUnderTest = objectGraph.Shows[0];
 
             // Assert
-            // development, app development, game development, website development
-            Assert.NotNull(itemUnderTest.Keywords);
-            Assert.Equal(4, itemUnderTest.Keywords.Count());
-            Assert.Contains("development", itemUnderTest.Keywords);
-            Assert.Contains("app development", itemUnderTest.Keywords);
-            Assert.Contains("game development", itemUnderTest.Keywords);
-            Assert.Contains("website development", itemUnderTest.Keywords);
+            var itemUnderTest = objectGraph.Shows[0];
+            Assert.Equal(3, itemUnderTest.Keywords.Count());
+            Assert.Contains("dev", itemUnderTest.Keywords);
+            Assert.Contains("test", itemUnderTest.Keywords);
+            Assert.Contains("antelope", itemUnderTest.Keywords);
+        }
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("\t")]
+        [InlineData("\r\n")]
+        [InlineData("\n")]
+        [InlineData("\t\n")]
+        [InlineData("\t\n    ")]
+        [InlineData(null)]
+        public void Deserialize_NullOrEmptyOrWhitespaceRssKeywords_ReturnNull(string keywords) {
+            // Arrange
+            var service = GetDeserializer();
+            var response = GetMockResponse();
+            response.Content = response.Content
+                .Replace("REPLACE IN TEST", keywords);
+
+            // Act
+            var objectGraph = service.Deserialize<PodcastStream>(response);
+
+            // Assert
+            var itemUnderTest = objectGraph.Shows[0];
+            Assert.Null(itemUnderTest.Keywords);
         }
 
         #region Helper Methods

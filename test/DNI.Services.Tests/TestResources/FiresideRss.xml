@@ -1,61 +1,67 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" encoding="UTF-8" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/" xmlns:atom="http://www.w3.org/2005/Atom/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:fireside="http://fireside.fm/modules/rss/fireside">
-  <channel>
-    <fireside:hostname>feed03.fireside.fm</fireside:hostname>
-    <fireside:genDate>Fri, 24 Jan 2020 09:27:57 -0600</fireside:genDate>
-    <generator>Fireside (https://fireside.fm)</generator>
-    <title>Documentation Not Included</title>
-    <link>https://www.dnistream.live</link>
-    <pubDate>Fri, 24 Jan 2020 12:27:22 -0000</pubDate>
-    <description>Documentation Not Included is a live-streamed development talk show and podcast where Josey and Chris delve deep into all things development.
-We're platform agnostic, covering topics such as web development, process work-flows, enterprise architecture, game development, visual effects, community management, virtual assistance and DevOps practices. We also cover a vast array of other topics related to IT in general.
-We stream live every Thursday at 7PM GMT (https://twitch.tv/dnistream) on Twitch. Come join us and have your say!
-</description>
-    <language>en-gb</language>
-    <itunes:type>episodic</itunes:type>
-    <itunes:subtitle>The podcast for developers by developers with other IT added for fun!</itunes:subtitle>
-    <itunes:author>Documentation Not Included</itunes:author>
-    <itunes:summary>Documentation Not Included is a live-streamed development talk show and podcast where Josey and Chris delve deep into all things development.
-We're platform agnostic, covering topics such as web development, process work-flows, enterprise architecture, game development, visual effects, community management, virtual assistance and DevOps practices. We also cover a vast array of other topics related to IT in general.
-We stream live every Thursday at 7PM GMT (https://twitch.tv/dnistream) on Twitch. Come join us and have your say!
-</itunes:summary>
-    <itunes:image href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/cover.jpg?v=2"/>
-    <itunes:explicit>no</itunes:explicit>
-    <itunes:keywords>development,game development,website development, full stack development, app development</itunes:keywords>
-    <itunes:owner>
-      <itunes:name>Documentation Not Included</itunes:name>
-      <itunes:email>contact@dnistream.live</itunes:email>
-    </itunes:owner>
-<itunes:category text="Technology"/>
-<itunes:category text="Business">
-  <itunes:category text="Careers"/>
-</itunes:category>
-<itunes:category text="Education"/>
-    <item>
-      <title>How I Learned To Stay Relevant and Love the Code</title>
-      <link>https://dnistream.fireside.fm/49</link>
-      <guid isPermaLink="false">9fba4db0-ff9b-4364-baa6-0d14eabc1ab7</guid>
-      <pubDate>Fri, 24 Jan 2020 05:15:00 +0000</pubDate>
-      <author>Documentation Not Included</author>
-      <enclosure url="https://test.com/mymp3.mp3" length="48168849" type="audio/mpeg"/>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:author>Documentation Not Included</itunes:author>
-      <itunes:subtitle>This is the expected subtitle</itunes:subtitle>
-      <itunes:duration>1:05:52</itunes:duration>
-      <itunes:explicit>no</itunes:explicit>
-      <itunes:image href="https://assets.fireside.fm/myimage.jpg"/>
-      <description>TEST
-PLAIN TEXT
-Content
-JEFF
-</description>
-      <itunes:keywords>development, app development, game development, website development</itunes:keywords>
-      <content:encoded>
-        <![CDATA[<p>This is some test HTML</p>
+
+<rss version="2.0" encoding="UTF-8" xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:admin="http://webns.net/mvcb/"
+    xmlns:atom="http://www.w3.org/2005/Atom/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:googleplay="http://www.google.com/schemas/play-podcasts/1.0"
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:fireside="http://fireside.fm/modules/rss/fireside">
+    <channel>
+        <fireside:hostname>feed03.fireside.fm</fireside:hostname>
+        <fireside:genDate>Fri, 24 Jan 2020 09:27:57 -0600</fireside:genDate>
+        <generator>Fireside (https://fireside.fm)</generator>
+        <title>Documentation Not Included</title>
+        <link>https://www.dnistream.live</link>
+        <pubDate>Fri, 24 Jan 2020 12:27:22 -0000</pubDate>
+        <description>Documentation Not Included is a live-streamed development talk show and podcast where Josey and Chris delve deep into all things development.
+            We're platform agnostic, covering topics such as web development, process work-flows, enterprise architecture, game development, visual effects, community management, virtual assistance and DevOps practices. We also cover a vast array of other topics related to IT in general.
+            We stream live every Thursday at 7PM GMT (https://twitch.tv/dnistream) on Twitch. Come join us and have your say!
+        </description>
+        <language>en-gb</language>
+        <itunes:type>episodic</itunes:type>
+        <itunes:subtitle>The podcast for developers by developers with other IT added for fun!</itunes:subtitle>
+        <itunes:author>Documentation Not Included</itunes:author>
+        <itunes:summary>Documentation Not Included is a live-streamed development talk show and podcast where Josey and Chris delve deep into all things development.
+            We're platform agnostic, covering topics such as web development, process work-flows, enterprise architecture, game development, visual effects, community management, virtual assistance and DevOps practices. We also cover a vast array of other topics related to IT in general.
+            We stream live every Thursday at 7PM GMT (https://twitch.tv/dnistream) on Twitch. Come join us and have your say!
+        </itunes:summary>
+        <itunes:image
+            href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/cover.jpg?v=2" />
+        <itunes:explicit>no</itunes:explicit>
+        <itunes:keywords>development,game development,website development, full stack development, app development</itunes:keywords>
+        <itunes:owner>
+            <itunes:name>Documentation Not Included</itunes:name>
+            <itunes:email>contact@dnistream.live</itunes:email>
+        </itunes:owner>
+        <itunes:category text="Technology" />
+        <itunes:category text="Business">
+            <itunes:category text="Careers" />
+        </itunes:category>
+        <itunes:category text="Education" />
+        <item>
+            <title>How I Learned To Stay Relevant and Love the Code</title>
+            <link>https://dnistream.fireside.fm/49</link>
+            <guid isPermaLink="false">9fba4db0-ff9b-4364-baa6-0d14eabc1ab7</guid>
+            <pubDate>Fri, 24 Jan 2020 05:15:00 +0000</pubDate>
+            <author>Documentation Not Included</author>
+            <enclosure url="https://test.com/mymp3.mp3" length="48168849" type="audio/mpeg" />
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:author>Documentation Not Included</itunes:author>
+            <itunes:subtitle>This is the expected subtitle</itunes:subtitle>
+            <itunes:duration>1:05:52</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:image href="https://assets.fireside.fm/myimage.jpg" />
+            <description>TEST
+                PLAIN TEXT
+                Content
+                JEFF
+            </description>
+            <itunes:keywords>REPLACE IN TEST</itunes:keywords>
+            <content:encoded>
+                <![CDATA[<p>This is some test HTML</p>
 <p>And another line</p>]]>
-      </content:encoded>
-      <itunes:summary>
-        <![CDATA[<p>Andy Morrell joins Chris and Josey this week to discuss how to stay relevant as a developer. Is the answer learning by osmosis? Ancient blood rituals? Listen to find out!</p>
+            </content:encoded>
+            <itunes:summary>
+                <![CDATA[<p>Andy Morrell joins Chris and Josey this week to discuss how to stay relevant as a developer. Is the answer learning by osmosis? Ancient blood rituals? Listen to find out!</p>
 
 <p><strong>TOPICS</strong></p>
 
@@ -71,37 +77,40 @@ JEFF
 Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. <a href="http://dig.ccmixter.org/files/texasradiofish/50478" rel="nofollow">http://dig.ccmixter.org/files/texasradiofish/50478</a> Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar<br>
 Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/53755" rel="nofollow">http://dig.ccmixter.org/files/cdk/53755</a> <br>
 Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/57150" rel="nofollow">http://dig.ccmixter.org/files/cdk/57150</a> </p><p>Special Guest: Andy Morrell.</p>]]>
-      </itunes:summary>
-    </item>
-    <item>
-      <title>Episode v0.3: 2020</title>
-      <link>https://www.dnistream.live/v0-3</link>
-      <guid isPermaLink="false">f92e6407-9107-4845-a858-f669ee1b748b</guid>
-      <pubDate>Fri, 10 Jan 2020 09:00:00 +0000</pubDate>
-      <author>Documentation Not Included</author>
-      <enclosure url="https://aphid.fireside.fm/d/1437767933/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/f92e6407-9107-4845-a858-f669ee1b748b.mp3" length="46791190" type="audio/mpeg"/>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:author>Documentation Not Included</itunes:author>
-      <itunes:subtitle>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.</itunes:subtitle>
-      <itunes:duration>1:02:03</itunes:duration>
-      <itunes:explicit>no</itunes:explicit>
-      <itunes:image href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/episodes/f/f92e6407-9107-4845-a858-f669ee1b748b/cover.jpg?v=1"/>
-      <description>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.
-TOPICS
-- What are our goals?
-- What is DNI Stream?
-- What is Documentation Not Included?
-- What is Development Now Included?
-- What is Developers Natter Internally?
-- ...and some more exciting news!
-MUSIC FROM THE CCMIXTER COMMUNITY
-Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. http://dig.ccmixter.org/files/texasradiofish/50478 Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar
-Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/53755 
-Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/57150  
-</description>
-      <itunes:keywords>development, app development, game development, website development</itunes:keywords>
-      <content:encoded>
-        <![CDATA[<p>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.</p>
+            </itunes:summary>
+        </item>
+        <item>
+            <title>Episode v0.3: 2020</title>
+            <link>https://www.dnistream.live/v0-3</link>
+            <guid isPermaLink="false">f92e6407-9107-4845-a858-f669ee1b748b</guid>
+            <pubDate>Fri, 10 Jan 2020 09:00:00 +0000</pubDate>
+            <author>Documentation Not Included</author>
+            <enclosure
+                url="https://aphid.fireside.fm/d/1437767933/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/f92e6407-9107-4845-a858-f669ee1b748b.mp3"
+                length="46791190" type="audio/mpeg" />
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:author>Documentation Not Included</itunes:author>
+            <itunes:subtitle>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.</itunes:subtitle>
+            <itunes:duration>1:02:03</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:image
+                href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/episodes/f/f92e6407-9107-4845-a858-f669ee1b748b/cover.jpg?v=1" />
+            <description>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.
+                TOPICS
+                - What are our goals?
+                - What is DNI Stream?
+                - What is Documentation Not Included?
+                - What is Development Now Included?
+                - What is Developers Natter Internally?
+                - ...and some more exciting news!
+                MUSIC FROM THE CCMIXTER COMMUNITY
+                Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. http://dig.ccmixter.org/files/texasradiofish/50478 Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar
+                Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/53755
+                Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/57150
+            </description>
+            <itunes:keywords>development, app development, game development, website development</itunes:keywords>
+            <content:encoded>
+                <![CDATA[<p>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.</p>
 
 <p><strong>TOPICS</strong></p>
 
@@ -118,9 +127,9 @@ Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyr
 Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. <a href="http://dig.ccmixter.org/files/texasradiofish/50478" rel="nofollow">http://dig.ccmixter.org/files/texasradiofish/50478</a> Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar<br>
 Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/53755" rel="nofollow">http://dig.ccmixter.org/files/cdk/53755</a> <br>
 Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/57150" rel="nofollow">http://dig.ccmixter.org/files/cdk/57150</a> </p><p>Links:</p><ul><li><a href="https://semver.org/" title="Sematic Versioning" rel="nofollow">Sematic Versioning</a></li><li><a href="https://www.deque.com/" title="deque Accessiblity" rel="nofollow">deque Accessiblity</a></li></ul>]]>
-      </content:encoded>
-      <itunes:summary>
-        <![CDATA[<p>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.</p>
+            </content:encoded>
+            <itunes:summary>
+                <![CDATA[<p>The first show of 2020 is all about us! Chris and Josey share news about what is coming in the new year and some information about a rebrand.</p>
 
 <p><strong>TOPICS</strong></p>
 
@@ -137,36 +146,39 @@ Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyr
 Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. <a href="http://dig.ccmixter.org/files/texasradiofish/50478" rel="nofollow">http://dig.ccmixter.org/files/texasradiofish/50478</a> Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar<br>
 Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/53755" rel="nofollow">http://dig.ccmixter.org/files/cdk/53755</a> <br>
 Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/57150" rel="nofollow">http://dig.ccmixter.org/files/cdk/57150</a> </p><p>Links:</p><ul><li><a href="https://semver.org/" title="Sematic Versioning" rel="nofollow">Sematic Versioning</a></li><li><a href="https://www.deque.com/" title="deque Accessiblity" rel="nofollow">deque Accessiblity</a></li></ul>]]>
-      </itunes:summary>
-    </item>
-    <item>
-      <title>Episode v11.10 - I ARE THIRTY FIVE</title>
-      <link>https://www.dnistream.live/v11-10</link>
-      <guid isPermaLink="false">c402526b-ea9f-4e7b-951b-ef8e6f4bda3c</guid>
-      <pubDate>Fri, 13 Dec 2019 09:00:00 +0000</pubDate>
-      <author>Documentation Not Included</author>
-      <enclosure url="https://aphid.fireside.fm/d/1437767933/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/c402526b-ea9f-4e7b-951b-ef8e6f4bda3c.mp3" length="92105022" type="audio/mpeg"/>
-      <itunes:episodeType>full</itunes:episodeType>
-      <itunes:author>Documentation Not Included</itunes:author>
-      <itunes:subtitle>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we've tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?</itunes:subtitle>
-      <itunes:duration>2:05:00</itunes:duration>
-      <itunes:explicit>no</itunes:explicit>
-      <itunes:image href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/episodes/c/c402526b-ea9f-4e7b-951b-ef8e6f4bda3c/cover.jpg?v=1"/>
-      <description>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we've tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?
-TOPICS
-- What is IR35?
-- Who is impacted by it?
-- How do you know if you are caught, or not?
-- What impact is this having right now on contractors and freelancers in the IT world?
-- ...and a whole lot more. After all this is a special 2 hour episode!
-MUSIC FROM THE CCMIXTER COMMUNITY
-Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. http://dig.ccmixter.org/files/texasradiofish/50478 Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar
-Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/53755 
-Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/57150  Special Guest: Jamie Taylor.
-</description>
-      <itunes:keywords>development, app development, game development, website development</itunes:keywords>
-      <content:encoded>
-        <![CDATA[<p>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we&#39;ve tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?</p>
+            </itunes:summary>
+        </item>
+        <item>
+            <title>Episode v11.10 - I ARE THIRTY FIVE</title>
+            <link>https://www.dnistream.live/v11-10</link>
+            <guid isPermaLink="false">c402526b-ea9f-4e7b-951b-ef8e6f4bda3c</guid>
+            <pubDate>Fri, 13 Dec 2019 09:00:00 +0000</pubDate>
+            <author>Documentation Not Included</author>
+            <enclosure
+                url="https://aphid.fireside.fm/d/1437767933/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/c402526b-ea9f-4e7b-951b-ef8e6f4bda3c.mp3"
+                length="92105022" type="audio/mpeg" />
+            <itunes:episodeType>full</itunes:episodeType>
+            <itunes:author>Documentation Not Included</itunes:author>
+            <itunes:subtitle>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we've tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?</itunes:subtitle>
+            <itunes:duration>2:05:00</itunes:duration>
+            <itunes:explicit>no</itunes:explicit>
+            <itunes:image
+                href="https://assets.fireside.fm/file/fireside-images/podcasts/images/8/8e0be1ae-e9ee-418b-96b3-1c0f4b0bf430/episodes/c/c402526b-ea9f-4e7b-951b-ef8e6f4bda3c/cover.jpg?v=1" />
+            <description>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we've tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?
+                TOPICS
+                - What is IR35?
+                - Who is impacted by it?
+                - How do you know if you are caught, or not?
+                - What impact is this having right now on contractors and freelancers in the IT world?
+                - ...and a whole lot more. After all this is a special 2 hour episode!
+                MUSIC FROM THE CCMIXTER COMMUNITY
+                Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. http://dig.ccmixter.org/files/texasradiofish/50478 Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar
+                Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/53755
+                Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. http://dig.ccmixter.org/files/cdk/57150  Special Guest: Jamie Taylor.
+            </description>
+            <itunes:keywords>development, app development, game development, website development</itunes:keywords>
+            <content:encoded>
+                <![CDATA[<p>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we&#39;ve tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?</p>
 
 <p><strong>TOPICS</strong></p>
 
@@ -182,9 +194,9 @@ Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyr
 Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. <a href="http://dig.ccmixter.org/files/texasradiofish/50478" rel="nofollow">http://dig.ccmixter.org/files/texasradiofish/50478</a> Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar<br>
 Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/53755" rel="nofollow">http://dig.ccmixter.org/files/cdk/53755</a> <br>
 Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/57150" rel="nofollow">http://dig.ccmixter.org/files/cdk/57150</a> </p><p>Special Guest: Jamie Taylor.</p>]]>
-      </content:encoded>
-      <itunes:summary>
-        <![CDATA[<p>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we&#39;ve tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?</p>
+            </content:encoded>
+            <itunes:summary>
+                <![CDATA[<p>In a special 2 hour episode, Chris and Josey are joined by Jamie from the donetcoreshow to discuss one of the biggest topics we&#39;ve tried to avoid this year; IR35.  What is it? Does it impact freelancers? Contractors? What happens when the gloves come off and the team has their say?</p>
 
 <p><strong>TOPICS</strong></p>
 
@@ -200,7 +212,7 @@ Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyr
 Snazzy Intro: On Top of the World by texasradiofish (c) copyright 2015 Licensed under a Creative Commons Attribution Noncommercial  (3.0) license. <a href="http://dig.ccmixter.org/files/texasradiofish/50478" rel="nofollow">http://dig.ccmixter.org/files/texasradiofish/50478</a> Ft: John Fletcher, Patricia Edwards, ElRon XChile, Speck, alexplaysguitar<br>
 Live Show Starting Soon: cdk - Sunday by Analog By Nature (c) copyright 2016 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/53755" rel="nofollow">http://dig.ccmixter.org/files/cdk/53755</a> <br>
 Live Show Outro: ＭＩＬＬＥＮＮＩＡＬＳ by Analog By Nature (c) copyright 2018 Licensed under a Creative Commons Attribution (3.0) license. <a href="http://dig.ccmixter.org/files/cdk/57150" rel="nofollow">http://dig.ccmixter.org/files/cdk/57150</a> </p><p>Special Guest: Jamie Taylor.</p>]]>
-      </itunes:summary>
-    </item>
-  </channel>
+            </itunes:summary>
+        </item>
+    </channel>
 </rss>

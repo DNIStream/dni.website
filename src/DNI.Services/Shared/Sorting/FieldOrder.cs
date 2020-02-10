@@ -1,8 +1,8 @@
-﻿namespace DNI.Services.ShowList {
+﻿namespace DNI.Services.Shared.Sorting {
     /// <summary>
     ///     Defines the selected field's order
     /// </summary>
-    public enum ShowOrderFieldOrder {
+    public enum FieldOrder {
         /// <summary>
         ///     Field ordered in increasing ascending order
         /// </summary>

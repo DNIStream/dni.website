@@ -1,4 +1,4 @@
-﻿namespace DNI.Services.ShowList {
+﻿namespace DNI.Services.Shared.Sorting {
     /// <summary>
     ///     Defines the field that shows are ordered by
     /// </summary>

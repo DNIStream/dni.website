@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 
+using DNI.API.Requests;
 using DNI.API.Responses;
 using DNI.Services.ShowList;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace DNI.API.Controllers {
     /// <summary>
@@ -23,25 +24,24 @@ namespace DNI.API.Controllers {
         }
 
         /// <summary>
-        ///     Retrieves a list of aggregated and merged shows from both podcast and vodcast services
+        ///     Retrieves a list shows from the podcast service
         /// </summary>
         /// <returns></returns>
         /// <response code="400">A validation error occurred. See raised <see cref="APIErrorResponse" /> for more details.</response>
         /// <response code="200">OK. Shows were successfully returned.</response>
         /// <response code="204">OK - No Content. No shows were found.</response>
-        [HttpGet]
+        [HttpPost]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ShowList), StatusCodes.Status200OK)]
         [Route("shows")]
-        public async Task<IActionResult> GetShowsAsync([FromQuery] ShowOrderField orderByField = ShowOrderField.PublishedTime,
-            [FromQuery] ShowOrderFieldOrder orderByOrder = ShowOrderFieldOrder.Descending) {
+        public async Task<IActionResult> GetShowsAsync([FromBody] GetShowsRequest request) {
             if(!ModelState.IsValid) {
                 return ModelValidationBadRequest();
             }
 
-            var showList = await _showListService.GetShowListAsync(orderByField, orderByOrder);
+            var showList = await _showListService.GetShowListAsync(request, request);
 
-            if(!showList.Shows.Any()) {
+            if(!showList.Items.Any()) {
                 return NoContent();
             }
 

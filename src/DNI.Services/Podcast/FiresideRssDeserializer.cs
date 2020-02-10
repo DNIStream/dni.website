@@ -18,6 +18,19 @@ namespace DNI.Services.Podcast {
     /// </summary>
     public class FiresideRssDeserializer : IXmlDeserializer {
         /// <summary>
+        ///     Sanitises RSS iTunes keywords
+        /// </summary>
+        /// <param name="keywords"></param>
+        /// <returns></returns>
+        private IEnumerable<string> SanitiseKeyWords(string keywords) {
+            return keywords
+                .Split(',')
+                .Select(x => x.Trim().ToLower())
+                .Where(x => x.Length > 0)
+                .Distinct();
+        }
+
+        /// <summary>
         ///     Deserializes a Fireside RSS feed into a <see cref="PodcastShow" />
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -37,6 +50,7 @@ namespace DNI.Services.Podcast {
 
                     var itemXml = feedReader.ReadElementAsString().GetAwaiter().GetResult();
                     var doc = XDocument.Parse(itemXml);
+                    var keywords = doc.GetElementValue("itunes:keywords");
 
                     streamGraph.Shows.Add(new PodcastShow {
                         Id = new Guid(doc.GetElementValue("guid")),
@@ -47,7 +61,7 @@ namespace DNI.Services.Podcast {
                         DatePublished = DateTime.TryParse(doc.GetElementValue("pubDate"), out var datePublished) ? datePublished : DateTime.MinValue,
                         PageUrl = doc.GetElementValue("link"),
                         HeaderImage = doc.GetAttributeValue("itunes:image", "href"),
-                        Keywords = doc.GetElementValue("itunes:keywords")?.Split(',').Select(x => x.Trim()),
+                        Keywords = !string.IsNullOrWhiteSpace(keywords) ? SanitiseKeyWords(keywords) : null,
                         AudioFile = new PodcastFile {
                             Url = doc.GetAttributeValue("enclosure", "url"),
                             Duration = doc.GetElementValue("itunes:duration"),

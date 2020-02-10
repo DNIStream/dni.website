@@ -5,7 +5,11 @@ using System.Reflection;
 using DNI.Options;
 using DNI.Services.Captcha;
 using DNI.Services.Email;
+using DNI.Services.Mappers;
 using DNI.Services.Podcast;
+using DNI.Services.Shared.Mapping;
+using DNI.Services.Shared.Paging;
+using DNI.Services.Shared.Sorting;
 using DNI.Services.ShowList;
 
 using Microsoft.AspNetCore.Builder;
@@ -64,7 +68,14 @@ namespace DNI.API {
                 .AddTransient<ICaptchaService, CaptchaService>()
                 .AddTransient<IEmailService, SystemNetEmailService>()
                 .AddTransient<IPodcastService, FiresidePodcastService>()
-                .AddTransient<IShowListService, ShowListService>();
+                .AddTransient<IShowListService, ShowListService>()
+                .AddTransient<IShowKeywordAggregationService, ShowKeywordAggregationService>()
+                .AddTransient<IPagingCalculator<Show>, PagingCalculator<Show>>()
+                .AddTransient<ISorter, Sorter>();
+
+            // Mappers
+            services
+                .AddTransient<IMapper<PodcastShow, Show>, PodcastShowToShowMapper>();
 
             // MVC
             services
