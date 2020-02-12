@@ -36,7 +36,7 @@ namespace DNI.Services.Podcast {
         /// <summary>
         ///     Returns the version of the <see cref="PageUrl" />, or null if the <see cref="PageUrl" /> is not version compatible.
         /// </summary>
-        public string Version {
+        public decimal? Version {
             get {
                 var m = podcastUriVersionMatcher.Match(PageUrl);
                 if(!m.Success) {
@@ -45,8 +45,8 @@ namespace DNI.Services.Podcast {
 
                 var version = m.Groups[1].Value.Replace("-", ".").Trim();
 
-                if(decimal.TryParse(version, out _)) {
-                    return version;
+                if(decimal.TryParse(version, out var dVersion)) {
+                    return dVersion;
                 }
 
                 return null;

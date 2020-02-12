@@ -51,10 +51,10 @@
             <itunes:explicit>no</itunes:explicit>
             <itunes:image href="https://assets.fireside.fm/myimage.jpg" />
             <description>TEST
-                PLAIN TEXT
-                Content
-                JEFF
-            </description>
+PLAIN TEXT
+Content
+JEFF
+</description>
             <itunes:keywords>REPLACE IN TEST</itunes:keywords>
             <content:encoded>
                 <![CDATA[<p>This is some test HTML</p>

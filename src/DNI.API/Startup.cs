@@ -71,7 +71,7 @@ namespace DNI.API {
                 .AddTransient<IShowListService, ShowListService>()
                 .AddTransient<IShowKeywordAggregationService, ShowKeywordAggregationService>()
                 .AddTransient<IPagingCalculator<Show>, PagingCalculator<Show>>()
-                .AddTransient<ISorter, Sorter>();
+                .AddTransient<ISorter<Show>, Sorter<Show>>();
 
             // Mappers
             services

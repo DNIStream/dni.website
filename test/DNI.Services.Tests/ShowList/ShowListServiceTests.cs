@@ -29,7 +29,7 @@ namespace DNI.Services.Tests.ShowList {
         private readonly Mock<IPagingCalculator<Show>> _pagingCalculatorMock;
         private readonly Mock<IShowKeywordAggregationService> _showKeywordAggregationServiceMock;
         private readonly Mock<IMapper<PodcastShow, Show>> _podcastShowMapperMock;
-        private readonly Mock<ISorter> _sorterMock;
+        private readonly Mock<ISorter<Show>> _sorterMock;
         private readonly Mock<ILogger<ShowListService>> _loggerMock;
 
         private readonly PodcastStream podcasts;
@@ -44,7 +44,7 @@ namespace DNI.Services.Tests.ShowList {
             _showKeywordAggregationServiceMock = Mock.Get(_fixture.Create<IShowKeywordAggregationService>());
             _pagingCalculatorMock = Mock.Get(_fixture.Create<IPagingCalculator<Show>>());
             _podcastShowMapperMock = Mock.Get(_fixture.Create<IMapper<PodcastShow, Show>>());
-            _sorterMock = Mock.Get(_fixture.Create<ISorter>());
+            _sorterMock = Mock.Get(_fixture.Create<ISorter<Show>>());
 
             _podcastServiceMock = Mock.Get(_fixture.Create<IPodcastService>());
             _podcastServiceMock

@@ -18,12 +18,12 @@ namespace DNI.Services.Tests.Podcast {
         }
 
         [Theory]
-        [InlineData("https://test.com/v0-1", "0.1")]
-        [InlineData("https://test.com/v13-2", "13.2")]
-        [InlineData("http://test.co.uk/shows/v3-56", "3.56")]
-        [InlineData("http://test.co.uk/shows/dni/v456-2223", "456.2223")]
-        [InlineData("http://test.co.uk/shows/dni/V2-4", "2.4")]
-        public void Version_ReturnsVersionFromVersionFormattedPageUrl(string inputUrl, string expectedVersion) {
+        [InlineData("https://test.com/v0-1", 0.1)]
+        [InlineData("https://test.com/v13-2", 13.2)]
+        [InlineData("http://test.co.uk/shows/v3-56", 3.56)]
+        [InlineData("http://test.co.uk/shows/dni/v456-2223", 456.2223)]
+        [InlineData("http://test.co.uk/shows/dni/V2-4", 2.4)]
+        public void Version_ReturnsVersionFromVersionFormattedPageUrl(string inputUrl, decimal expectedVersion) {
             // Arrange
             var show = new PodcastShow {
                 PageUrl = inputUrl

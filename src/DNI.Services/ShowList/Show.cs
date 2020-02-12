@@ -15,7 +15,7 @@ namespace DNI.Services.ShowList {
 
         public DateTime PublishedTime { get; set; }
 
-        public string Version { get; set; }
+        public decimal? Version { get; set; }
 
         public string Slug { get; set; }
 
@@ -24,6 +24,8 @@ namespace DNI.Services.ShowList {
         public string PodcastPageUrl { get; set; }
 
         public string Duration { get; set; }
+
+        public long? DurationInSeconds { get; set; }
 
         public IEnumerable<string> Keywords { get; set; }
     }

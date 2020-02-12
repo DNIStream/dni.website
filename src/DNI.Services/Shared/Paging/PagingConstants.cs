@@ -13,6 +13,6 @@ namespace DNI.Services.Shared.Paging {
         /// <summary>
         ///     The default number of records returned per page for all paging queries
         /// </summary>
-        public const int DEFAULT_PAGE_SIZE = 10;
+        public const int DEFAULT_PAGE_SIZE = 7;
     }
 }

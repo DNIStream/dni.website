@@ -21,9 +21,15 @@ namespace DNI.API.Requests {
         public int ItemsPerPage { get; set; } = PagingConstants.DEFAULT_PAGE_SIZE;
 
         /// <summary>
-        ///     The field to sort by
+        ///     The field to sort the result set by
         /// </summary>
-        [BindProperty(Name = "sort-by-fields", SupportsGet = true)]
-        public FieldSort SortByField { get; set; }
+        [BindProperty(Name = "sort-field", SupportsGet = true)]
+        public string Field { get; set; } = "PublishedTime";
+
+        /// <summary>
+        ///     The order of the field to sort the result set by
+        /// </summary>
+        [BindProperty(Name = "sort-order", SupportsGet = true)]
+        public FieldOrder Order { get; set; } = FieldOrder.Descending;
     }
 }

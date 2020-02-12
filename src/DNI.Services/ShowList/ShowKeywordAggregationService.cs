@@ -13,6 +13,8 @@ namespace DNI.Services.ShowList {
             return await Task.FromResult(shows
                 .SelectMany(x => x.Keywords)
                 .GroupBy(k => k, (keyword, keywords) => new {Keyword = keyword, Count = keywords.Count()})
+                .OrderByDescending(x => x.Count)
+                .ThenBy(x => x.Keyword)
                 .ToDictionary(k => k.Keyword, v => v.Count));
         }
     }

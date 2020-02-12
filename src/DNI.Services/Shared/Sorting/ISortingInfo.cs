@@ -4,8 +4,14 @@
     /// </summary>
     public interface ISortingInfo {
         /// <summary>
-        ///     A sorted dictionary of the fields to sort by, along with their corresponding order
+        ///     The field name to sort by
         /// </summary>
-        FieldSort SortByField { get; set; }
+        
+        string Field { get; set; }
+
+        /// <summary>
+        ///     The sort order
+        /// </summary>
+        FieldOrder Order { get; set; }
     }
 }

@@ -13,18 +13,18 @@ namespace DNI.Services.ShowList {
         private readonly IPodcastService _podcastService;
         private readonly ILogger<ShowListService> _logger;
         private readonly IShowKeywordAggregationService _showKeywordAggregationService;
-        private readonly IPagingCalculator<Show> _pagingCalculator;
+        private readonly IPagingCalculator<Show> _showPagingCalculator;
         private readonly IMapper<PodcastShow, Show> _podcastShowMapper;
-        private readonly ISorter _sorter;
+        private readonly ISorter<Show> _showSorter;
 
         public ShowListService(IPodcastService podcastService, IShowKeywordAggregationService showKeywordAggregationService,
-            IPagingCalculator<Show> pagingCalculator, IMapper<PodcastShow, Show> podcastShowMapper, ISorter sorter, ILogger<ShowListService> logger) {
+            IPagingCalculator<Show> showPagingCalculator, IMapper<PodcastShow, Show> podcastShowMapper, ISorter<Show> showSorter, ILogger<ShowListService> logger) {
             _podcastService = podcastService;
             _logger = logger;
             _showKeywordAggregationService = showKeywordAggregationService;
-            _pagingCalculator = pagingCalculator;
+            _showPagingCalculator = showPagingCalculator;
             _podcastShowMapper = podcastShowMapper;
-            _sorter = sorter;
+            _showSorter = showSorter;
         }
 
         /// <summary>
@@ -45,10 +45,10 @@ namespace DNI.Services.ShowList {
             // TODO: Caching
 
             // Perform sorting
-            var orderedShows = await _sorter.SortAsync(allShows, sortingInfo);
+            var orderedShows = await _showSorter.SortAsync(allShows, sortingInfo);
 
             // Perform paging
-            var showListResponse = await _pagingCalculator.PageItemsAsync<ShowList>(pageInfo, orderedShows);
+            var showListResponse = await _showPagingCalculator.PageItemsAsync<ShowList>(pageInfo, orderedShows);
             showListResponse.TotalKeywordCounts = keywordCounts;
             return showListResponse;
         }

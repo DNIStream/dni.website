@@ -5,7 +5,7 @@ namespace DNI.Services.Shared.Sorting {
     /// <summary>
     ///     Provides a sorting service contract.
     /// </summary>
-    public interface ISorter {
-        Task<TItem[]> SortAsync<TItem>(IEnumerable<TItem> allItems, ISortingInfo sortingInfo);
+    public interface ISorter<TItem> where TItem: class {
+        Task<TItem[]> SortAsync(IEnumerable<TItem> allItems, ISortingInfo sortingInfo);
     }
 }

@@ -30,11 +30,12 @@ namespace DNI.API.Controllers {
         /// <response code="400">A validation error occurred. See raised <see cref="APIErrorResponse" /> for more details.</response>
         /// <response code="200">OK. Shows were successfully returned.</response>
         /// <response code="204">OK - No Content. No shows were found.</response>
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ShowList), StatusCodes.Status200OK)]
         [Route("shows")]
-        public async Task<IActionResult> GetShowsAsync([FromBody] GetShowsRequest request) {
+        public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request) {
+            // TODO: Implement tests
             if(!ModelState.IsValid) {
                 return ModelValidationBadRequest();
             }
