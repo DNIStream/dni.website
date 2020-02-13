@@ -33,10 +33,10 @@ namespace DNI.Services.Tests.Shared.Paging {
             var calculator = GetCalculator();
 
             // Act
-            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => calculator.PageItemsAsync<TestPagedResponse>(null, results));
+            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => calculator.PageItemsAsync<TestPagedResponse>(results, null));
 
             // Assert
-            Assert.Equal("pagingInfo", ex.ParamName);
+            Assert.Equal("pagingRequest", ex.ParamName);
         }
 
         [Theory]
@@ -46,17 +46,17 @@ namespace DNI.Services.Tests.Shared.Paging {
         public async Task Calculate_ThrowsException_IfPagingRequestHasInvalidItemsPerPage(int itemsPagePage) {
             // Arrange
             var results = _fixture.CreateMany<string>(56).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = itemsPagePage,
                 PageNumber = 1
             };
             var calculator = GetCalculator();
 
             // Act
-            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results));
+            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo));
 
             // Assert
-            Assert.Equal("pagingInfo.ItemsPerPage must be greater than zero", ex.Message);
+            Assert.Equal("pagingRequest.ItemsPerPage must be greater than zero", ex.Message);
         }
 
         [Theory]
@@ -66,31 +66,31 @@ namespace DNI.Services.Tests.Shared.Paging {
         public async Task Calculate_ThrowsException_IfPagingRequestHasInvalidPageNumber(int pageNumber) {
             // Arrange
             var results = _fixture.CreateMany<string>(56).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = 10,
                 PageNumber = pageNumber
             };
             var calculator = GetCalculator();
 
             // Act
-            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results));
+            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo));
 
             // Assert
-            Assert.Equal("pagingInfo.PageNumber must be greater than zero", ex.Message);
+            Assert.Equal("pagingRequest.PageNumber must be greater than zero", ex.Message);
         }
 
         [Fact]
         public async Task Calculate_ReturnsResponse() {
             // Arrange
             var results = _fixture.CreateMany<string>(56).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = 10,
                 PageNumber = 1
             };
             var calculator = GetCalculator();
 
             // Act
-            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results);
+            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo);
 
             // Assert
             Assert.NotNull(pagedResponse);
@@ -111,14 +111,14 @@ namespace DNI.Services.Tests.Shared.Paging {
             int expectedStartIndex, int expectedEndIndex, int expectedTotalPages) {
             // Arrange
             var results = _fixture.CreateMany<string>(totalRecords).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = requestedItemsPerPage,
                 PageNumber = requestedPageNo
             };
             var calculator = GetCalculator();
 
             // Act
-            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results);
+            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo);
 
             // Assert
             Assert.Equal(expectedCurrentPage, pagedResponse.CurrentPage);
@@ -132,7 +132,7 @@ namespace DNI.Services.Tests.Shared.Paging {
         public async Task Calculate_ReturnsExpectedPagedItems_ForFirstPage() {
             // Arrange
             var results = _fixture.CreateMany<string>(56).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = 10,
                 PageNumber = 1
             };
@@ -140,7 +140,7 @@ namespace DNI.Services.Tests.Shared.Paging {
             var expectedResults = results.Take(10);
 
             // Act
-            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results);
+            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo);
 
             // Assert
             Assert.NotNull(pagedResponse.Items);
@@ -152,7 +152,7 @@ namespace DNI.Services.Tests.Shared.Paging {
         public async Task Calculate_ReturnsExpectedPagedItems_ForSecondPage() {
             // Arrange
             var results = _fixture.CreateMany<string>(56).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = 10,
                 PageNumber = 2
             };
@@ -160,7 +160,7 @@ namespace DNI.Services.Tests.Shared.Paging {
             var expectedResults = results.Skip(10).Take(10);
 
             // Act
-            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results);
+            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo);
 
             // Assert
             Assert.NotNull(pagedResponse.Items);
@@ -172,7 +172,7 @@ namespace DNI.Services.Tests.Shared.Paging {
         public async Task Calculate_ReturnsExpectedPagedItems_ForLastPage() {
             // Arrange
             var results = _fixture.CreateMany<string>(53).ToArray();
-            var pagingInfo = new TestPagingInfo {
+            var pagingInfo = new TestPagingRequest {
                 ItemsPerPage = 10,
                 PageNumber = 6
             };
@@ -180,7 +180,7 @@ namespace DNI.Services.Tests.Shared.Paging {
             var expectedResults = results.TakeLast(3);
 
             // Act
-            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(pagingInfo, results);
+            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo);
 
             // Assert
             Assert.NotNull(pagedResponse.Items);
@@ -188,7 +188,7 @@ namespace DNI.Services.Tests.Shared.Paging {
             Assert.True(pagedResponse.Items.SequenceEqual(expectedResults));
         }
 
-        private class TestPagingInfo : IPagingInfo {
+        private class TestPagingRequest : IPagingRequest {
             public int PageNumber { get; set; }
 
             public int ItemsPerPage { get; set; }

@@ -14,27 +14,27 @@ namespace DNI.Services.Shared.Paging {
         /// </summary>
         /// <typeparam name="TItem"></typeparam>
         /// <typeparam name="TPagedResponse"></typeparam>
-        /// <param name="pagingInfo"></param>
+        /// <param name="pagingRequest"></param>
         /// <param name="allItems"></param>
         /// <returns></returns>
-        public async Task<TPagedResponse> PageItemsAsync<TPagedResponse>(IPagingInfo pagingInfo, TItem[] allItems)
+        public async Task<TPagedResponse> PageItemsAsync<TPagedResponse>(TItem[] allItems, IPagingRequest pagingRequest)
             where TPagedResponse : IPagedResponse<TItem>, new() {
-            if(pagingInfo == null) {
-                throw new ArgumentNullException(nameof(pagingInfo));
+            if(pagingRequest == null) {
+                throw new ArgumentNullException(nameof(pagingRequest));
             }
 
-            if(pagingInfo.ItemsPerPage <= 0) {
-                throw new InvalidOperationException("pagingInfo.ItemsPerPage must be greater than zero");
+            if(pagingRequest.ItemsPerPage <= 0) {
+                throw new InvalidOperationException("pagingRequest.ItemsPerPage must be greater than zero");
             }
 
-            if(pagingInfo.PageNumber <= 0) {
-                throw new InvalidOperationException("pagingInfo.PageNumber must be greater than zero");
+            if(pagingRequest.PageNumber <= 0) {
+                throw new InvalidOperationException("pagingRequest.PageNumber must be greater than zero");
             }
 
-            var pageSize = pagingInfo.ItemsPerPage;
+            var pageSize = pagingRequest.ItemsPerPage;
             var totalRecords = allItems.Length;
             var totalPages = CalculateTotalPages(totalRecords, pageSize);
-            var currentPageNumber = CalculateCurrentPageNumber(totalPages, pagingInfo.PageNumber);
+            var currentPageNumber = CalculateCurrentPageNumber(totalPages, pagingRequest.PageNumber);
             var startIndex = CalculateStartIndex(totalRecords, currentPageNumber, pageSize, totalPages);
             var endIndex = CalculateEndIndex(totalRecords, currentPageNumber, pageSize, totalPages, startIndex);
 
@@ -42,10 +42,8 @@ namespace DNI.Services.Shared.Paging {
                 CurrentPage = currentPageNumber,
                 TotalRecords = totalRecords,
                 StartIndex = startIndex,
-                // Check for divide by zero error
                 TotalPages = totalPages,
                 EndIndex = endIndex,
-                // TODO: Benchmark
                 Items = await FilterItemsAsync(allItems, startIndex, pageSize)
             };
         }

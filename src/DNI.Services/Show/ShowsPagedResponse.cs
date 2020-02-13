@@ -2,12 +2,11 @@
 
 using DNI.Services.Shared.Paging;
 
-namespace DNI.Services.ShowList {
+namespace DNI.Services.Show {
     /// <summary>
     ///     Contains a list of shows along with aggregated metadata and paging information.
     /// </summary>
-    public class ShowList : IPagedResponse<Show> {
-        #region Implementation of IPagedResponse
+    internal class ShowsPagedResponse: IPagedResponse<Show> {
 
         public int CurrentPage { get; set; }
 
@@ -20,9 +19,5 @@ namespace DNI.Services.ShowList {
         public int EndIndex { get; set; }
 
         public IEnumerable<Show> Items { get; set; }
-
-        #endregion
-
-        public IDictionary<string, int> TotalKeywordCounts { get; set; }
     }
 }

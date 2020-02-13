@@ -25,7 +25,7 @@ namespace DNI.Services.Podcast {
 
         public string Summary { get; set; }
 
-        public DateTime DatePublished { get; set; }
+        public DateTime PublishedTime { get; set; }
 
         public PodcastFile AudioFile { get; set; }
 
@@ -68,5 +68,12 @@ namespace DNI.Services.Podcast {
                 return slug;
             }
         }
+
+        /// <summary>
+        ///     Calculates the duration in seconds from the AudioFile.Duration property
+        /// </summary>
+        public long? DurationInSeconds =>
+            TimeSpan.TryParse(AudioFile?.Duration, out var durationInSeconds)
+                ? (long?) durationInSeconds.TotalSeconds : null;
     }
 }

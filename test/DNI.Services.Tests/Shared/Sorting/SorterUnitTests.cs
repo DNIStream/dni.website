@@ -35,13 +35,13 @@ namespace DNI.Services.Tests.Shared.Sorting {
             var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => sorter.SortAsync(results, null));
 
             // Assert
-            Assert.Equal("sortingInfo", ex.ParamName);
+            Assert.Equal("sortingRequest", ex.ParamName);
         }
 
         [Fact]
         public async Task SortAsync_ThrowsException_WhenNullItems() {
             // Arrange
-            var sortingInfo = _fixture.Create<TestSortingInfo>();
+            var sortingInfo = _fixture.Create<TestSortingRequest>();
             var sorter = GetCalculator();
 
             // Act
@@ -60,7 +60,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
         [InlineData("\t")]
         public async Task SortAsync_ThrowsException_WhenSortingInfoHasNullFieldName(string fieldName) {
             // Arrange
-            var sortingInfo = _fixture.Create<TestSortingInfo>();
+            var sortingInfo = _fixture.Create<TestSortingRequest>();
             sortingInfo.Field = fieldName;
 
             var results = _fixture.CreateMany<string>();
@@ -70,15 +70,15 @@ namespace DNI.Services.Tests.Shared.Sorting {
             var ex = await Assert.ThrowsAsync<ArgumentException>(() => sorter.SortAsync(results, sortingInfo));
 
             // Assert
-            Assert.Equal("sortingInfo", ex.ParamName);
-            Assert.Contains("sortingInfo.Field is required", ex.Message);
+            Assert.Equal("sortingRequest", ex.ParamName);
+            Assert.Contains("sortingRequest.Field is required", ex.Message);
         }
 
         [Fact]
         public async Task SortAsync_ThrowsInvalidOperation_WhenSpecifiedFieldDoesNotExistOnType() {
             // Arrange
             var results = _fixture.CreateMany<string>(23);
-            var sortingInfo = _fixture.Create<TestSortingInfo>();
+            var sortingInfo = _fixture.Create<TestSortingRequest>();
             sortingInfo.Field = "NOTASTRINGMEMBER";
             var sorter = GetCalculator();
 
@@ -93,7 +93,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
         public async Task SortAsync_ReturnsEmptyArray_IfAllItemsIsEmpty() {
             // Arrange
             var results = _fixture.CreateMany<string>(0);
-            var sortingInfo = _fixture.Create<TestSortingInfo>();
+            var sortingInfo = _fixture.Create<TestSortingRequest>();
             sortingInfo.Field = "Length";
             var sorter = GetCalculator();
 
@@ -115,7 +115,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
             var fifth = string.Join("", Enumerable.Repeat("E", 25));
 
             var inputArray = new[] {second, fifth, third, first, fourth};
-            var sortingInfo = _fixture.Create<TestSortingInfo>();
+            var sortingInfo = _fixture.Create<TestSortingRequest>();
             sortingInfo.Field = "Length";
             sortingInfo.Order = FieldOrder.Ascending;
 
@@ -142,7 +142,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
             var fifth = string.Join("", Enumerable.Repeat("E", 25));
 
             var inputArray = new[] {second, fifth, third, first, fourth};
-            var sortingInfo = _fixture.Create<TestSortingInfo>();
+            var sortingInfo = _fixture.Create<TestSortingRequest>();
             sortingInfo.Field = "Length";
             sortingInfo.Order = FieldOrder.Descending;
 
@@ -159,7 +159,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
             Assert.Equal(fifth, result[0]);
         }
 
-        private class TestSortingInfo : ISortingInfo {
+        private class TestSortingRequest : ISortingRequest {
             public string Field { get; set; }
 
             public FieldOrder Order { get; set; }

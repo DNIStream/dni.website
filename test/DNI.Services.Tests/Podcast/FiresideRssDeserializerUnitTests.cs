@@ -86,7 +86,7 @@ namespace DNI.Services.Tests.Podcast {
             Assert.Equal("<p>This is some test HTML</p>\n<p>And another line</p>", itemUnderTest.ContentHtml);
             Assert.Equal("This is the expected subtitle", itemUnderTest.Summary);
             // "Fri, 24 Jan 2020 05:15:00 +0000" in file
-            Assert.Equal(new DateTime(2020, 1, 24, 5, 15, 0), itemUnderTest.DatePublished);
+            Assert.Equal(new DateTime(2020, 1, 24, 5, 15, 0), itemUnderTest.PublishedTime);
             Assert.Equal(new Guid("9fba4db0-ff9b-4364-baa6-0d14eabc1ab7"), itemUnderTest.Id);
             Assert.Equal("https://dnistream.fireside.fm/49", itemUnderTest.PageUrl);
             // <itunes:image href="https://assets.fireside.fm/myimage.jpg"/>

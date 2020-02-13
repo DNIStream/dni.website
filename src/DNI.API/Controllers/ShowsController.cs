@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 using DNI.API.Requests;
 using DNI.API.Responses;
-using DNI.Services.ShowList;
+using DNI.Services.Show;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +13,14 @@ namespace DNI.API.Controllers {
     ///     Provides REST methods for shows
     /// </summary>
     public class ShowsController : ControllerBase {
-        private readonly IShowListService _showListService;
+        private readonly IShowService _showService;
 
         /// <summary>
         ///     Provides REST methods for shows
         /// </summary>
-        /// <param name="showListService"></param>
-        public ShowsController(IShowListService showListService) {
-            _showListService = showListService;
+        /// <param name="showService"></param>
+        public ShowsController(IShowService showService) {
+            _showService = showService;
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace DNI.API.Controllers {
         /// <response code="204">OK - No Content. No shows were found.</response>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(typeof(ShowList), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ShowListAPIResponse), StatusCodes.Status200OK)]
         [Route("shows")]
         public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request) {
             // TODO: Implement tests
@@ -40,13 +40,30 @@ namespace DNI.API.Controllers {
                 return ModelValidationBadRequest();
             }
 
-            var showList = await _showListService.GetShowListAsync(request, request);
+            var showList = await _showService.GetShowsAsync(request, request);
 
             if(!showList.Items.Any()) {
                 return NoContent();
             }
 
-            return Ok(showList);
+            var latestShow = await _showService.GetLatestShowAsync();
+
+            var keywords = await _showService.GetAggregatedKeywords();
+
+            var test = new ShowListAPIResponse {
+                PageInfo = new PagedAPIResponse {
+                    StartIndex = showList.StartIndex,
+                    TotalRecords = showList.TotalRecords,
+                    EndIndex = showList.EndIndex,
+                    CurrentPage = showList.CurrentPage,
+                    TotalPages = showList.TotalPages
+                },
+                PagedShows = showList.Items, 
+                LatestShow = latestShow,
+                ShowKeywords = keywords
+            };
+
+            return Ok(test);
         }
     }
 }

@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using AutoFixture;
 using AutoFixture.AutoMoq;
 
-using DNI.Services.ShowList;
+using DNI.Services.Podcast;
+using DNI.Services.Show;
 using DNI.Testing;
 
 using Xunit;
 using Xunit.Abstractions;
 
-namespace DNI.Services.Tests.ShowList {
+namespace DNI.Services.Tests.Show {
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class ShowKeywordAggregationServiceTests {
         private readonly ITestOutputHelper _output;
@@ -30,27 +31,27 @@ namespace DNI.Services.Tests.ShowList {
             // Arrange
             var service = GetService();
 
-            var show1 = _fixture.Build<Show>()
+            var show1 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag1", "tag2", "tag3"
                 })
                 .Create();
-            var show2 = _fixture.Build<Show>()
+            var show2 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag2"
                 })
                 .Create();
-            var show3 = _fixture.Build<Show>()
+            var show3 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag3"
                 })
                 .Create();
-            var show4 = _fixture.Build<Show>()
+            var show4 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag3", "tag4"
                 })
                 .Create();
-            var shows = new List<Show> {
+            var shows = new List<PodcastShow> {
                 show1, show2, show3, show4
             };
 
@@ -70,27 +71,27 @@ namespace DNI.Services.Tests.ShowList {
             // Arrange
             var service = GetService();
 
-            var show1 = _fixture.Build<Show>()
+            var show1 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag1", "tag2", "tag3"
                 })
                 .Create();
-            var show2 = _fixture.Build<Show>()
+            var show2 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag2"
                 })
                 .Create();
-            var show3 = _fixture.Build<Show>()
+            var show3 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag3"
                 })
                 .Create();
-            var show4 = _fixture.Build<Show>()
+            var show4 = _fixture.Build<PodcastShow>()
                 .With(x => x.Keywords, () => new List<string> {
                     "tag3", "tag4"
                 })
                 .Create();
-            var shows = new List<Show> {
+            var shows = new List<PodcastShow> {
                 show1, show2, show3, show4
             };
 

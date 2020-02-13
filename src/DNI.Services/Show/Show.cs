@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DNI.Services.ShowList {
+namespace DNI.Services.Show {
     public class Show {
         public string AudioUrl { get; set; }
 

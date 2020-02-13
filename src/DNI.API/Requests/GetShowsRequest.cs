@@ -7,7 +7,7 @@ namespace DNI.API.Requests {
     /// <summary>
     ///     A REST request for retrieving a list of shows
     /// </summary>
-    public class GetShowsRequest : IPagingInfo, ISortingInfo {
+    public class GetShowsRequest : IPagingRequest, ISortingRequest {
         /// <summary>
         ///     The page number to request
         /// </summary>

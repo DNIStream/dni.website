@@ -90,5 +90,67 @@ namespace DNI.Services.Tests.Podcast {
             // Assert
             Assert.Null(actualSlug);
         }
+
+        [Fact]
+        public void DurationInSeconds_ReturnsNullWhenAudioFileIsNull() {
+            // Arrange
+            var show = new PodcastShow {
+                AudioFile = null
+            };
+
+            // Act
+            var actualDuration = show.DurationInSeconds;
+
+            // Assert
+            Assert.Null(actualDuration);
+        }
+
+        [Fact]
+        public void DurationInSeconds_ReturnsNullWhenAudioFileDurationIsNull() {
+            // Arrange
+            var show = new PodcastShow {
+                AudioFile = new PodcastFile {
+                    Duration = null
+                }
+            };
+
+            // Act
+            var actualDuration = show.DurationInSeconds;
+
+            // Assert
+            Assert.Null(actualDuration);
+        }
+
+        [Fact]
+        public void DurationInSeconds_ReturnsNullWhenAudioFileDurationCannotBeParsed() {
+            // Arrange
+            var show = new PodcastShow {
+                AudioFile = new PodcastFile {
+                    Duration = "NOT A TIME"
+                }
+            };
+
+            // Act
+            var actualDuration = show.DurationInSeconds;
+
+            // Assert
+            Assert.Null(actualDuration);
+        }
+
+        [Fact]
+        public void DurationInSeconds_ReturnsExpectedDurationInSecondsWhenAudioFileIsValidTimeStamp() {
+            // Arrange
+            var show = new PodcastShow {
+                AudioFile = new PodcastFile {
+                    Duration = "02:45:43" // ((60 x 2) x 60) + (45 x 60) + 43 = 9943
+                }
+            };
+
+            // Act
+            var actualDuration = show.DurationInSeconds;
+
+            // Assert
+            Assert.Equal(9943, actualDuration);
+        }
     }
 }

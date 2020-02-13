@@ -58,7 +58,7 @@ namespace DNI.Services.Podcast {
                         Content = doc.GetElementValue("description"),
                         ContentHtml = doc.GetElementValue("content:encoded"),
                         Summary = doc.GetElementValue("itunes:subtitle"),
-                        DatePublished = DateTime.TryParse(doc.GetElementValue("pubDate"), out var datePublished) ? datePublished : DateTime.MinValue,
+                        PublishedTime = DateTime.TryParse(doc.GetElementValue("pubDate"), out var datePublished) ? datePublished : DateTime.MinValue,
                         PageUrl = doc.GetElementValue("link"),
                         HeaderImage = doc.GetAttributeValue("itunes:image", "href"),
                         Keywords = !string.IsNullOrWhiteSpace(keywords) ? SanitiseKeyWords(keywords) : null,
