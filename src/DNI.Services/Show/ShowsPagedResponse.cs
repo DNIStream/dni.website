@@ -18,6 +18,8 @@ namespace DNI.Services.Show {
 
         public int EndIndex { get; set; }
 
+        public int ItemsPerPage { get; set; }
+
         public IEnumerable<Show> Items { get; set; }
     }
 }

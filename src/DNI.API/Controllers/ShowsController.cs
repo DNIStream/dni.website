@@ -56,7 +56,8 @@ namespace DNI.API.Controllers {
                     TotalRecords = showList.TotalRecords,
                     EndIndex = showList.EndIndex,
                     CurrentPage = showList.CurrentPage,
-                    TotalPages = showList.TotalPages
+                    TotalPages = showList.TotalPages,
+                    ItemsPerPage = showList.ItemsPerPage
                 },
                 PagedShows = showList.Items, 
                 LatestShow = latestShow,

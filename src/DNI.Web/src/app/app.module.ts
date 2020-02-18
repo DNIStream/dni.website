@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgStringPipesModule } from 'angular-pipes';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { TabsModule, CollapseModule } from 'ngx-bootstrap';
+import { TabsModule, CollapseModule, PaginationModule } from 'ngx-bootstrap';
 // Replace this import and delete the code once the 3rd party component has been published to npm
 import { CookieLawModule } from 'app/components/shared/angular2-cookie-law/angular2-cookie-law.module';
 // import { CookieLawModule } from 'angular2-cookie-law';
@@ -45,6 +45,7 @@ import { SafePipe } from 'app/components/shared/safe-pipe/safe.pipe';
     BrowserModule.withServerTransition({ appId: 'dni' }),
     TabsModule.forRoot(),
     CollapseModule.forRoot(),
+    PaginationModule.forRoot(),
     ReactiveFormsModule,
     FormsModule,
     NgxCaptchaModule,

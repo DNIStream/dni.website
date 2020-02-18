@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace DNI.Services.Podcast {
@@ -72,8 +73,29 @@ namespace DNI.Services.Podcast {
         /// <summary>
         ///     Calculates the duration in seconds from the AudioFile.Duration property
         /// </summary>
-        public long? DurationInSeconds =>
-            TimeSpan.TryParse(AudioFile?.Duration, out var durationInSeconds)
-                ? (long?) durationInSeconds.TotalSeconds : null;
+        public long? DurationInSeconds {
+            get {
+                if(AudioFile?.Duration == null) {
+                    return null;
+                }
+
+                var times = new int[3];
+                var parts = AudioFile.Duration.Split(':');
+                Array.Reverse(parts);
+
+                for(var i = 0; i < parts.Length; ++i) {
+                    if(int.TryParse(parts[i], out var part)) {
+                        times[times.Length - 1 - i] = part;
+                    }
+                }
+
+                var hours = times[0];
+                var mins = times[1];
+                var seconds = times[2];
+
+                var totalSeconds = seconds + (mins * 60) + ((hours * 60) * 60);
+                return totalSeconds > 0 ? totalSeconds : (long?) null;
+            }
+        }
     }
 }

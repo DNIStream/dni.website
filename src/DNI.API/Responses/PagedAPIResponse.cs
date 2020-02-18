@@ -27,5 +27,10 @@
         ///     The zero based end index of the record for the returned page
         /// </summary>
         public int EndIndex { get; set; }
+
+        /// <summary>
+        ///     The number of items per page
+        /// </summary>
+        public int ItemsPerPage { get; set; }
     }
 }

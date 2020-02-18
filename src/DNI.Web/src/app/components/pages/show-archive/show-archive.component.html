@@ -1,17 +1,15 @@
 <div class="container bg-light rounded p-4">
   <h1>Show Archive</h1>
-  <dni-loading *ngIf="!model || model.length <= 0"></dni-loading>
-  <ng-container *ngIf="model && model.length > 0">
 
-    <form class="form-inline py-3"
-          name="show-list-filter-form"
-          id="show-list-filter-form"
-          (ngSubmit)="onSubmit()"
-          #f="ngForm"
-          novalidate>
-      <label for="orderByField"
-             class="m-3">Order By:</label>
-      <select
+  <form class="form-inline py-3"
+        name="show-list-filter-form"
+        id="show-list-filter-form"
+        (ngSubmit)="onSubmit()"
+        #f="ngForm"
+        novalidate>
+    <label for="orderByField"
+           class="m-3">Order By:</label>
+    <select
         class="form-control mr-3"
         id="orderByField"
         name="orderByField"
@@ -19,10 +17,10 @@
         #orderByField="ngModel">
         <option *ngFor="let f of filterFields" [value]="f">{{f}}</option>
       </select>
-      <label class="sr-only"
-             for="orderByOrder">Order:</label>
+    <label class="sr-only"
+           for="orderByOrder">Order:</label>
 
-      <select
+    <select
         class="form-control mr-3"
         id="orderByOrder"
         name="orderByOrder"
@@ -31,19 +29,31 @@
         <option *ngFor="let o of filterOrders" [value]="o">{{o}}</option>
       </select>
 
-      <button type="submit" class="btn btn-primary">Update</button>
-    </form>
+    <button type="submit" class="btn btn-primary">Update</button>
+  </form>
 
-    <ng-container *ngFor="let show of model">
-      <div class="row">
-        <div class="col-12 pb-2">
-          <h4>{{show.title}}</h4>
-        </div>
-        <div class="col-md-3">
-          <img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" />
-          <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
-        </div>
-        <!-- <div class="col-md-5">
+  <pagination [totalItems]="totalItems"
+              [itemsPerPage]="itemsPerPage"
+              [(ngModel)]="currentPage"
+              [directionLinks]="true"
+              [boundaryLinks]="true"
+              [maxSize]="5"
+              [rotate]="true"
+              (pageChanged)="onPageChanged($event)">
+  </pagination> {{totalItems}} podcasts over {{totalPages}} pages
+
+  <dni-loading *ngIf="!shows || shows.length <= 0"></dni-loading>
+
+  <ng-container *ngFor="let show of shows">
+    <div class="row">
+      <div class="col-12 pb-2">
+        <h4>{{show.title}}</h4>
+      </div>
+      <div class="col-md-3">
+        <img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" />
+        <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
+      </div>
+      <!-- <div class="col-md-5">
           <p class="mt-2">{{show.summary}}</p>
           <audio controls
                  *ngIf="show.audioUrl">
@@ -52,18 +62,17 @@
             <p>Your browser does not support HTML5 Audio - click one of the social links to listen.</p>
           </audio>
         </div> -->
-        <div class="col-md-4">
-          <div>
-            <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
-            <strong>Duration</strong>: {{show.durationMinutes}}
-          </div>
-          <div>
-            <a [href]="show.vodPageUrl" target="_blank" title="View on YouTube" class="mr-2"><i class="fab fa-youtube fa-2x"></i></a>
-            <a [href]="show.podcastPageUrl" target="_blank" title="Listen on Fireside"><i class="fas fa-podcast fa-2x"></i></a>
-          </div>
+      <div class="col-md-4">
+        <div>
+          <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
+          <strong>Duration</strong>: {{show.duration}} | {{show.durationMinutes}}
+        </div>
+        <div>
+          <a [href]="show.podcastPageUrl" target="_blank" title="Listen on Fireside"><i class="fas fa-podcast fa-2x"></i></a>
         </div>
       </div>
-      <!--
+    </div>
+    <!--
       <div class="col-12 py-3">
         <button type="button" class="btn btn-primary btn-block" (click)="show.shown = !show.shown"
                 [attr.aria-expanded]="show.shown" attr.aria-controls="'collapse-' + show.version">
@@ -91,6 +100,16 @@
         </div>
         <hr />
       </div> -->
-    </ng-container>
   </ng-container>
+
+  <pagination [totalItems]="totalItems"
+              [itemsPerPage]="itemsPerPage"
+              [(ngModel)]="currentPage"
+              [directionLinks]="true"
+              [boundaryLinks]="true"
+              [maxSize]="5"
+              [rotate]="true"
+              (pageChanged)="onPageChanged($event)">
+  </pagination>
+
 </div>

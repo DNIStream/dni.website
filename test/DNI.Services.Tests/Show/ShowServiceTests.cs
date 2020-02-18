@@ -164,6 +164,7 @@ namespace DNI.Services.Tests.Show {
             Assert.Equal(expectedPagedItemsReponse.StartIndex, actualResponse.StartIndex);
             Assert.Equal(expectedPagedItemsReponse.TotalPages, actualResponse.TotalPages);
             Assert.Equal(expectedPagedItemsReponse.TotalRecords, actualResponse.TotalRecords);
+            Assert.Equal(expectedPagedItemsReponse.ItemsPerPage, actualResponse.ItemsPerPage);
         }
 
         #endregion

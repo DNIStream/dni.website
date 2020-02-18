@@ -125,7 +125,27 @@ namespace DNI.Services.Tests.Shared.Paging {
             Assert.Equal(totalRecords, pagedResponse.TotalRecords);
             Assert.Equal(expectedTotalPages, pagedResponse.TotalPages);
             Assert.Equal(expectedStartIndex, pagedResponse.StartIndex);
-            Assert.Equal(expectedEndIndex, pagedResponse.EndIndex);
+            Assert.Equal(expectedEndIndex, pagedResponse.EndIndex); 
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(10)]
+        [InlineData(180)]
+        public async Task Calculate_ReturnsInputItemsPerPage_AsOutput(int expectedItemsPerPage) {
+            // Arrange
+            var results = _fixture.CreateMany<string>().ToArray();
+            var pagingInfo = new TestPagingRequest {
+                ItemsPerPage = expectedItemsPerPage,
+                PageNumber = 1
+            };
+            var calculator = GetCalculator();
+
+            // Act
+            var pagedResponse = await calculator.PageItemsAsync<TestPagedResponse>(results, pagingInfo);
+
+            // Assert
+            Assert.Equal(expectedItemsPerPage, pagedResponse.ItemsPerPage); 
         }
 
         [Fact]
@@ -204,6 +224,8 @@ namespace DNI.Services.Tests.Shared.Paging {
             public int StartIndex { get; set; }
 
             public int EndIndex { get; set; }
+
+            public int ItemsPerPage { get; set; }
 
             public IEnumerable<string> Items { get; set; }
         }

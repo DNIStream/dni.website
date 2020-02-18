@@ -44,6 +44,7 @@ namespace DNI.Services.Shared.Paging {
                 StartIndex = startIndex,
                 TotalPages = totalPages,
                 EndIndex = endIndex,
+                ItemsPerPage = pagingRequest.ItemsPerPage,
                 Items = await FilterItemsAsync(allItems, startIndex, pageSize)
             };
         }

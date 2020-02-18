@@ -137,12 +137,15 @@ namespace DNI.Services.Tests.Podcast {
             Assert.Null(actualDuration);
         }
 
-        [Fact]
-        public void DurationInSeconds_ReturnsExpectedDurationInSecondsWhenAudioFileIsValidTimeStamp() {
+        [Theory]
+        [InlineData("02:45:43", 9943)] // ((60 x 2) x 60) + (45 x 60) + 43 = 9943
+        [InlineData("45:43", 2743)] // (45 x 60) + 43 = 2743
+        [InlineData("43", 43)]
+        public void DurationInSeconds_ReturnsExpectedDurationInSecondsWhenAudioFileIsValidTimeStamp(string inputTimeCode, int expectedSeconds) {
             // Arrange
             var show = new PodcastShow {
                 AudioFile = new PodcastFile {
-                    Duration = "02:45:43" // ((60 x 2) x 60) + (45 x 60) + 43 = 9943
+                    Duration = inputTimeCode
                 }
             };
 
@@ -150,7 +153,7 @@ namespace DNI.Services.Tests.Podcast {
             var actualDuration = show.DurationInSeconds;
 
             // Assert
-            Assert.Equal(9943, actualDuration);
+            Assert.Equal(expectedSeconds, actualDuration);
         }
     }
 }

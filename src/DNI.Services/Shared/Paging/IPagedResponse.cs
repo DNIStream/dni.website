@@ -12,6 +12,8 @@ namespace DNI.Services.Shared.Paging {
 
         int EndIndex { get; set; }
 
+        int ItemsPerPage { get; set; }
+
         IEnumerable<TItem> Items { get; set; }
     }
 }

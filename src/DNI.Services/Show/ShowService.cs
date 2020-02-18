@@ -66,6 +66,7 @@ namespace DNI.Services.Show {
                 StartIndex = pagedPodcastShows.StartIndex,
                 TotalPages = pagedPodcastShows.TotalPages,
                 TotalRecords = pagedPodcastShows.TotalRecords,
+                ItemsPerPage = pagedPodcastShows.ItemsPerPage,
                 Items = mappedShows
             };
         }
