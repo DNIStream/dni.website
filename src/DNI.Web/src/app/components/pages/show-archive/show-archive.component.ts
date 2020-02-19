@@ -13,11 +13,11 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
 
   public shows: Show[];
 
-  public filterFields: string[] = [
-    'PublishedTime',
-    'Title',
-    'DurationInSeconds'
-  ];
+  public filterFields: { [key: string]: string; } = {
+    'PublishedTime': 'Date',
+    'Title': 'Episode Title',
+    'DurationInSeconds': 'Length'
+  };
 
   public filterOrders: string[] = [
     'Descending',
@@ -25,7 +25,7 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
   ];
 
   public filters = {
-    orderByField: this.filterFields[0],
+    orderByField: Object.keys(this.filterFields)[0],
     orderByOrder: this.filterOrders[0]
   };
 
@@ -37,6 +37,14 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
   private totalPages: number;
 
   //#endregion
+
+  private _filterKeys: string[];
+  public get filterKeys(): string[] {
+    if (!this._filterKeys) {
+      this._filterKeys = Object.keys(this.filterFields);
+    }
+    return this._filterKeys;
+  }
 
   constructor(
     private showService: ShowService,
@@ -54,6 +62,10 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.shows = null;
+  }
+
+  public getFilterName(key: string) {
+    return this.filterFields[key];
   }
 
   public onSubmit(): void {

@@ -15,7 +15,7 @@
         name="orderByField"
         [(ngModel)]="filters.orderByField"
         #orderByField="ngModel">
-        <option *ngFor="let f of filterFields" [value]="f">{{f}}</option>
+        <option *ngFor="let f of filterKeys" [value]="f">{{getFilterName(f)}}</option>
       </select>
     <label class="sr-only"
            for="orderByOrder">Order:</label>
@@ -65,7 +65,7 @@
       <div class="col-md-4">
         <div>
           <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
-          <strong>Duration</strong>: {{show.duration}} | {{show.durationMinutes}}
+          <strong>Duration</strong>: {{show.duration}}
         </div>
         <div>
           <a [href]="show.podcastPageUrl" target="_blank" title="Listen on Fireside"><i class="fas fa-podcast fa-2x"></i></a>

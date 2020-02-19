@@ -20,11 +20,5 @@ export class Show {
             .replace(/(?:\r\n|\r|\n)/g, '<br/>');
     }
 
-    public get durationMinutes(): string {
-        const mins = this.durationInSeconds / 60;
-        const seconds = Math.ceil((mins % 1) * 60);
-        return `${Math.floor(mins)}m ${seconds}s`;
-    }
-
     public shown: boolean;
 }

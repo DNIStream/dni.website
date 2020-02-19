@@ -94,7 +94,6 @@ namespace DNI.Services.Show {
             var podcastRssGraph = await GetShowsFromRssFeed();
             var keywordCounts = await _showKeywordAggregationService.GetKeywordDictionaryAsync(podcastRssGraph.Shows);
             return keywordCounts;
-            //throw new NotImplementedException();
         }
     }
 }
