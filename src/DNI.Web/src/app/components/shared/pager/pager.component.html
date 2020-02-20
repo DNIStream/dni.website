@@ -1,0 +1,21 @@
+<div class="dni-pager"
+     [hidden]="!items">
+    <pagination [totalItems]="totalItems"
+                [itemsPerPage]="itemsPerPage"
+                [(ngModel)]="currentPage"
+                [directionLinks]="directionLinks"
+                [boundaryLinks]="boundaryLinks"
+                [maxSize]="maxSize"
+                [rotate]="rotate"
+                [previousText]="previousText"
+                [nextText]="nextText"
+                [firstText]="firstText"
+                [lastText]="lastText"
+                (pageChanged)="onPageChanged($event)"
+                name="pager">
+    </pagination>
+    <div class="dni-pager-totals"
+         *ngIf="showTotals">
+        <em>Page <strong>{{currentPage}}</strong> of <strong>{{totalPages}}</strong> ({{totalItems}} total {{itemType}})</em>
+    </div>
+</div>

@@ -24,6 +24,7 @@ import { CommunityGuidelinesComponent } from './components/pages/community-guide
 import { SocialLinksComponent } from './components/shared/social-links/social-links.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { SafePipe } from 'app/components/shared/safe-pipe/safe.pipe';
+import { PagerComponent } from './components/shared/pager/pager.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { SafePipe } from 'app/components/shared/safe-pipe/safe.pipe';
     CommunityGuidelinesComponent,
     SocialLinksComponent,
     LoadingComponent,
-    SafePipe
+    SafePipe,
+    PagerComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'dni' }),

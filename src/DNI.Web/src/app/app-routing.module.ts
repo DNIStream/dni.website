@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'privacy', component: PrivacyComponent },
   { path: 'show-archive', component: ShowArchiveComponent },
+  { path: 'show-archive/:slug', component: ShowArchiveComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'ethics', component: EthicsComponent },
   { path: '**', component: PageNotFoundComponent }

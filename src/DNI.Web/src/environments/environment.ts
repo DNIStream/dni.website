@@ -5,7 +5,7 @@
 export const environment = {
     production: false,
     webUri: 'http://localhost:4200/',
-    apiBaseUri: 'http://localhost:12341/',
+    apiBaseUri: 'http://192.168.2.133:12341/',
     recaptchaSiteKey: '6Lcv_3MUAAAAAPTlA1F3Jk2X3mc_Vnixqbgk3pgv',
     version: '1.3.2',
     versionText: 'The Left-Hoofed Antelope'

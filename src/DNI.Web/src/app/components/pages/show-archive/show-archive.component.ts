@@ -31,10 +31,10 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
 
   //#region Paging info
 
-  private itemsPerPage: number;
-  private currentPage: number = 1;
-  private totalItems: number;
-  private totalPages: number;
+  public itemsPerPage: number;
+  public currentPage: number = 1;
+  public totalItems: number;
+  public totalPages: number;
 
   //#endregion
 

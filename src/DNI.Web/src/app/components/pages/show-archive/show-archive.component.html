@@ -1,46 +1,45 @@
 <div class="container bg-light rounded p-4">
   <h1>Show Archive</h1>
 
-  <form class="form-inline py-3"
+  <form class="form-inline py-3 justify-content-end"
         name="show-list-filter-form"
         id="show-list-filter-form"
         (ngSubmit)="onSubmit()"
         #f="ngForm"
         novalidate>
     <label for="orderByField"
-           class="m-3">Order By:</label>
+           class="my-3 mr-0 mr-sm-3">Order By:</label>
     <select
-        class="form-control mr-3"
+        class="form-control mr-sm-3 mb-2 mb-md-0"
         id="orderByField"
         name="orderByField"
         [(ngModel)]="filters.orderByField"
         #orderByField="ngModel">
         <option *ngFor="let f of filterKeys" [value]="f">{{getFilterName(f)}}</option>
-      </select>
+    </select>
     <label class="sr-only"
            for="orderByOrder">Order:</label>
 
     <select
-        class="form-control mr-3"
+        class="form-control mr-md-3 mb-2 mb-md-0"
         id="orderByOrder"
         name="orderByOrder"
         [(ngModel)]="filters.orderByOrder"
         #orderByOrder="ngModel">
         <option *ngFor="let o of filterOrders" [value]="o">{{o}}</option>
-      </select>
+    </select>
 
-    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="submit" class="btn btn-primary col-12 col-md-2">Update</button>
   </form>
 
-  <pagination [totalItems]="totalItems"
-              [itemsPerPage]="itemsPerPage"
-              [(ngModel)]="currentPage"
-              [directionLinks]="true"
-              [boundaryLinks]="true"
-              [maxSize]="5"
-              [rotate]="true"
-              (pageChanged)="onPageChanged($event)">
-  </pagination> {{totalItems}} podcasts over {{totalPages}} pages
+  <dni-pager [totalItems]="totalItems"
+             [itemsPerPage]="itemsPerPage"
+             [totalPages]="totalPages"
+             [currentPage]="currentPage"
+             [items]="shows"
+             [showTotals]="false"
+             (pageChanged)="onPageChanged($event)">
+  </dni-pager>
 
   <dni-loading *ngIf="!shows || shows.length <= 0"></dni-loading>
 
@@ -49,67 +48,34 @@
       <div class="col-12 pb-2">
         <h4>{{show.title}}</h4>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-3 d-none d-md-block text-center">
         <img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" />
         <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
       </div>
-      <!-- <div class="col-md-5">
-          <p class="mt-2">{{show.summary}}</p>
-          <audio controls
-                 *ngIf="show.audioUrl">
-            <source [src]="show.audioUrl | safe"
-                    type="audio/mp3">
-            <p>Your browser does not support HTML5 Audio - click one of the social links to listen.</p>
-          </audio>
-        </div> -->
-      <div class="col-md-4">
-        <div>
-          <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
-          <strong>Duration</strong>: {{show.duration}}
-        </div>
-        <div>
-          <a [href]="show.podcastPageUrl" target="_blank" title="Listen on Fireside"><i class="fas fa-podcast fa-2x"></i></a>
+      <div class="col-md-5"
+           [innerHtml]="show.summary">
+      </div>
+      <div class="col-md-4 pt-2 pt-md-0">
+        <div class="row">
+          <div class="col-10 col-md-12 text-md-right">
+            <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
+            <strong>Duration</strong>: {{show.duration}}
+          </div>
+          <div class="col-2 col-md-12 text-md-right">
+            <a [routerLink]="['/show-archive', show.slug]" title="Listen / View Episode Details"><i class="fas fa-podcast fa-2x"></i></a>
+          </div>
         </div>
       </div>
     </div>
-    <!--
-      <div class="col-12 py-3">
-        <button type="button" class="btn btn-primary btn-block" (click)="show.shown = !show.shown"
-                [attr.aria-expanded]="show.shown" attr.aria-controls="'collapse-' + show.version">
-                {{show.title}} Show Notes &amp; VOD
-            </button>
-      </div>
-      <div id="collapse-{{show.version}}"
-           class="expanded-info p-3"
-           [collapse]="!show.shown">
-        <div class="embed-responsive embed-responsive-16by9 mr-3 mb-2 yt-embed">
-          <iframe *ngIf="show.shown"
-                  width="560"
-                  height="315"
-                  [src]="show.videoUrl | safe"
-                  frameborder="0"
-                  allow="autoplay; encrypted-media"
-                  allowfullscreen>
-          </iframe>
-        </div>
-
-        <div class="show-notes">
-          <h5>{{show.title}} Show Notes</h5>
-          <div [innerHtml]="show.showNotesFormatted"
-               class="small"></div>
-        </div>
-        <hr />
-      </div> -->
+    <hr />
   </ng-container>
 
-  <pagination [totalItems]="totalItems"
-              [itemsPerPage]="itemsPerPage"
-              [(ngModel)]="currentPage"
-              [directionLinks]="true"
-              [boundaryLinks]="true"
-              [maxSize]="5"
-              [rotate]="true"
-              (pageChanged)="onPageChanged($event)">
-  </pagination>
-
+  <dni-pager [totalItems]="totalItems"
+             [itemsPerPage]="itemsPerPage"
+             [totalPages]="totalPages"
+             [currentPage]="currentPage"
+             [items]="shows"
+             itemType="podcasts"
+             (pageChanged)="onPageChanged($event)">
+  </dni-pager>
 </div>
