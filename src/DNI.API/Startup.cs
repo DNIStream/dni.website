@@ -2,6 +2,8 @@
 using System.IO;
 using System.Reflection;
 
+using DNI.API.Requests;
+using DNI.API.Validators;
 using DNI.Options;
 using DNI.Services.Captcha;
 using DNI.Services.Email;
@@ -11,6 +13,9 @@ using DNI.Services.Shared.Mapping;
 using DNI.Services.Shared.Paging;
 using DNI.Services.Shared.Sorting;
 using DNI.Services.Show;
+
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -68,7 +73,7 @@ namespace DNI.API {
                 .AddTransient<ICaptchaService, CaptchaService>()
                 .AddTransient<IEmailService, SystemNetEmailService>()
                 .AddTransient<IPodcastService, FiresidePodcastService>()
-                .AddTransient<IShowService, ShowService>()
+                .AddScoped<IShowService, ShowService>()
                 .AddTransient<IShowKeywordAggregationService, ShowKeywordAggregationService>()
                 .AddTransient<IPagingCalculator<PodcastShow>, PagingCalculator<PodcastShow>>()
                 .AddTransient<ISorter<PodcastShow>, Sorter<PodcastShow>>();
@@ -90,25 +95,31 @@ namespace DNI.API {
                         NamingStrategy = new DefaultNamingStrategy(),
                         AllowIntegerValues = true
                     });
-                });
+                })
+                .AddFluentValidation();
+
+            // Validators
+            services
+                .AddTransient<IValidator<GetShowsRequest>, GetShowsRequestValidator>();
 
             // Swagger
-            services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new Info {
-                    Title = APINameSpace,
-                    Version = $"v{GetVersion()}",
-                    Description = "This API provides REST capabilities to the Documentation Not Included website"
+            services
+                .AddSwaggerGen(c => {
+                    c.SwaggerDoc("v1", new Info {
+                        Title = APINameSpace,
+                        Version = $"v{GetVersion()}",
+                        Description = "This API provides REST capabilities to the Documentation Not Included website"
+                    });
+
+                    // Convert all documentation urls to lowercase
+                    c.DocumentFilter<LowercaseDocumentFilter>();
+
+                    // Include code comments in API documentation
+                    var appPath = AppDomain.CurrentDomain.BaseDirectory;
+                    foreach(var file in Directory.GetFiles(appPath, "*.xml")) {
+                        c.IncludeXmlComments(file);
+                    }
                 });
-
-                // Convert all documentation urls to lowercase
-                c.DocumentFilter<LowercaseDocumentFilter>();
-
-                // Include code comments in API documentation
-                var appPath = AppDomain.CurrentDomain.BaseDirectory;
-                foreach(var file in Directory.GetFiles(appPath, "*.xml")) {
-                    c.IncludeXmlComments(file);
-                }
-            });
 
             // Response caching
             // services.AddResponseCaching();

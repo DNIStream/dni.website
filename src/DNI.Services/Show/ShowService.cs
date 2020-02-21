@@ -51,6 +51,10 @@ namespace DNI.Services.Show {
         public async Task<IPagedResponse<Show>> GetShowsAsync(IPagingRequest pagingRequest, ISortingRequest sortingRequest) {
             var podcastRssGraph = await GetShowsFromRssFeed();
 
+            if(podcastRssGraph?.Shows == null || podcastRssGraph.Shows.Count <= 0) {
+                return null;
+            }
+
             // Perform sorting
             var orderedShows = await _showSorter.SortAsync(podcastRssGraph.Shows, sortingRequest);
 
@@ -94,6 +98,28 @@ namespace DNI.Services.Show {
             var podcastRssGraph = await GetShowsFromRssFeed();
             var keywordCounts = await _showKeywordAggregationService.GetKeywordDictionaryAsync(podcastRssGraph.Shows);
             return keywordCounts;
+        }
+
+        /// <summary>
+        ///     Retrieves a podcast show by its slug
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
+        public async Task<Show> GetShowBySlugAsync(string slug) {
+            if(string.IsNullOrWhiteSpace(slug)) {
+                throw new ArgumentNullException(nameof(slug));
+            }
+
+            var allPodcasts = await _podcastService.GetAllAsync();
+
+            var podcastShow = allPodcasts.Shows.FirstOrDefault(x => x.Slug == slug);
+            if(podcastShow == null) {
+                throw new InvalidOperationException($"Slug '{slug}' not found");
+            }
+
+            var mappedShow = _podcastShowMapper.Map(podcastShow);
+
+            return mappedShow;
         }
     }
 }

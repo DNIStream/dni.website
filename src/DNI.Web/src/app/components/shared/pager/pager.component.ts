@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'dni-pager',
@@ -50,7 +51,7 @@ export class PagerComponent implements OnInit {
   public lastText = '&raquo;';
 
   @Input()
-  public items: any[] = null;
+  public items: Observable<any[]> = null;
 
   @Output()
   public pageChanged = new EventEmitter<any>();

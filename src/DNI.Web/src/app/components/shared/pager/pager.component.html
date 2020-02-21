@@ -1,5 +1,5 @@
 <div class="dni-pager"
-     [hidden]="!items">
+     [hidden]="!(items | async)">
     <pagination [totalItems]="totalItems"
                 [itemsPerPage]="itemsPerPage"
                 [(ngModel)]="currentPage"

@@ -1,5 +1,5 @@
 <div class="container bg-light rounded p-4">
-  <h1>Show Archive</h1>
+  <h1>Podcast Archive</h1>
 
   <form class="form-inline py-3 justify-content-end"
         name="show-list-filter-form"
@@ -41,15 +41,16 @@
              (pageChanged)="onPageChanged($event)">
   </dni-pager>
 
-  <dni-loading *ngIf="!shows || shows.length <= 0"></dni-loading>
+  <dni-loading *ngIf="(!(shows | async) || shows.length <= 0); else showList"></dni-loading>
 
-  <ng-container *ngFor="let show of shows">
+  <ng-container *ngFor="let show of shows | async"
+                #showList>
     <div class="row">
       <div class="col-12 pb-2">
         <h4>{{show.title}}</h4>
       </div>
       <div class="col-md-3 d-none d-md-block text-center">
-        <img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" />
+        <a [routerLink]="['/show-archive', show.slug]" title="Listen / View Episode Details"><img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" /></a>
         <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
       </div>
       <div class="col-md-5"

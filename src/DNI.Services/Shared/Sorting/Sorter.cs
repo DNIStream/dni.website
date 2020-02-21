@@ -44,7 +44,7 @@ namespace DNI.Services.Shared.Sorting {
             var type = typeof(TItem);
             var propInfo = type.GetProperty(sortingRequest.Field);
             if(propInfo == null) {
-                throw new InvalidOperationException($"'{sortingRequest.Field}' is not a property of type '{type.Name}'");
+                throw new SortingException($"'{sortingRequest.Field}' is not a property of type '{type.Name}'");
             }
 
             return propInfo.GetValue(item);

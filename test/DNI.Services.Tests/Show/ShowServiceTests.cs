@@ -74,6 +74,58 @@ namespace DNI.Services.Tests.Show {
         }
 
         [Fact]
+        public async Task GetShowListAsync_ReturnsNullWhenPodcastServiceReturnsNull() {
+            // Arrange
+            var service = GetService();
+            var request = new GetShowsRequest();
+            _podcastServiceMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => null);
+
+            // Act
+            var response = await service.GetShowsAsync(request, request);
+
+            // Assert
+            Assert.Null(response);
+        }
+
+        [Fact]
+        public async Task GetShowListAsync_ReturnsNullWhenPodcastsAreNull() {
+            // Arrange
+            var service = GetService();
+            var request = new GetShowsRequest();
+            _podcastServiceMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => new PodcastStream {
+                    Shows = null
+                });
+
+            // Act
+            var response = await service.GetShowsAsync(request, request);
+
+            // Assert
+            Assert.Null(response);
+        }
+
+        [Fact]
+        public async Task GetShowListAsync_ReturnsNullWhenNoPodcastsArePresent() {
+            // Arrange
+            var service = GetService();
+            var request = new GetShowsRequest();
+            _podcastServiceMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => new PodcastStream {
+                    Shows = new List<PodcastShow>()
+                });
+
+            // Act
+            var response = await service.GetShowsAsync(request, request);
+
+            // Assert
+            Assert.Null(response);
+        }
+
+        [Fact]
         public async Task GetShowListAsync_CallsSorter_WithEnumeratedPodcastShows_AndSortingRequest() {
             // Arrange
             var service = GetService();
@@ -210,6 +262,83 @@ namespace DNI.Services.Tests.Show {
 
         #endregion
 
+        #region GetShowBySlugAsync
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData("\n")]
+        [InlineData("\r")]
+        [InlineData("\t")]
+        public async Task GetShowBySlug_ThrowsArgumentNullException_IfSlugIsNotPassed(string slug) {
+            // Arrange
+            var service = GetService();
+
+            // Act & Assert
+            var ex = await Assert.ThrowsAsync<ArgumentNullException>(() => service.GetShowBySlugAsync(slug));
+            Assert.Equal("slug", ex.ParamName);
+        }
+
+        [Fact]
+        public async Task GetShowBySlug_CallsGetAllAsyncOnPodcastService_IfSlugIsValidString() {
+            // Arrange
+            var service = GetService();
+            var slug = (GetShowBySlug_SetupValidPodcastShowList()).Slug;
+
+            // Act
+            await service.GetShowBySlugAsync(slug);
+
+            // Assert
+            _podcastServiceMock.Verify(x => x.GetAllAsync(), Times.Once());
+        }
+
+        [Fact]
+        public async Task GetShowBySlug_MapsShowWithRequestedSlug() {
+            // Arrange
+            var service = GetService();
+            var expectedShow = GetShowBySlug_SetupValidPodcastShowList();
+
+            // Act
+            await service.GetShowBySlugAsync(expectedShow.Slug);
+
+            // Assert
+            _podcastShowMapperMock
+                .Verify(x => x.Map(It.Is<PodcastShow>(s => s == expectedShow)),
+                    Times.Once());
+        }
+
+        [Fact]
+        public async Task GetShowBySlug_ReturnsMappedShow() {
+            // Arrange
+            var service = GetService();
+            var show = GetShowBySlug_SetupValidPodcastShowList();
+            var expectedShow = _fixture.Create<Services.Show.Show>();
+
+            _podcastShowMapperMock
+                .Setup(x => x.Map(It.IsAny<PodcastShow>()))
+                .Returns(() => expectedShow);
+
+            // Act
+            var actualShow = await service.GetShowBySlugAsync(show.Slug);
+
+            // Assert
+            Assert.Equal(expectedShow, actualShow);
+        }
+
+        [Fact]
+        public async Task GetShowBySlug_ThrowsInvalidOperationException_WhenSlugDoesNotExist() {
+            // Arrange
+            var service = GetService();
+            var expectedSlug = _fixture.Create<string>();
+
+            // Act & Assert
+            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => service.GetShowBySlugAsync(expectedSlug));
+            Assert.Contains($"Slug '{expectedSlug}' not found", ex.Message);
+        }
+
+        #endregion
+
         #region GetAggregatedKeywords
 
         [Fact]
@@ -265,5 +394,28 @@ namespace DNI.Services.Tests.Show {
         }
 
         #endregion
+
+        /// <summary>
+        ///     Helper method. Sets up GetAllAsync() on the <see cref="_podcastServiceMock" /> with the specified number of
+        ///     <see cref="PodcastShow" />s, then returns the <see cref="PodcastShow" /> at the specified
+        ///     <paramref name="returnShowIndex" />
+        /// </summary>
+        /// <param name="countOfShows"></param>
+        /// <param name="returnShowIndex"></param>
+        /// <returns></returns>
+        private PodcastShow GetShowBySlug_SetupValidPodcastShowList(int countOfShows = 3, int returnShowIndex = 0) {
+            var allShows = _fixture
+                .Build<PodcastShow>()
+                .With(x => x.PageUrl, $"https://test.com/{_fixture.Create<string>()}")
+                .CreateMany(countOfShows)
+                .ToList();
+
+            _podcastServiceMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => new PodcastStream {
+                    Shows = allShows
+                });
+            return allShows[returnShowIndex];
+        }
     }
 }

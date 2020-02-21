@@ -75,7 +75,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
         }
 
         [Fact]
-        public async Task SortAsync_ThrowsInvalidOperation_WhenSpecifiedFieldDoesNotExistOnType() {
+        public async Task SortAsync_ThrowsSortingException_WhenSpecifiedFieldDoesNotExistOnType() {
             // Arrange
             var results = _fixture.CreateMany<string>(23);
             var sortingInfo = _fixture.Create<TestSortingRequest>();
@@ -83,7 +83,7 @@ namespace DNI.Services.Tests.Shared.Sorting {
             var sorter = GetCalculator();
 
             // Act
-            var ex = await Assert.ThrowsAsync<InvalidOperationException>(() => sorter.SortAsync(results, sortingInfo));
+            var ex = await Assert.ThrowsAsync<SortingException>(() => sorter.SortAsync(results, sortingInfo));
 
             // Assert
             Assert.Contains("'NOTASTRINGMEMBER' is not a property of type 'String'", ex.Message);

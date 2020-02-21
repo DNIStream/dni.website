@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using DNI.API.Requests;
@@ -35,18 +36,15 @@ namespace DNI.API.Controllers {
         [ProducesResponseType(typeof(ShowListAPIResponse), StatusCodes.Status200OK)]
         [Route("shows")]
         public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request) {
-            // TODO: Implement tests
             if(!ModelState.IsValid) {
                 return ModelValidationBadRequest();
             }
 
             var showList = await _showService.GetShowsAsync(request, request);
 
-            if(!showList.Items.Any()) {
+            if(showList == null || !showList.Items.Any()) {
                 return NoContent();
             }
-
-            var latestShow = await _showService.GetLatestShowAsync();
 
             var keywords = await _showService.GetAggregatedKeywords();
 
@@ -59,12 +57,38 @@ namespace DNI.API.Controllers {
                     TotalPages = showList.TotalPages,
                     ItemsPerPage = showList.ItemsPerPage
                 },
-                PagedShows = showList.Items, 
-                LatestShow = latestShow,
+                PagedShows = showList.Items,
                 ShowKeywords = keywords
             };
 
             return Ok(test);
         }
+
+        /// <summary>
+        ///     Retrieves a <see cref="Show" /> by its slug
+        /// </summary>
+        /// <param name="slug"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(Show), StatusCodes.Status200OK)]
+        [Route("show/{slug}")]
+        public async Task<IActionResult> GetShowBySlugAsync([FromRoute] string slug) {
+            if(!ModelState.IsValid) {
+                return ModelValidationBadRequest();
+            }
+
+            Show show;
+            try {
+                show = await _showService.GetShowBySlugAsync(slug);
+            } catch(InvalidOperationException) {
+                ModelState.AddModelError(nameof(slug), "The specified slug does not exist");
+                return ModelValidationBadRequest();
+            }
+
+            return Ok(show);
+        }
+
+        // TODO: Add "GetLatestShowAsync"
     }
 }

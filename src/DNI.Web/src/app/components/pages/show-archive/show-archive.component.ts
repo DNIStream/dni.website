@@ -1,9 +1,12 @@
-import { ShowResponse } from 'app/model/show-response';
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { ShowService } from 'app/services/show/show.service';
 import { SEOService } from 'app/services/seo/seo.service';
 import { Show } from 'app/model/show';
+import { ShowResponse } from 'app/model/show-response';
+
 
 @Component({
   templateUrl: './show-archive.component.html',
@@ -11,7 +14,7 @@ import { Show } from 'app/model/show';
 })
 export class ShowArchiveComponent implements OnInit, OnDestroy {
 
-  public shows: Show[];
+  public shows: Observable<Show[]>;
 
   public filterFields: { [key: string]: string; } = {
     'PublishedTime': 'Date',
@@ -80,18 +83,14 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
   private refreshShows(): void {
     this.shows = null;
 
-    this.showService
+    this.shows = this.showService
       .getShows(this.filters.orderByField, this.filters.orderByOrder, this.currentPage, this.itemsPerPage)
-      .subscribe({
-        next: (response: ShowResponse) => {
-          this.shows = response.pagedShows;
-          this.totalItems = response.pageInfo.totalRecords;
-          this.itemsPerPage = response.pageInfo.itemsPerPage;
-          this.totalPages = response.pageInfo.totalPages;
-        },
-        error: (e: any) => {
-          this.shows = null;
-        }
-      });
+      .pipe(
+        switchMap((showResponse: ShowResponse) => {
+          this.totalItems = showResponse.pageInfo.totalRecords;
+          this.itemsPerPage = showResponse.pageInfo.itemsPerPage;
+          this.totalPages = showResponse.pageInfo.totalPages;
+          return of(showResponse.pagedShows);
+        }));
   }
 }

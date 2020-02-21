@@ -1,7 +1,6 @@
-import { map, switchMap, flatMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { environment } from 'environments/environment';
@@ -36,6 +35,12 @@ export class ShowService {
           response.latestShow = Object.assign(new Show(), response.latestShow);
           return response;
         }));
+  }
 
+  public getShow(slug: string): Observable<Show> {
+    const uri = environment.apiBaseUri + 'show/' + slug;
+    return this.http
+      .get<Show>(uri)
+      .pipe(map((response: Show) => Object.assign(new Show(), response)));
   }
 }

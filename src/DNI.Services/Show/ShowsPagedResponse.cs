@@ -6,7 +6,7 @@ namespace DNI.Services.Show {
     /// <summary>
     ///     Contains a list of shows along with aggregated metadata and paging information.
     /// </summary>
-    internal class ShowsPagedResponse: IPagedResponse<Show> {
+    public class ShowsPagedResponse: IPagedResponse<Show> {
 
         public int CurrentPage { get; set; }
 

@@ -19,11 +19,6 @@ namespace DNI.API.Responses {
         public IEnumerable<Show> PagedShows { get; set; }
 
         /// <summary>
-        ///     The latest show - always the same regardless of the paging and ordering queries
-        /// </summary>
-        public Show LatestShow { get; set; }
-
-        /// <summary>
         ///     An aggregated list of keywords across all un-paged shows
         /// </summary>
         public IDictionary<string, int> ShowKeywords { get; set; }

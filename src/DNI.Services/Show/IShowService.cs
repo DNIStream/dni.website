@@ -11,5 +11,7 @@ namespace DNI.Services.Show {
         Task<Show> GetLatestShowAsync();
 
         Task<IDictionary<string, int>> GetAggregatedKeywords();
+
+        Task<Show> GetShowBySlugAsync(string slug);
     }
 }

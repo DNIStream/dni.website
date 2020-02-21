@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B86E4627-3062-42F7-8BDD-47E53C2D0584}"
 EndProject
@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Services.Tests", "test\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Options", "src\DNI.Options\DNI.Options.csproj", "{A435837B-92E8-49EC-BC21-B732834641A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNI.Testing", "src\DNI.Testing\DNI.Testing.csproj", "{2546627F-BF47-483E-982D-BCA0F0853B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DNI.Testing", "src\DNI.Testing\DNI.Testing.csproj", "{2546627F-BF47-483E-982D-BCA0F0853B58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
