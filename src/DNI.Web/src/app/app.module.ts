@@ -26,6 +26,7 @@ import { LoadingComponent } from './components/shared/loading/loading.component'
 import { SafePipe } from 'app/components/shared/safe-pipe/safe.pipe';
 import { PagerComponent } from './components/shared/pager/pager.component';
 import { ShowDetailComponent } from './components/pages/show-detail/show-detail.component';
+import { KeywordTagsComponent } from './components/shared/keyword-tags/keyword-tags.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ShowDetailComponent } from './components/pages/show-detail/show-detail.
     LoadingComponent,
     SafePipe,
     PagerComponent,
-    ShowDetailComponent
+    ShowDetailComponent,
+    KeywordTagsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'dni' }),

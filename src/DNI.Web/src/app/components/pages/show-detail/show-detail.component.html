@@ -1,5 +1,45 @@
 <div class="container bg-light rounded p-4">
-    <div *ngIf="show | async as show">
-        <h1>{{show.title}}</h1>
-    </div>
+    <dni-loading *ngIf="!showData; else showDetail"></dni-loading>
+    <ng-container *ngIf="show | async as show"
+                  #showDetail>
+        <h1 class="mb-4">{{show.title}}</h1>
+
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-5 col-lg-3">
+                <img [src]="show.imageUrl"
+                 [alt]="show.title"
+                 class="img-thumbnail" />
+                <!-- img fix for vscode -->
+            </div>
+            <div class="col-12 col-sm-7 col-lg-9 text-right">
+                <div class="mb-3">
+                    <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}<br/>
+                    <strong>Duration</strong>: {{show.duration}}
+                </div>
+                <div class="mb-3">
+                    <dni-keyword-tags [keywords]="show.keywords"></dni-keyword-tags>
+                </div>
+                <div class="row mb-3 align-items-center">
+                    <div class="col-9 col-lg-10">
+                        <audio controls
+                               *ngIf="show.audioUrl"
+                               controls
+                               preload="metadata"
+                               class="audio-player">
+                            <source [src]="show.audioUrl | safe"
+                                    type="audio/mp3">
+                            <p>Your browser does not support HTML5 Audio - click one of the social links to listen.</p>
+                        </audio>
+                    </div>
+                    <div class="col-3 col-lg-2">
+                        <a [href]="show.audioUrl" title="Download" target="_blank"><i class="fas fa-download fa-lg"></i></a>&nbsp;<a [href]="show.podcastPageUrl" title="View '{{show.title}}' on Fireside" target="_blank"><i class="fas fa-podcast fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <p class="col-12"
+               [innerHtml]="show.showNotesHtml"></p>
+        </div>
+    </ng-container>
 </div>

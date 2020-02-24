@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -43,4 +43,13 @@ export class ShowService {
       .get<Show>(uri)
       .pipe(map((response: Show) => Object.assign(new Show(), response)));
   }
+
+  // public downloadShowMp3(slug: string): Observable<HttpResponse<Blob>> {
+  //   const uri = environment.apiBaseUri + 'show-download/' + slug;
+  //   return this.http
+  //     .get(uri, {
+  //       responseType: 'blob',
+  //       observe: 'response'
+  //     });
+  // }
 }
