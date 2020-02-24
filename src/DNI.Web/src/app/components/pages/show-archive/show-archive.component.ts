@@ -57,8 +57,8 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.seoService.setTitle('Podcast Archive');
-    this.seoService.setDescription('The top-level list of our podcast and vodcast shows');
+    this.seoService.setTitle('Documentation Not Included Podcast Episode Archive');
+    this.seoService.setDescription('Documentation Not Included is DNI Stream\'s weekly live tech industry podcast that covers all aspects of the software industry, hosted by Chris and Josey. We feature guests from all over the globe with expertise in everything from development support and quality assurance, to technical and software architecture. Follow us on https://www.twitch.tv/dnistream to be notified when the show goes live.');
 
     this.refreshShows();
   }

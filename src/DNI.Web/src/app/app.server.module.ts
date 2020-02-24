@@ -16,6 +16,6 @@ import { AppComponent } from './components/shared/app.component';
     providers: [
         // Add universal-only providers here
     ],
-    bootstrap: [AppComponent],
+    bootstrap: [AppComponent]
 })
 export class AppServerModule { }

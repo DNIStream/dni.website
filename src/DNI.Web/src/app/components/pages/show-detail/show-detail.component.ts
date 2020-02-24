@@ -6,6 +6,7 @@ import { switchMap, map } from 'rxjs/operators';
 
 import { ShowService } from 'app/services/show/show.service';
 import { Show } from 'app/model/show';
+import { SEOService } from 'app/services/seo/seo.service';
 
 @Component({
   selector: 'dni-show-detail',
@@ -20,7 +21,8 @@ export class ShowDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private showService: ShowService
+    private showService: ShowService,
+    private seoService: SEOService
   ) { }
 
   public ngOnInit(): void {
@@ -35,6 +37,8 @@ export class ShowDetailComponent implements OnInit {
         }),
         map(show => {
           this.showData = show;
+          this.seoService.setTitle(show.title + ' | Documentation Not Included Podcast');
+          this.seoService.setDescription(show.summary);
           return show;
         }));
   }

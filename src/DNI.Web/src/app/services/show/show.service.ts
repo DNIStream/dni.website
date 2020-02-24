@@ -18,6 +18,7 @@ export class ShowService {
   ) { }
 
   public getShows(orderByField: string, orderByOrder: string, pageNo: number = 1, itemsPerPage: number = 7): Observable<ShowResponse> {
+    console.log('here');
     let uri = environment.apiBaseUri + 'shows';
 
     uri = UriHelper.getUri(uri, {
@@ -43,13 +44,4 @@ export class ShowService {
       .get<Show>(uri)
       .pipe(map((response: Show) => Object.assign(new Show(), response)));
   }
-
-  // public downloadShowMp3(slug: string): Observable<HttpResponse<Blob>> {
-  //   const uri = environment.apiBaseUri + 'show-download/' + slug;
-  //   return this.http
-  //     .get(uri, {
-  //       responseType: 'blob',
-  //       observe: 'response'
-  //     });
-  // }
 }
