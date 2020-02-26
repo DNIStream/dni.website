@@ -1,4 +1,6 @@
-﻿using AutoFixture;
+﻿using System.Collections.Generic;
+
+using AutoFixture;
 using AutoFixture.AutoMoq;
 
 using DNI.Services.Podcast;

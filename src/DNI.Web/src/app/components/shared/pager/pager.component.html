@@ -1,5 +1,5 @@
 <div class="dni-pager"
-     [hidden]="!(items | async)">
+     *ngIf="totalItems > 0">
     <pagination [totalItems]="totalItems"
                 [itemsPerPage]="itemsPerPage"
                 [(ngModel)]="currentPage"
@@ -14,6 +14,7 @@
                 (pageChanged)="onPageChanged($event)"
                 name="pager">
     </pagination>
+
     <div class="dni-pager-totals"
          *ngIf="showTotals">
         <em>Page <strong>{{currentPage}}</strong> of <strong>{{totalPages}}</strong> ({{totalItems}} total {{itemType}})</em>

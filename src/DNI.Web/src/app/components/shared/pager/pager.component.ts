@@ -18,7 +18,7 @@ export class PagerComponent implements OnInit {
   public totalPages: number = 0;
 
   @Input()
-  public currentPage: number = 1;
+  public currentPage: Observable<number>;
 
   @Input()
   public directionLinks: boolean = true;
@@ -50,9 +50,6 @@ export class PagerComponent implements OnInit {
   @Input()
   public lastText = '&raquo;';
 
-  @Input()
-  public items: Observable<any[]> = null;
-
   @Output()
   public pageChanged = new EventEmitter<any>();
 
@@ -61,8 +58,8 @@ export class PagerComponent implements OnInit {
   ngOnInit() {
   }
 
-  public onPageChanged(pageInfo: any) {
+  public onPageChanged(pageInfo: any): void {
+    console.log('child onPageChanged');
     this.pageChanged.emit(pageInfo);
   }
-
 }

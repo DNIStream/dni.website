@@ -55,7 +55,7 @@ PLAIN TEXT
 Content
 JEFF
 </description>
-            <itunes:keywords>REPLACE IN TEST</itunes:keywords>
+            <itunes:keywords>KEYWORDS_REPLACED_IN_TEST</itunes:keywords>
             <content:encoded>
                 <![CDATA[<p>This is some test HTML</p>
 <p>And another line</p>]]>

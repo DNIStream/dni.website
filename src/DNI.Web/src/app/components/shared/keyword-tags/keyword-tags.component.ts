@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ShowKeyword } from 'app/model/show-keyword';
 
 @Component({
   selector: 'dni-keyword-tags',
@@ -8,11 +9,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class KeywordTagsComponent implements OnInit {
 
   @Input()
-  public keywords: string[];
+  public keywords: ShowKeyword[];
 
   constructor() { }
 
   ngOnInit() {
   }
-
 }

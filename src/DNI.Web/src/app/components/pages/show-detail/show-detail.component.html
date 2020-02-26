@@ -1,7 +1,9 @@
 <div class="container bg-light rounded p-4">
-    <dni-loading *ngIf="!showData; else showDetail"></dni-loading>
-    <ng-container *ngIf="show | async as show"
-                  #showDetail>
+    <ng-template #loading>
+        <dni-loading></dni-loading>
+    </ng-template>
+
+    <ng-container *ngIf="show$ | async as show; else loading">
         <h1 class="mb-4">{{show.title}}</h1>
 
         <div class="row align-items-center">
@@ -17,7 +19,7 @@
                     <strong>Duration</strong>: {{show.duration}}
                 </div>
                 <div class="mb-3">
-                    <dni-keyword-tags [keywords]="show.keywords"></dni-keyword-tags>
+                    <dni-keyword-tags [keywords]="show.getKeywords()"></dni-keyword-tags>
                 </div>
                 <div class="row mb-3 align-items-center">
                     <div class="col-9 col-lg-10">

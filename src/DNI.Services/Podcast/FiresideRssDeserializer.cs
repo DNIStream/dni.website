@@ -25,7 +25,7 @@ namespace DNI.Services.Podcast {
         private IEnumerable<string> SanitiseKeyWords(string keywords) {
             return keywords
                 .Split(',')
-                .Select(x => x.Trim().ToLower())
+                .Select(x => x.Trim().ToLower().Replace(" ", "-"))
                 .Where(x => x.Length > 0)
                 .Distinct();
         }

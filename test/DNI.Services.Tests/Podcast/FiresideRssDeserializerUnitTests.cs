@@ -57,7 +57,7 @@ namespace DNI.Services.Tests.Podcast {
         }
 
         [Fact]
-        public void Deserialize_ReturnsSamesNumberOfShowsAsInInputRss() {
+        public void Deserialize_ReturnsSameNumberOfShowsAsInInputRss() {
             // Arrange
             var service = GetDeserializer();
             var response = GetMockResponse();
@@ -124,7 +124,7 @@ namespace DNI.Services.Tests.Podcast {
             var service = GetDeserializer();
             var response = GetMockResponse();
             response.Content = response.Content
-                .Replace("REPLACE IN TEST", keywords);
+                .Replace("KEYWORDS_REPLACED_IN_TEST", keywords);
 
             // Act
             var objectGraph = service.Deserialize<PodcastStream>(response);
@@ -135,6 +135,42 @@ namespace DNI.Services.Tests.Podcast {
             Assert.Contains("dev", itemUnderTest.Keywords);
             Assert.Contains("test", itemUnderTest.Keywords);
             Assert.Contains("antelope", itemUnderTest.Keywords);
+        }
+
+        [Fact]
+        public void Deserialize_RssKeywordsAreConvertedToLowerCase() {
+            // Arrange
+            var service = GetDeserializer();
+            var response = GetMockResponse();
+            response.Content = response.Content
+                .Replace("KEYWORDS_REPLACED_IN_TEST", "DEV, TEST, JEFF");
+
+            // Act
+            var objectGraph = service.Deserialize<PodcastStream>(response);
+
+            // Assert
+            var itemUnderTest = objectGraph.Shows[0];
+            Assert.Contains("dev", itemUnderTest.Keywords, StringComparer.CurrentCulture);
+            Assert.Contains("test", itemUnderTest.Keywords, StringComparer.CurrentCulture);
+            Assert.Contains("jeff", itemUnderTest.Keywords, StringComparer.CurrentCulture);
+        }
+
+        [Fact]
+        public void Deserialize_RssKeywordspacesAreConvertedToHyphens() {
+            // Arrange
+            var service = GetDeserializer();
+            var response = GetMockResponse();
+            response.Content = response.Content
+                .Replace("KEYWORDS_REPLACED_IN_TEST", "dev-test, jEFF with a space, antelope hoof");
+
+            // Act
+            var objectGraph = service.Deserialize<PodcastStream>(response);
+
+            // Assert
+            var itemUnderTest = objectGraph.Shows[0];
+            Assert.Contains("dev-test", itemUnderTest.Keywords, StringComparer.CurrentCulture);
+            Assert.Contains("jeff-with-a-space", itemUnderTest.Keywords, StringComparer.CurrentCulture);
+            Assert.Contains("antelope-hoof", itemUnderTest.Keywords, StringComparer.CurrentCulture);
         }
 
         [Theory]
@@ -151,7 +187,7 @@ namespace DNI.Services.Tests.Podcast {
             var service = GetDeserializer();
             var response = GetMockResponse();
             response.Content = response.Content
-                .Replace("REPLACE IN TEST", keywords);
+                .Replace("KEYWORDS_REPLACED_IN_TEST", keywords);
 
             // Act
             var objectGraph = service.Deserialize<PodcastStream>(response);

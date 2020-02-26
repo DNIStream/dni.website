@@ -15,7 +15,7 @@ import { SEOService } from 'app/services/seo/seo.service';
 })
 export class ShowDetailComponent implements OnInit {
 
-  public show: Observable<Show>;
+  public show$: Observable<Show>;
 
   private showData: Show;
 
@@ -28,7 +28,7 @@ export class ShowDetailComponent implements OnInit {
   public ngOnInit(): void {
     this.showData = null;
 
-    this.show = this.route
+    this.show$ = this.route
       .paramMap
       .pipe(
         switchMap((params: ParamMap) => {

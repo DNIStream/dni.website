@@ -32,58 +32,67 @@
     <button type="submit" class="btn btn-primary col-12 col-md-2">Update</button>
   </form>
 
+  <ng-template #loading>
+    <dni-loading></dni-loading>
+  </ng-template>
+
   <dni-pager [totalItems]="totalItems"
              [itemsPerPage]="itemsPerPage"
              [totalPages]="totalPages"
              [currentPage]="currentPage"
-             [items]="shows"
              [showTotals]="false"
              (pageChanged)="onPageChanged($event)">
   </dni-pager>
 
-  <dni-loading *ngIf="(!(shows | async) || shows.length <= 0); else showList"></dni-loading>
+  <ng-container *ngIf="shows$ | async as shows; else loading">
 
-  <ng-container *ngFor="let show of shows | async"
-                #showList>
-    <div class="row">
-      <div class="col-12 pb-2">
-        <h4><a [routerLink]="['/show', show.slug]" [title]="show.title">{{show.title}}</a></h4>
-      </div>
-      <div class="col-md-3 d-none d-md-block text-center">
-        <a [routerLink]="['/show', show.slug]" [title]="show.title"><img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" /></a>
-        <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
-      </div>
-      <div class="col-md-5">
-        <p [innerHtml]="show.summary"></p>
-        <div>
-          <dni-keyword-tags [keywords]="show.keywords"></dni-keyword-tags>
-        </div>
-      </div>
-      <div class="col-md-4 pt-2 pt-md-0">
-        <div class="row">
-          <div class="col-10 col-md-12 text-md-right">
-            <div class="mb-md-1">
-              <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}
-            </div>
-            <div class="mb-md-1">
-              <strong>Duration</strong>: {{show.duration}}
-            </div>
-          </div>
-          <div class="col-2 col-md-12 text-md-right">
-            <a [routerLink]="['/show', show.slug]" title="Listen to '{{show.title}}'"><i class="fas fa-headphones fa-2x"></i></a>
-          </div>
-        </div>
-      </div>
+    <div class="mb-3">
+      <dni-keyword-tags [keywords]="globalKeywords"></dni-keyword-tags>
+      <hr />
     </div>
-    <hr />
+
+    <ng-container *ngFor="let show of shows">
+      <div class="row">
+        <div class="col-12 pb-2">
+          <h4><a [routerLink]="['/show', show.slug]" [title]="show.title">{{show.title}}</a></h4>
+        </div>
+        <div class="col-md-3 d-none d-md-block text-center">
+          <a [routerLink]="['/show', show.slug]" [title]="show.title"><img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" /></a>
+          <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
+        </div>
+        <div class="col-md-5">
+          <p [innerHtml]="show.summary"></p>
+          <div>
+            <dni-keyword-tags [keywords]="show.getKeywords()"></dni-keyword-tags>
+          </div>
+        </div>
+        <div class="col-md-4 pt-2 pt-md-0">
+          <div class="row">
+            <div class="col-10 col-md-12 text-md-right">
+              <div class="mb-md-1">
+                <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}
+              </div>
+              <div class="mb-md-1">
+                <strong>Duration</strong>: {{show.duration}}
+              </div>
+            </div>
+            <div class="col-2 col-md-12 text-md-right">
+              <a [routerLink]="['/show', show.slug]" title="Listen to '{{show.title}}'"><i class="fas fa-headphones fa-2x"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+    </ng-container>
+
   </ng-container>
 
   <dni-pager [totalItems]="totalItems"
              [itemsPerPage]="itemsPerPage"
              [totalPages]="totalPages"
              [currentPage]="currentPage"
-             [items]="shows"
              itemType="podcasts"
              (pageChanged)="onPageChanged($event)">
   </dni-pager>
+
 </div>
