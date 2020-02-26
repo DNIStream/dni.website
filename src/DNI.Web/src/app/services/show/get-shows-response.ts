@@ -1,8 +1,8 @@
 import { Show } from 'app/model/show';
 import { IPagedAPIResponse } from 'app/components/shared/paging/IPagedAPIResponse';
-import { ShowKeyword } from './show-keyword';
+import { ShowKeyword } from 'app/model/show-keyword';
 
-export class ShowResponse {
+export class GetShowsResponse {
     public pageInfo: IPagedAPIResponse;
 
     public pagedShows: Show[];

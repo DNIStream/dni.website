@@ -1,7 +1,6 @@
-import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
 import { ShowService } from 'app/services/show/show.service';

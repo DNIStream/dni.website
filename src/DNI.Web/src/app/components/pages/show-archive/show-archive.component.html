@@ -1,57 +1,61 @@
 <div class="container bg-light rounded p-4">
   <h1>Podcast Archive</h1>
 
-  <form class="form-inline py-3 justify-content-end"
-        name="show-list-filter-form"
-        id="show-list-filter-form"
-        (ngSubmit)="onSubmit()"
-        #f="ngForm"
-        novalidate>
-    <label for="orderByField"
-           class="my-3 mr-0 mr-sm-3">Order By:</label>
-    <select
+  <ng-container *ngIf="getShowsRequest$ | async as req">
+    {{req | json}}
+    <form class="form-inline py-3 justify-content-end"
+          name="show-list-filter-form"
+          id="show-list-filter-form"
+          (ngSubmit)="onSortSubmit()"
+          #f="ngForm"
+          novalidate>
+      <label for="orderByField"
+             class="my-3 mr-0 mr-sm-3">Order By:</label>
+      <select
         class="form-control mr-sm-3 mb-2 mb-md-0"
         id="orderByField"
         name="orderByField"
-        [(ngModel)]="filters.orderByField"
+        [(ngModel)]="req.orderByField"
         #orderByField="ngModel">
-        <option *ngFor="let f of filterKeys" [value]="f">{{getFilterName(f)}}</option>
+        <option *ngFor="let f of sortFieldOptionKeys" [value]="f">{{sortFieldOptions[f]}}</option>
     </select>
-    <label class="sr-only"
-           for="orderByOrder">Order:</label>
+      <label class="sr-only"
+             for="orderByOrder">Order:</label>
 
-    <select
+      <select
         class="form-control mr-md-3 mb-2 mb-md-0"
         id="orderByOrder"
         name="orderByOrder"
-        [(ngModel)]="filters.orderByOrder"
+        [(ngModel)]="req.orderByOrder"
         #orderByOrder="ngModel">
-        <option *ngFor="let o of filterOrders" [value]="o">{{o}}</option>
+        <option *ngFor="let o of sortFieldOrders" [value]="o">{{o}}</option>
     </select>
 
-    <button type="submit" class="btn btn-primary col-12 col-md-2">Update</button>
-  </form>
+      <button type="submit" class="btn btn-primary col-12 col-md-2">Update</button>
+    </form>
+  </ng-container>
 
   <ng-template #loading>
     <dni-loading></dni-loading>
   </ng-template>
 
-  <dni-pager [totalItems]="totalItems"
-             [itemsPerPage]="itemsPerPage"
-             [totalPages]="totalPages"
-             [currentPage]="currentPage"
+  <dni-pager *ngIf="(getShowsRequest$ | async) as req && (getShowsResponse$ | async) as res"
+             [totalItems]="res.pageInfo.totalItems"
+             [itemsPerPage]="req.itemsPerPage"
+             [totalPages]="res.pageInfo.totalPages"
+             [currentPage]="req.currentPage"
              [showTotals]="false"
-             (pageChanged)="onPageChanged($event)">
+             (pageChanged)="onPaginationChanged($event)">
   </dni-pager>
 
-  <ng-container *ngIf="shows$ | async as shows; else loading">
+  <ng-container *ngIf="getShowsResponse$ | async as showsResponse; else loading">
 
     <div class="mb-3">
       <dni-keyword-tags [keywords]="globalKeywords"></dni-keyword-tags>
       <hr />
     </div>
 
-    <ng-container *ngFor="let show of shows">
+    <ng-container *ngFor="let show of showsResponse.pagedShows">
       <div class="row">
         <div class="col-12 pb-2">
           <h4><a [routerLink]="['/show', show.slug]" [title]="show.title">{{show.title}}</a></h4>
@@ -87,12 +91,13 @@
 
   </ng-container>
 
-  <dni-pager [totalItems]="totalItems"
-             [itemsPerPage]="itemsPerPage"
-             [totalPages]="totalPages"
-             [currentPage]="currentPage"
+  <!-- <dni-pager *ngIf="(getShowsRequest$ | async) as req && (getShowsResponse$ | async) as res"
+             [totalItems]="res.pageInfo.totalItems"
+             [itemsPerPage]="req.itemsPerPage"
+             [totalPages]="res.pageInfo.totalPages"
+             [currentPage]="req.currentPage"
              itemType="podcasts"
-             (pageChanged)="onPageChanged($event)">
-  </dni-pager>
+             (pageChanged)="onPaginationChanged($event)">
+  </dni-pager> -->
 
 </div>

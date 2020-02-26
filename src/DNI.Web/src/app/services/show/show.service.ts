@@ -1,6 +1,5 @@
-import { ShowKeyword } from './../../model/show-keyword';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -8,8 +7,8 @@ import { environment } from 'environments/environment';
 
 import { Show } from 'app/model/show';
 import { UriHelper } from 'app/components/shared/uriHelper';
-import { ShowResponse } from 'app/model/show-response';
-import { GetShowsRequest } from 'app/model/get-shows-request';
+import { GetShowsRequest } from 'app/services/show/get-shows-request';
+import { GetShowsResponse } from './get-shows-response';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,7 @@ export class ShowService {
     private http: HttpClient
   ) { }
 
-  public getShows(request: GetShowsRequest): Observable<ShowResponse> {
+  public getShows(request: GetShowsRequest): Observable<GetShowsResponse> {
     let uri = environment.apiBaseUri + 'shows';
 
     uri = UriHelper.getUri(uri, {
@@ -30,10 +29,10 @@ export class ShowService {
     });
 
     return this.http
-      .get<ShowResponse>(uri)
+      .get<GetShowsResponse>(uri)
       .pipe(
-        switchMap((response: ShowResponse) => {
-          const newResponse = Object.assign(new ShowResponse(), response);
+        switchMap((response: GetShowsResponse) => {
+          const newResponse = Object.assign(new GetShowsResponse(), response);
           newResponse.pagedShows = response.pagedShows.map(s => Object.assign(new Show(), s));
           newResponse.latestShow = Object.assign(new Show(), response.latestShow);
           return of(newResponse);
