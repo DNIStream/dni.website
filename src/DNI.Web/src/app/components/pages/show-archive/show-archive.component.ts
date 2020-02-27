@@ -1,10 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
-import { switchMap, share, map, delay } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap, share } from 'rxjs/operators';
 
 import { ShowService } from 'app/services/show/show.service';
 import { SEOService } from 'app/services/seo/seo.service';
-import { ShowKeyword } from 'app/model/show-keyword';
 import { GetShowsRequest } from 'app/services/show/get-shows-request';
 import { GetShowsResponse } from 'app/services/show/get-shows-response';
 
