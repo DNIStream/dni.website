@@ -2,7 +2,6 @@
   <h1>Podcast Archive</h1>
 
   <ng-container *ngIf="getShowsRequest$ | async as req">
-    {{req | json}}
     <form class="form-inline py-3 justify-content-end"
           name="show-list-filter-form"
           id="show-list-filter-form"
@@ -33,71 +32,68 @@
 
       <button type="submit" class="btn btn-primary col-12 col-md-2">Update</button>
     </form>
-  </ng-container>
 
-  <ng-template #loading>
-    <dni-loading></dni-loading>
-  </ng-template>
+    <dni-loading *ngIf="!getShowsResponse || !getShowsResponse.pagedShows || getShowsResponse.pagedShows.length <= 0"></dni-loading>
 
-  <dni-pager *ngIf="(getShowsRequest$ | async) as req && (getShowsResponse$ | async) as res"
-             [totalItems]="res.pageInfo.totalItems"
-             [itemsPerPage]="req.itemsPerPage"
-             [totalPages]="res.pageInfo.totalPages"
-             [currentPage]="req.currentPage"
-             [showTotals]="false"
-             (pageChanged)="onPaginationChanged($event)">
-  </dni-pager>
+    <div *ngIf="getShowsResponse"
+         [hidden]="!getShowsResponse.pagedShows || getShowsResponse.pagedShows.length <= 0">
 
-  <ng-container *ngIf="getShowsResponse$ | async as showsResponse; else loading">
+      <dni-pager [totalItems]="getShowsResponse.pageInfo.totalRecords"
+                 [itemsPerPage]="req.itemsPerPage"
+                 [totalPages]="getShowsResponse.pageInfo.totalPages"
+                 [currentPage]="req.currentPage"
+                 [showTotals]="false"
+                 (pageChanged)="onPaginationChanged($event)">
+      </dni-pager>
 
-    <div class="mb-3">
-      <dni-keyword-tags [keywords]="globalKeywords"></dni-keyword-tags>
-      <hr />
+      <div class="mb-3">
+        <dni-keyword-tags [keywords]="getShowsResponse.getTopKeywords(10)"></dni-keyword-tags>
+        <hr />
+      </div>
+
+      <ng-container *ngFor="let show of getShowsResponse.pagedShows">
+        <div class="row">
+          <div class="col-12 pb-2">
+            <h4><a [routerLink]="['/show', show.slug]" [title]="show.title">{{show.title}}</a></h4>
+          </div>
+          <div class="col-md-3 d-none d-md-block text-center">
+            <a [routerLink]="['/show', show.slug]" [title]="show.title"><img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" /></a>
+            <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
+          </div>
+          <div class="col-md-5">
+            <p [innerHtml]="show.summary"></p>
+            <div>
+              <dni-keyword-tags [keywords]="show.getKeywords()"></dni-keyword-tags>
+            </div>
+          </div>
+          <div class="col-md-4 pt-2 pt-md-0">
+            <div class="row">
+              <div class="col-10 col-md-12 text-md-right">
+                <div class="mb-md-1">
+                  <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}
+                </div>
+                <div class="mb-md-1">
+                  <strong>Duration</strong>: {{show.duration}}
+                </div>
+              </div>
+              <div class="col-2 col-md-12 text-md-right">
+                <a [routerLink]="['/show', show.slug]" title="Listen to '{{show.title}}'"><i class="fas fa-headphones fa-2x"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+      </ng-container>
+
+      <dni-pager [totalItems]="getShowsResponse.pageInfo.totalRecords"
+                 [itemsPerPage]="req.itemsPerPage"
+                 [totalPages]="getShowsResponse.pageInfo.totalPages"
+                 [currentPage]="req.currentPage"
+                 itemType="podcasts"
+                 (pageChanged)="onPaginationChanged($event)">
+      </dni-pager>
+
     </div>
 
-    <ng-container *ngFor="let show of showsResponse.pagedShows">
-      <div class="row">
-        <div class="col-12 pb-2">
-          <h4><a [routerLink]="['/show', show.slug]" [title]="show.title">{{show.title}}</a></h4>
-        </div>
-        <div class="col-md-3 d-none d-md-block text-center">
-          <a [routerLink]="['/show', show.slug]" [title]="show.title"><img [src]="show.imageUrl" [alt]="show.title" class="img-thumbnail" /></a>
-          <!-- this comment stops vscode from indenting the rest of this page incorrectly (img tag weirdness?) -->
-        </div>
-        <div class="col-md-5">
-          <p [innerHtml]="show.summary"></p>
-          <div>
-            <dni-keyword-tags [keywords]="show.getKeywords()"></dni-keyword-tags>
-          </div>
-        </div>
-        <div class="col-md-4 pt-2 pt-md-0">
-          <div class="row">
-            <div class="col-10 col-md-12 text-md-right">
-              <div class="mb-md-1">
-                <strong>Published</strong>: {{show.publishedTime | date: 'EE d MMM yy'}}
-              </div>
-              <div class="mb-md-1">
-                <strong>Duration</strong>: {{show.duration}}
-              </div>
-            </div>
-            <div class="col-2 col-md-12 text-md-right">
-              <a [routerLink]="['/show', show.slug]" title="Listen to '{{show.title}}'"><i class="fas fa-headphones fa-2x"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr />
-    </ng-container>
-
   </ng-container>
-
-  <!-- <dni-pager *ngIf="(getShowsRequest$ | async) as req && (getShowsResponse$ | async) as res"
-             [totalItems]="res.pageInfo.totalItems"
-             [itemsPerPage]="req.itemsPerPage"
-             [totalPages]="res.pageInfo.totalPages"
-             [currentPage]="req.currentPage"
-             itemType="podcasts"
-             (pageChanged)="onPaginationChanged($event)">
-  </dni-pager> -->
-
 </div>
