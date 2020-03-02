@@ -19,7 +19,7 @@ export class ShowService {
   ) { }
 
   public getShows(request: GetShowsRequest): Observable<GetShowsResponse> {
-    let uri = environment.apiBaseUri + 'shows';
+    let uri = environment.apiBaseUri + (!request.keyword ? 'shows' : `shows/${request.keyword}`);
 
     uri = UriHelper.getUri(uri, {
       'sort-field': request.orderByField,

@@ -55,6 +55,20 @@ namespace DNI.API.Tests.Controllers {
         }
 
         [Fact]
+        public async Task GetShowsAsync_CallsGetShowsAsync_WhenRequestIsValid() {
+            // Arrange
+            var request = _fixture.Create<GetShowsRequest>();
+            var controller = GetController();
+
+            // Act
+            await controller.GetShowsAsync(request);
+            
+            // Assert
+            showServiceMock
+                .Verify(x => x.GetShowsAsync(It.Is<IPagingRequest>(p => p == request), It.Is<ISortingRequest>(s => s == request)), Times.Once());
+        }
+
+        [Fact]
         public async Task GetShowsAsync_Returns204NoContent_WhenNoResponseIsReturned() {
             // Arrange
             var request = _fixture.Create<GetShowsRequest>();
@@ -121,6 +135,24 @@ namespace DNI.API.Tests.Controllers {
             Assert.IsType<ShowListAPIResponse>(resultData);
             var actualData = (ShowListAPIResponse) resultData;
             Assert.Equal(keywordResponse, actualData.ShowKeywords);
+        }
+
+        [Fact]
+        public async Task GetShowsAsync_CallsGetShowsAsyncKeywordOverload_WhenKeywordIsNotNull() {
+            // Arrange
+            var request = _fixture.Create<GetShowsRequest>();
+            var expectedKeyword = _fixture.Create<string>();
+
+            var controller = GetController();
+
+            // Act
+            await controller.GetShowsAsync(request, expectedKeyword);
+            
+            // Assert
+            showServiceMock
+                .Verify(x => x.GetShowsAsync(It.Is<IPagingRequest>(p => p == request),
+                    It.Is<ISortingRequest>(s => s == request),
+                    It.Is<string>(k => k == expectedKeyword)), Times.Once());
         }
 
         #endregion

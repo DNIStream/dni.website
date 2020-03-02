@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { switchMap, share } from 'rxjs/operators';
+import { BehaviorSubject, of } from 'rxjs';
+import { switchMap, share, delay } from 'rxjs/operators';
 
 import { ShowService } from 'app/services/show/show.service';
 import { SEOService } from 'app/services/seo/seo.service';
 import { GetShowsRequest } from 'app/services/show/get-shows-request';
 import { GetShowsResponse } from 'app/services/show/get-shows-response';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   templateUrl: './show-archive.component.html',
@@ -38,7 +39,8 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
 
   constructor(
     private showService: ShowService,
-    private seoService: SEOService
+    private seoService: SEOService,
+    private route: ActivatedRoute
   ) { }
 
   public ngOnInit(): void {
@@ -74,10 +76,22 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToShows(): void {
-    this.getShowsRequest$
+    this.route
+      .paramMap
       .pipe(
-        switchMap((getShowsRequest: GetShowsRequest) => this.showService.getShows(getShowsRequest)),
-        share()
+        switchMap((params: ParamMap) => {
+          const keyword = params.get('keyword');
+          return of(keyword);
+        }),
+        switchMap((keyword: string) => {
+          this.getShowsRequest$.value.keyword = keyword;
+          return this.getShowsRequest$
+            .pipe(
+              switchMap((getShowsRequest: GetShowsRequest) => this.showService.getShows(getShowsRequest)),
+              share(),
+              delay(1500)
+            );
+        })
       )
       .subscribe(showResponse => this.getShowsResponse = showResponse);
   }

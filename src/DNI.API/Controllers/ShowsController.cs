@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using DNI.API.Requests;
 using DNI.API.Responses;
+using DNI.Services.Shared.Paging;
 using DNI.Services.Show;
 
 using Microsoft.AspNetCore.Http;
@@ -34,13 +35,19 @@ namespace DNI.API.Controllers {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ShowListAPIResponse), StatusCodes.Status200OK)]
-        [Route("shows")]
-        public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request) {
+        [Route("shows/{keyword}")]
+        public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request, [FromRoute] string keyword = null) {
             if(!ModelState.IsValid) {
                 return ModelValidationBadRequest();
             }
 
-            var showList = await _showService.GetShowsAsync(request, request);
+            // TODO: remove this if!
+            IPagedResponse<Show> showList;
+            if(string.IsNullOrWhiteSpace(keyword)) {
+                showList = await _showService.GetShowsAsync(request, request);
+            } else {
+                showList = await _showService.GetShowsAsync(request, request, keyword);
+            }
 
             if(showList == null || !showList.Items.Any()) {
                 return NoContent();
@@ -48,7 +55,7 @@ namespace DNI.API.Controllers {
 
             var keywords = await _showService.GetAggregatedKeywords();
 
-            var test = new ShowListAPIResponse {
+            var response = new ShowListAPIResponse {
                 PageInfo = new PagedAPIResponse {
                     StartIndex = showList.StartIndex,
                     TotalRecords = showList.TotalRecords,
@@ -61,7 +68,7 @@ namespace DNI.API.Controllers {
                 ShowKeywords = keywords
             };
 
-            return Ok(test);
+            return Ok(response);
         }
 
         /// <summary>

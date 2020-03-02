@@ -6,7 +6,7 @@ using DNI.Services.Shared.Sorting;
 
 namespace DNI.Services.Show {
     public interface IShowService {
-        Task<IPagedResponse<Show>> GetShowsAsync(IPagingRequest pagingRequest, ISortingRequest sortingRequest);
+        Task<IPagedResponse<Show>> GetShowsAsync(IPagingRequest pagingRequest, ISortingRequest sortingRequest, string keyword = null);
 
         Task<Show> GetLatestShowAsync();
 

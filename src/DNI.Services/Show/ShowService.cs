@@ -48,7 +48,7 @@ namespace DNI.Services.Show {
         ///     Retrieves all shows, ordered in descending published version order.
         /// </summary>
         /// <returns></returns>
-        public async Task<IPagedResponse<Show>> GetShowsAsync(IPagingRequest pagingRequest, ISortingRequest sortingRequest) {
+        public async Task<IPagedResponse<Show>> GetShowsAsync(IPagingRequest pagingRequest, ISortingRequest sortingRequest, string keyword = null) {
             var podcastRssGraph = await GetShowsFromRssFeed();
 
             if(podcastRssGraph?.Shows == null || podcastRssGraph.Shows.Count <= 0) {
