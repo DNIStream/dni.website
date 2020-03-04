@@ -152,6 +152,37 @@ namespace DNI.Services.Tests.Show {
         }
 
         [Fact]
+        public async Task GetShowListAsync_CallsSorter_WithFilteredByPodcastShows_WhenKeywordIsSpecified() {
+            // Arrange
+            var service = GetService();
+            var request = new GetShowsRequest();
+            var show1 = _fixture.Create<PodcastShow>();
+            var show2 = _fixture.Create<PodcastShow>();
+            var show3 = _fixture.Create<PodcastShow>();
+            show1.Keywords = new List<string> {
+                "test1", "test2"
+            };
+            _podcastServiceMock
+                .Setup(x => x.GetAllAsync())
+                .ReturnsAsync(() => new PodcastStream {
+                    Shows = {
+                        show1, show2, show3
+                    }
+                });
+
+            // Act
+            await service.GetShowsAsync(request, request, "test1");
+
+            // Assert
+            _sorterMock
+                .Verify(x => x.SortAsync(It.Is<IEnumerable<PodcastShow>>(k => k.Count() == 1),
+                    It.Is<ISortingRequest>(r => r == request)), Times.Once(), "Only one show should be returned");
+            _sorterMock
+                .Verify(x => x.SortAsync(It.Is<IEnumerable<PodcastShow>>(k => k.Contains(show1)),
+                    It.Is<ISortingRequest>(r => r == request)), Times.Once(), "show1 is expected");
+        }
+
+        [Fact]
         public async Task GetShowListAsync_MapsOnlyPagedPodcastShowsToAShow() {
             // Arrange
             var service = GetService();

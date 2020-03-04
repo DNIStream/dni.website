@@ -65,7 +65,7 @@ namespace DNI.API.Tests.Controllers {
             
             // Assert
             showServiceMock
-                .Verify(x => x.GetShowsAsync(It.Is<IPagingRequest>(p => p == request), It.Is<ISortingRequest>(s => s == request)), Times.Once());
+                .Verify(x => x.GetShowsAsync(It.Is<IPagingRequest>(p => p == request), It.Is<ISortingRequest>(s => s == request), It.Is<string>(s => s == null)), Times.Once());
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace DNI.API.Tests.Controllers {
             // Arrange
             var request = _fixture.Create<GetShowsRequest>();
             showServiceMock
-                .Setup(x => x.GetShowsAsync(It.IsAny<IPagingRequest>(), It.IsAny<ISortingRequest>()))
+                .Setup(x => x.GetShowsAsync(It.IsAny<IPagingRequest>(), It.IsAny<ISortingRequest>(), It.IsAny<string>()))
                 .ReturnsAsync(() => null);
 
             var controller = GetController();
@@ -91,7 +91,7 @@ namespace DNI.API.Tests.Controllers {
             var request = _fixture.Create<GetShowsRequest>();
             var pagedResponse = _fixture.Create<IPagedResponse<Show>>();
             showServiceMock
-                .Setup(x => x.GetShowsAsync(It.IsAny<IPagingRequest>(), It.IsAny<ISortingRequest>()))
+                .Setup(x => x.GetShowsAsync(It.IsAny<IPagingRequest>(), It.IsAny<ISortingRequest>(), It.IsAny<string>()))
                 .ReturnsAsync(() => pagedResponse);
 
             var controller = GetController();

@@ -55,8 +55,12 @@ namespace DNI.Services.Show {
                 return null;
             }
 
+            // Filter by keyword
+            var shows = !string.IsNullOrWhiteSpace(keyword) ?
+                podcastRssGraph.Shows.Where(x => x.Keywords.Contains(keyword)) : podcastRssGraph.Shows;
+
             // Perform sorting
-            var orderedShows = await _showSorter.SortAsync(podcastRssGraph.Shows, sortingRequest);
+            var orderedShows = await _showSorter.SortAsync(shows, sortingRequest);
 
             // Perform paging
             var pagedPodcastShows = await _showPagingCalculator.PageItemsAsync<PodcastShowPagedResponse>(orderedShows, pagingRequest);

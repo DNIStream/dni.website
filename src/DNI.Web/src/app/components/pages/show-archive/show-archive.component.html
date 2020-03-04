@@ -1,13 +1,23 @@
 <div class="container bg-light rounded p-4">
   <h1>Podcast Archive</h1>
 
+  <dni-loading *ngIf="loading"></dni-loading>
+
+  <div *ngIf="!loading && errorMessage"
+       class="alert alert-warning"
+       role="alert">
+    <h2>An Error Occurred</h2>
+    <p [innerHtml]="errorMessage"></p>
+  </div>
+
   <ng-container *ngIf="getShowsRequest$ | async as req">
     <form class="form-inline py-3 justify-content-end"
           name="show-list-filter-form"
           id="show-list-filter-form"
           (ngSubmit)="onSortSubmit()"
           #f="ngForm"
-          novalidate>
+          novalidate
+          [hidden]="errorMessage || loading">
       <label for="orderByField"
              class="my-3 mr-0 mr-sm-3">Order By:</label>
       <select
@@ -33,10 +43,8 @@
       <button type="submit" class="btn btn-primary col-12 col-md-2">Update</button>
     </form>
 
-    <dni-loading *ngIf="!getShowsResponse || !getShowsResponse.pagedShows || getShowsResponse.pagedShows.length <= 0"></dni-loading>
-
     <div *ngIf="getShowsResponse"
-         [hidden]="!getShowsResponse.pagedShows || getShowsResponse.pagedShows.length <= 0">
+         [hidden]="loading">
 
       <dni-pager [totalItems]="getShowsResponse.pageInfo.totalRecords"
                  [itemsPerPage]="req.itemsPerPage"

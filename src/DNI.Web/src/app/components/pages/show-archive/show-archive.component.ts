@@ -14,6 +14,10 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class ShowArchiveComponent implements OnInit, OnDestroy {
 
+  public errorMessage: string;
+
+  public loading: boolean = true;
+
   public getShowsResponse: GetShowsResponse = null;
 
   public getShowsRequest$: BehaviorSubject<GetShowsRequest>;
@@ -71,6 +75,7 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
     // This works with the hacky dni-loading and following <div> ngIfs and [hidden] logic due to a bug in the
     // pager
     this.getShowsResponse.pagedShows = null;
+    this.loading = true;
     // Emit the bound request value to the subscriber
     this.getShowsRequest$.next(this.getShowsRequest$.value);
   }
@@ -81,18 +86,26 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap((params: ParamMap) => {
           const keyword = params.get('keyword');
+          this.loading = true;
           return of(keyword);
         }),
         switchMap((keyword: string) => {
+          this.loading = true;
           this.getShowsRequest$.value.keyword = keyword;
           return this.getShowsRequest$
             .pipe(
               switchMap((getShowsRequest: GetShowsRequest) => this.showService.getShows(getShowsRequest)),
-              share(),
-              delay(1500)
+              share()
             );
         })
       )
-      .subscribe(showResponse => this.getShowsResponse = showResponse);
+      .subscribe(showResponse => {
+        this.getShowsResponse = showResponse;
+        this.errorMessage = null;
+        this.loading = false;
+      }, e => {
+        this.errorMessage = 'Oops! An error occurred when trying to retrieve the podcast episodes - please let us know!';
+        this.loading = false;
+      });
   }
 }
