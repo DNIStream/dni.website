@@ -7,9 +7,10 @@ export const environment = {
   // webUri: 'http://localhost:4200/',
   // apiBaseUri: 'http://localhost:12341/',
   // recaptchaSiteKey: '6Lcv_3MUAAAAAPTlA1F3Jk2X3mc_Vnixqbgk3pgv',
-  version: '1.3.2',
-  versionText: 'The Left-Hoofed Antelope'
+  version: '2.0.0',
+  versionText: 'The Jolly Guinea Pig'
 };
+
 
 
 
