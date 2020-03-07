@@ -11,7 +11,7 @@ export class SEOService {
   ) { }
 
   public setTitle(title: string): void {
-    this.title.setTitle(title + ': Documentation Not Included Development Podcast');
+    this.title.setTitle(title + ' | DNI Stream');
   }
 
   public setDescription(description: string): void {

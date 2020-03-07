@@ -2,12 +2,20 @@
 using System.IO;
 using System.Reflection;
 
+using DNI.API.Requests;
+using DNI.API.Validators;
 using DNI.Options;
 using DNI.Services.Captcha;
 using DNI.Services.Email;
+using DNI.Services.Mappers;
 using DNI.Services.Podcast;
-using DNI.Services.ShowList;
-using DNI.Services.Vodcast;
+using DNI.Services.Shared.Mapping;
+using DNI.Services.Shared.Paging;
+using DNI.Services.Shared.Sorting;
+using DNI.Services.Show;
+
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,8 +29,6 @@ using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
 using RestSharp;
-
-using SendGrid;
 
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -56,23 +62,25 @@ namespace DNI.API {
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
             services.Configure<GeneralOptions>(Configuration.GetSection("General"));
-            services.Configure<YouTubeOptions>(Configuration.GetSection("YouTube"));
 
             // 3rd Party Services
-            var sendGridAPIKey = Configuration.GetSection("SendGrid").GetValue("ApiKey", "");
             services
                 .AddTransient<ISmtpClient, SmtpClient>()
-                .AddTransient<IRestClient, RestClient>()
-                .AddTransient<ISendGridClient>(p => new SendGridClient(sendGridAPIKey));
+                .AddTransient<IRestClient, RestClient>();
 
             // Services
             services
                 .AddTransient<ICaptchaService, CaptchaService>()
-                // .AddTransient<IEmailService, SendGridEmailService>();
                 .AddTransient<IEmailService, SystemNetEmailService>()
                 .AddTransient<IPodcastService, FiresidePodcastService>()
-                .AddTransient<IVodcastService, YouTubeVodcastService>()
-                .AddTransient<IShowListService, ShowListService>();
+                .AddScoped<IShowService, ShowService>()
+                .AddTransient<IShowKeywordAggregationService, ShowKeywordAggregationService>()
+                .AddTransient<IPagingCalculator<PodcastShow>, PagingCalculator<PodcastShow>>()
+                .AddTransient<ISorter<PodcastShow>, Sorter<PodcastShow>>();
+
+            // Mappers
+            services
+                .AddTransient<IMapper<PodcastShow, Show>, PodcastShowToShowMapper>();
 
             // MVC
             services
@@ -87,25 +95,31 @@ namespace DNI.API {
                         NamingStrategy = new DefaultNamingStrategy(),
                         AllowIntegerValues = true
                     });
-                });
+                })
+                .AddFluentValidation();
+
+            // Validators
+            services
+                .AddTransient<IValidator<GetShowsRequest>, GetShowsRequestValidator>();
 
             // Swagger
-            services.AddSwaggerGen(c => {
-                c.SwaggerDoc("v1", new Info {
-                    Title = APINameSpace,
-                    Version = $"v{GetVersion()}",
-                    Description = "This API provides REST capabilities to the Documentation Not Included website"
+            services
+                .AddSwaggerGen(c => {
+                    c.SwaggerDoc("v1", new Info {
+                        Title = APINameSpace,
+                        Version = $"v{GetVersion()}",
+                        Description = "This API provides REST capabilities to the Documentation Not Included website"
+                    });
+
+                    // Convert all documentation urls to lowercase
+                    c.DocumentFilter<LowercaseDocumentFilter>();
+
+                    // Include code comments in API documentation
+                    var appPath = AppDomain.CurrentDomain.BaseDirectory;
+                    foreach(var file in Directory.GetFiles(appPath, "*.xml")) {
+                        c.IncludeXmlComments(file);
+                    }
                 });
-
-                // Convert all documentation urls to lowercase
-                c.DocumentFilter<LowercaseDocumentFilter>();
-
-                // Include code comments in API documentation
-                var appPath = AppDomain.CurrentDomain.BaseDirectory;
-                foreach(var file in Directory.GetFiles(appPath, "*.xml")) {
-                    c.IncludeXmlComments(file);
-                }
-            });
 
             // Response caching
             // services.AddResponseCaching();
@@ -126,7 +140,7 @@ namespace DNI.API {
                 // Swagger
                 app.UseSwagger();
                 app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"DNI API v{GetVersion()}");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", $"DNI Stream API v{GetVersion()}");
                     c.RoutePrefix = string.Empty;
                     c.DocumentTitle = $"{APINameSpace} v{GetVersion()} UI";
                     c.DocExpansion(DocExpansion.None);

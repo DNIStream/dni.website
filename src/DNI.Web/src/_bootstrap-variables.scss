@@ -4,6 +4,7 @@
 // Variables should follow the `$component-state-property-size` formula for
 // consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
 
+$enable-responsive-font-sizes: true;
 
 //
 // Color system
@@ -289,8 +290,8 @@ $display3-weight:             300 !default;
 $display4-weight:             300 !default;
 $display-line-height:         $headings-line-height !default;
 
-$lead-font-size:              ($font-size-base * 1.25) !default;
-$lead-font-weight:            300 !default;
+$lead-font-size:              ($font-size-base * 1.7) !default;
+$lead-font-weight:            400 !default;
 
 $small-font-size:             80% !default;
 

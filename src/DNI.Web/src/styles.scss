@@ -89,3 +89,9 @@ footer {
 .no-text-shadow {
     text-shadow: none;
 }
+
+.alternate {
+    background-color: $orange;
+    border-top: 1px black solid;
+    border-bottom: 1px black solid;
+}

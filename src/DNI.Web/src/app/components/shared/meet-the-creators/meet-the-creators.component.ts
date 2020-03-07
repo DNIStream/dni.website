@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-
-import { catchError } from 'rxjs/operators';
+import { of, Observable } from 'rxjs';
+import { switchMap, map, share } from 'rxjs/operators';
 
 import { DataService } from 'app/services/data/data.service';
 import { Creator } from 'app/model/creator';
-import { of, throwError } from 'rxjs';
+
 
 @Component({
   selector: 'dni-meet-the-creators',
@@ -13,22 +13,17 @@ import { of, throwError } from 'rxjs';
 })
 export class MeetTheCreatorsComponent implements OnInit {
 
-  public creators: Creator[];
+  public creators$: Observable<Creator[]>;
 
   constructor(
     private dataService: DataService
   ) { }
 
-  ngOnInit() {
-    this.dataService
-      .creators()
-      .pipe(catchError(err => {
-        console.log(err);
-        return throwError(err);
-      }))
-      .subscribe(creators => {
-        this.creators = creators.sort(() => .5 - Math.random());
-      });
+  public ngOnInit(): void {
+    this.creators$ = this.dataService
+      .getCreators()
+      .pipe(
+        map((creators: Creator[]) => creators.sort(() => .5 - Math.random()))
+      );
   }
-
 }

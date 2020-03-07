@@ -8,6 +8,7 @@ using DNI.API.Controllers;
 using DNI.API.Requests;
 using DNI.API.Responses;
 using DNI.Services.Captcha;
+using DNI.Testing;
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ using Moq;
 using Xunit;
 
 namespace DNI.API.Tests.Controllers {
-    [Trait("TestType", "Unit")]
+    [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeUnit)]
     public class CaptchaControllerUnitTests {
         private readonly IFixture _fixture = new Fixture().Customize(new AutoMoqCustomization {ConfigureMembers = true});
 
