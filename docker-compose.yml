@@ -12,14 +12,13 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - CAPTCHA__SecretKey=${CAPTCHA_KEY}
       - General__SmtpServer=${SMTP_SERVER}
+      - General__SmtpServerPort=${SMTP_PORT}
+      - General__SmtpEnableSSL=${SMTP_ENABLE_SSL}
       - General__SmtpUsername=${SMTP_USERNAME}
       - General__SmtpPassword=${SMTP_PASSWORD}
       - General__ErrorEmailFrom=${ERROR_EMAIL_FROM}
       - General__ErrorEmailTo=${ERROR_EMAIL_TO}
       - General__ContactEmailTo=${CONTACT_EMAIL_TO}
-      - YouTube__ApiKey=${YOUTUBE_API_KEY}
-      - YouTube__Referrer=${YOUTUBE_REFERRER}
-      - YouTube__Origin=${YOUTUBE_ORIGIN}
     build:
       context: . # Nnnngh
       dockerfile: src/DNI.API/Dockerfile
