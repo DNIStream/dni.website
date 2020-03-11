@@ -20,7 +20,6 @@ jobs:
         - npm install --no-progress
       script:
         - npm run lint
-        - npm run test
         - npm run build:ssr
     - name: "Docker Build"
       if: branch = master
@@ -28,4 +27,5 @@ jobs:
         - docker
       script:
         - docker-compose build
+        # TODO: Set product environment variables
         # TODO: Deploy
