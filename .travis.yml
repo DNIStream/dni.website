@@ -11,7 +11,7 @@ branches:
     - /^feature\/.*$/
 
 install:
-  - dotnet restore"
+  - dotnet restore
 script:
-  - "dotnet test --filter TestType!=Integration"
-  - "pwd"
+  - dotnet test --filter TestType!=Integration
+  - pwd
