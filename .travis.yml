@@ -7,18 +7,14 @@
 
 jobs:
   include:
-    - on:
-        all_branches: true
-        condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
+    - if: branch =~ /^feature\/.*$/
       # install:
       #   - dotnet restore
       script:
         #- dotnet test --filter TestType!=Integration
         - echo 'feature'
         - pwd
-    - on:
-        all_branches: true
-        condition: $TRAVIS_BRANCH = test
+    - if: branch = test
       # install:
       #   - dotnet restore
       script:
