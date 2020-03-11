@@ -8,7 +8,7 @@ dotnet: 2.2.103
 branches:
   only:
     - master
-    - feature/*
+    - /^feature\/.*$/
 
 install:
   - dotnet restore"
