@@ -1,24 +1,26 @@
-language: csharp
-mono: none
-dotnet: 2.2.103
+# language: csharp
+# mono: none
+# dotnet: 2.2.103
 
 # services:
 #   - docker
 
 jobs:
   include:
-    - branches:
-        only:
-          - /^feature\/.*$/
-      install:
-        - dotnet restore
-      script:
-        - dotnet test --filter TestType!=Integration
-        - pwd
-    - branches:
-        only:
-          - test
+    - on:
+        all_branches: true
+        condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
       # install:
       #   - dotnet restore
       script:
+        #- dotnet test --filter TestType!=Integration
+        - echo 'feature'
+        - pwd
+    - on:
+        all_branches: true
+        condition: $TRAVIS_BRANCH = test
+      # install:
+      #   - dotnet restore
+      script:
+        - echo 'test'
         - pwd
