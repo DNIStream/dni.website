@@ -15,3 +15,10 @@ jobs:
       script:
         - dotnet test --filter TestType!=Integration
         - pwd
+    - branches:
+        only:
+          - test
+      # install:
+      #   - dotnet restore
+      script:
+        - pwd
