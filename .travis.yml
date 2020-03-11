@@ -5,13 +5,13 @@ dotnet: 2.2.103
 # services:
 #   - docker
 
-branches:
-  only:
-    - master
-    - /^feature\/.*$/
-
-install:
-  - dotnet restore
-script:
-  - dotnet test --filter TestType!=Integration
-  - pwd
+jobs:
+  include:
+    - branches:
+        only:
+          - /^feature\/.*$/
+      install:
+        - dotnet restore
+      script:
+        - dotnet test --filter TestType!=Integration
+        - pwd
