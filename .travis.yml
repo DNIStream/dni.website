@@ -1,22 +1,29 @@
-# language: csharp
-# mono: none
-# dotnet: 2.2.103
-
-# services:
-#   - docker
-
 jobs:
   include:
-    - if: branch =~ /^feature\/.*$/
-      # install:
-      #   - dotnet restore
+    - name: ".Net Build"
+      if: branch =~ /^feature\/.*$/
+      language: csharp
+      mono: none
+      dotnet: 2.2.103
+      install:
+        - dotnet restore
       script:
-        #- dotnet test --filter TestType!=Integration
-        - echo 'feature'
-        - pwd
-    - if: branch = test
-      # install:
-      #   - dotnet restore
+        - dotnet test --filter TestType!=Integration
+    - name: "Angular Build"
+      if: branch =~ /^feature\/.*$/
+      language: node_js
+      node_js: 10.13
+      install:
+        - npm set progress=false
+        - npm install --no-progress
       script:
-        - echo 'test'
-        - pwd
+        - npm run lint
+        - npm run test
+        - npm run build:ssr
+    - name: "Docker Build"
+      if: branch = master
+      services:
+        - docker
+      script:
+        - docker-compose build
+        # TODO: Deploy
