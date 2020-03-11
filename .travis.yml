@@ -8,8 +8,10 @@ dotnet: 2.2.103
 jobs:
   include:
     - name: "CI Build"
-    - stage: test
-      # script: "dotnet restore"
+      stage: restore
+      script: "dotnet restore"
+      stage: "test"
+      script: "pwd"
       script: "dotnet test --filter TestType!=Integration"
       # on:
       #   all_branches: true
