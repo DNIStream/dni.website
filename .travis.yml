@@ -7,10 +7,10 @@ dotnet: 2.2.103
 
 jobs:
   include:
-    - name: "CI Build"
+    - stage: test
+    name: "CI Build"
       # on:
       #   all_branches: true
       #condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
-      stage: test
       # script: "dotnet restore"
       script: "dotnet test --filter TestType!=Integration"
