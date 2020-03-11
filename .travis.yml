@@ -13,6 +13,8 @@ jobs:
       if: branch =~ /^feature\/.*$/
       language: node_js
       node_js: 10.13
+      before_install:
+        - cd src/DNI.Web
       install:
         - npm set progress=false
         - npm install --no-progress
