@@ -5,14 +5,13 @@ dotnet: 2.2.103
 # services:
 #   - docker
 
-jobs:
-  include:
-    - name: "CI Build"
-      stage: restore
-      script: "dotnet restore"
-      stage: "test"
-      script: "pwd"
-      script: "dotnet test --filter TestType!=Integration"
-      # on:
-      #   all_branches: true
-      #condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
+branches:
+  only:
+    - master
+    - feature/*
+
+install:
+  - dotnet restore"
+script:
+  - "dotnet test --filter TestType!=Integration"
+  - "pwd"
