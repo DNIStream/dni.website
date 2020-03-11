@@ -1,0 +1,16 @@
+language: csharp
+mono: none
+dotnet: 2.2.103
+
+services:
+  - docker
+
+jobs:
+  include:
+    - stage: restore
+      script: "dotnet restore"
+    - stage: tests
+      name: "Unit Tests"
+      script: "dotnet test --filter TestType!=Integration"
+    - stage: "build"
+      script: "dotnet build src/DNI.API/DNI.API.csproj -c Development"
