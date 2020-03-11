@@ -21,6 +21,7 @@ jobs:
       script:
         - npm run lint
         - npm run build:ssr
+        # TODO: Headless angular tests
     - name: "Docker Build"
       if: branch = master
       services:
@@ -28,4 +29,4 @@ jobs:
       script:
         - docker-compose build
         # TODO: Set product environment variables
-        # TODO: Deploy
+        # TODO: Deploy docker image
