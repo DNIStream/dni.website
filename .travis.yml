@@ -11,7 +11,7 @@ jobs:
     dotnet: 2.2.103
     on:
       all_branches: true
-      condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
+      #condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
       stage: test
       # script: "dotnet restore"
       script: "dotnet test --filter TestType!=Integration"
