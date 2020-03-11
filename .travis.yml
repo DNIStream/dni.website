@@ -9,8 +9,8 @@ jobs:
     language: csharp
     mono: none
     dotnet: 2.2.103
-    on:
-      all_branches: true
+    # on:
+    #   all_branches: true
       #condition: $TRAVIS_BRANCH =~ /^feature\/.*$/
       stage: test
       # script: "dotnet restore"
