@@ -13,7 +13,7 @@ jobs:
         - dotnet restore
       script:
         - dotnet build src/$PROJECT_NAME/$PROJECT_NAME.csproj --no-restore --nologo -c $ASPNET_CONFIGURATION
-        - for dir in test/*.Tests/; do (cd "$dir" && dotnet test -c $ASPNET_CONFIGURATION --no-build --no-restore --nologo --list-tests --filter TestType!=Integration); done
+        - for dir in test/*.Tests/; do (cd "$dir" && dotnet test -c $ASPNET_CONFIGURATION --no-build --nologo --filter TestType!=Integration); done
     - name: "Angular Build, Lint & Test"
       language: node_js
       node_js: 12.16.1
