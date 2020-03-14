@@ -1,26 +1,26 @@
 jobs:
   include:
     # CI Build for /feature branches
-    - stage: "CI Feature Build"
-      name: build
-      if: branch =~ /^feature\/.*$/
+    - stage: "CI Feature Build & Test"
       language: csharp
       mono: none
       dotnet: 2.2.103
+      if: branch =~ /^feature\/.*$/
+      name: ".Net build"
       before_install:
         - cd src/DNI.API
       install:
         - dotnet restore
       script:
         - dotnet build DNI.API.csproj -c Release
-      name: test
-      if: branch =~ /^feature\/.*$/
+      name: ".Net test"
       script:
         - dotnet test --filter TestType!=Integration
     -
-      name: "Angular Build"
       language: node_js
       node_js: 12.16.1
+      if: branch =~ /^feature\/.*$/
+      name: "Angular Lint"
       before_install:
         - cd src/DNI.Web
       install:
@@ -28,6 +28,8 @@ jobs:
         - npm install --no-progress
       script:
         - npm run lint
+      name: "Angular Build"
+      script:
         - npm run build:ssr
         # TODO: Headless angular tests
     # CD Build for PRs and master
