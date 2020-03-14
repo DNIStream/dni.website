@@ -1,5 +1,6 @@
 jobs:
   include:
+    # CI Build for /feature branches
     - name: ".Net Build"
       if: branch =~ /^feature\/.*$/
       language: csharp
@@ -22,11 +23,11 @@ jobs:
         - npm run lint
         - npm run build:ssr
         # TODO: Headless angular tests
+    # CD Build for PRs and master
     - name: "Docker Build"
       if: branch = master
       services:
         - docker
       script:
         - docker-compose build
-        # TODO: Set product environment variables
         # TODO: Deploy docker image

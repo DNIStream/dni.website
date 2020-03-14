@@ -6,7 +6,7 @@ This repository contains the source code for https://www.dnistream.live - a plat
 
 ## Code Coverage
 
-Code coverage is slightly lower than normal as this is a personal project, though all pertinent back-end service code is covered adequately. Front end tests are being worked on, along with 100% coverage of Web API controllers.
+Front-end test coverage is slightly lower than normal, though all pertinent back-end service code is covered adequately. Front end tests are being worked on, along with 100% coverage of Web API controllers.
 
 ## Solution Parts
 
@@ -15,27 +15,27 @@ This solution consists of the following:
 * A .Net Core 2.2.1 RESTful Web API ([src/DNI.API](src/DNI.API))
 * An Angular front-end (with a small number of Karma / Jasmine tests) ([src/DNI.Web](src/DNI.Web))
 * A docker / docker-compose configuration for production deployment ([docker-compose.yml](docker-compose.yml))
-* NGINX configuration files for deployment ([NGINX folder](nginx))
+* NGINX configuration files for a docker reverse proxy deployment ([NGINX folder](nginx))
 
-All data comes from Fireside and YouTube APIs, so there is no data persistence - caching will be implemented in the near future. there is currently a bug surrounding the display of information, see #8, #31 & #33.
+All data comes from Fireside's RSS feed.
 
-## How to run
+## How to Run
 
-The solution relies heavily on a number of configuration values and secret keys for API integration. These keys are *not* pushed to the repository, but are accessed from a local `.env` file on the developer's machine. All APIs are configured with both development and production keys with the relevant security restrictions (IP, referrer etc). Please speak to [Chris Sebok](https://github.com/Bidthedog) if you need access to these keys, though you can set up and configure your own if you are forking this repositry to create a similar website.
+The solution relies heavily on a number of configuration values and secret keys for API integration. These keys are *not* pushed to the repository, but are accessed from a local `.env` file on the developer's machine, and within the CI / CD pipeline. All APIs are configured with both development and production keys with the relevant security restrictions (IP, referrer etc). Please speak to [Chris Sebok](https://github.com/Bidthedog) if you need access to these keys, though you can set up and configure your own if you are forking this repository to create a similar website.
 
-A number of helper scripts are included to get the solution working in development mode on a Windows box. Docker is **not** used for development, but can be configured for "local production" testing and full production deployment.
+A number of helper scripts are included to facilitate the setup of a development environment on a Windows box. Docker is **not** used for development, but can be configured for "local production" testing.
 
-Both local development and dev / prod deployment via docker relies on the below file:
+The local development scripts **and** local docker production deployment testing require a `.env` file to be created in the repository root with the following contents (sensitive info redacted):
 
-* Create a `.env` file in the repository root with the following contents (sensitive info redacted):
-
-##### Production values (Linux deployment):
+##### Production values
 ```
 BUILD_ENVIRONMENT=prod
 ASPNETCORE_ENVIRONMENT=Production
 CAPTCHA_KEY=<REDACTED>
 ASPNET_CONFIGURATION=Release
 SMTP_SERVER=<REDACTED>
+SMTP_PORT=25
+SMTP_ENABLE_SSL=True
 SMTP_USERNAME=<REDACTED>
 SMTP_PASSWORD=<REDACTED>
 LOG_MOUNT_PATH=/app/api.dnistream.live/logs
@@ -44,17 +44,15 @@ LOCAL_API_PORT=8181
 ERROR_EMAIL_FROM=<REDACTED>
 ERROR_EMAIL_TO=<REDACTED>
 CONTACT_EMAIL_TO=<REDACTED>
-YOUTUBE_API_KEY=<REDACTED>
-YOUTUBE_REFERRER=https://www.dnistream.live
-YOUTUBE_ORIGIN=https://www.dnistream.live
 ```
-##### Development values (local Windows development and docker deployment testing):
+##### Development values (local Windows development and local docker deployment testing):
 ```
 BUILD_ENVIRONMENT=dev
 ASPNETCORE_ENVIRONMENT=Development
 CAPTCHA_KEY=<REDACTED>
 ASPNET_CONFIGURATION=Debug
-SMTP_SERVER=localhost
+SMTP_SERVER=host.docker.internal
+SMTP_ENABLE_SSL=False
 SMTP_USERNAME=
 SMTP_PASSWORD=
 LOG_MOUNT_PATH=f:/docker-mounts/dni/apilogs
@@ -63,9 +61,6 @@ LOCAL_API_PORT=12341
 ERROR_EMAIL_FROM=<REDACTED>
 ERROR_EMAIL_TO=<REDACTED>
 CONTACT_EMAIL_TO=<REDACTED>
-YOUTUBE_API_KEY=<REDACTED>
-YOUTUBE_REFERRER=http://localhost:4200
-YOUTUBE_ORIGIN=http://localhost:4200
 ```
 
 ### Development (local IDE)
@@ -74,20 +69,23 @@ YOUTUBE_ORIGIN=http://localhost:4200
 * To run the .Net Core Web API, run the following scripts (in order) in a Powershell window:
     * `setup-env-vars.ps1`
     * `run-service-hosts.ps1`
-* To run the Angular cli website, run the following in a separate Command Prompt, Git Bash shell or Powershell Window:
+* To host the Angular website, run the following command in your shell of choice:
     * `npm start`
 * Open the `DNI.sln` file in visual Studio to work on the .Net Core WebAPI solution
 * Open the `src/DNI.Web` folder in your text editor of choice (I use Visual Studio Code or Notepad++) to work on the Angular front-end application
 
-### Production (deployed via docker)
+### Production (manual deployment via docker)
+
+*This deployment is now handled with Travis CI, which is configured to build docker images, push them to docker hub, then automatically host the containers on the web host. You can see this deployment configuration in [.travis.yml](travis.yml). All configuration values (listed above) are stored in Travis CI's environment variables.*
 
 * Ensure the `.env` file has been created and contains the correct **Production** key / value pairs for all config values
+* Pull the repository on to the server
 * Run the following command from the solution root to build and host all the docker containers:
     * `docker-compose up -d --build`
 
 ## Angular SSR
 
-This project is a public facing website, and as such uses Angular Universal / SSR to compile the front-end website. The following commands can be run inside the [src/DNI.Web](src/DNI.Web) folder to build and serve the SSR website via Node.js and Express:
+This project is a public facing website, and as such uses Angular Universal / SSR. The following commands can be run inside the [src/DNI.Web](src/DNI.Web) folder to build and serve the SSR website via Node.js and Express:
 
 * `npm run build:ssr`
 * `npm run serve:ssr`
@@ -96,11 +94,11 @@ This project is a public facing website, and as such uses Angular Universal / SS
 
 ## Versioning
 
-A Powershell script has been provided that iterates through all files that need to be changed when a new version is released. The API, .Net Core assemblies and Angular app are all updated with the same version. This project uses GitFlow and https://semver.org/ for branching and versioning respectively.
+A Powershell script has been provided that iterates through all files that need to be changed when a new version is released. The API, .Net Core assemblies and Angular app are all updated with the same version. This project uses GitFlow for branching and https://semver.org/ versioning.
 
 For example, to update the app to version 3.4.5, run the following commands on a **clean commit**
 
-* `version.ps1 3 4 5`
+* `./version.ps1 3 4 5`
 * `git commit -am "Version 3.4.5"`
 * `git push`
 * `git tag 3.4.5`
@@ -108,10 +106,12 @@ For example, to update the app to version 3.4.5, run the following commands on a
 
 ## Development pre-requisites:
 
-Generally this project uses the latest releases. At the time of writing, the following versions are in use:
+At the time of writing, the following SDK / tool versions are in use:
 
-* Node.js LTS 12.13.0
-* Angular CLI 8.3.18
-* Dotnet Core SDK 2.2.300
-* Docker 19.03.4 (Windows)
-* Docker-Compose 1.24.1, build 4667896b (Windows)
+* Node.js LTS 12.16.1
+* Angular CLI 8.3.25
+* Dotnet Core SDK 2.2.401
+* Docker 19.03.5, build 633a0ea (Windows)
+* Docker-Compose 1.25.4, build 8d51620a (Windows)
+* Visual Studio Professional 2019 (16.4.5)
+* VSCode 1.43.0
