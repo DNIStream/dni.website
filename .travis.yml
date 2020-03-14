@@ -1,7 +1,8 @@
 jobs:
   include:
     # CI Build for /feature branches
-    - name: ".Net Build"
+    - stage: "CI Feature Build"
+      name: ".Net Build & Test"
       if: branch =~ /^feature\/.*$/
       language: csharp
       mono: none
@@ -13,7 +14,7 @@ jobs:
     - name: "Angular Build"
       if: branch =~ /^feature\/.*$/
       language: node_js
-      node_js: 10.13
+      node_js: 12.16.1
       before_install:
         - cd src/DNI.Web
       install:
@@ -24,10 +25,12 @@ jobs:
         - npm run build:ssr
         # TODO: Headless angular tests
     # CD Build for PRs and master
-    - name: "Docker Build"
+    - stage: "CD Docker Build & Deploy"
+      name: "Docker Build"
       if: branch = master
       services:
         - docker
       script:
         - docker-compose build
+        - echo $DEPLOY_SERVER
         # TODO: Deploy docker image
