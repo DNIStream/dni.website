@@ -3,17 +3,18 @@ jobs:
     # CI Build for /feature branches
     - stage: "CI Feature Build"
       if: branch =~ /^feature\/.*$/
-      before_install:
-        - cd src/DNI.API
-      install:
-        - dotnet restore
       name: build
       language: csharp
       mono: none
       dotnet: 2.2.103
+      before_install:
+        - cd src/DNI.API
+      install:
+        - dotnet restore
       script:
         - dotnet build DNI.API.csproj -c Release
       name: test
+      script:
         - dotnet test --filter TestType!=Integration
     -
       name: "Angular Build"
