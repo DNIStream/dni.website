@@ -11,8 +11,10 @@ jobs:
         - cd src/DNI.API
       install:
         - dotnet restore
-      script:
+      build:
         - dotnet build DNI.API.csproj -c Release
+      test:
+        - cd $TRAVIS_BUILD_DIR
         - dotnet test --filter TestType!=Integration
     - name: "Angular Build, Lint & Test"
       language: node_js
