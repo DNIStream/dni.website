@@ -1,9 +1,7 @@
 # Web API Dot Net Core Web Server Dockerfile
 
 # ----------------
-# FROM microsoft/dotnet:2.1-sdk-alpine3.7 AS restore
-#FROM microsoft/dotnet:2.1.403-sdk-alpine3.7 AS restore
-FROM microsoft/dotnet:2.2.103-sdk-alpine3.8 AS restore
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS restore
 
 WORKDIR /source
 
@@ -32,12 +30,11 @@ RUN for dir in test/*.Tests/; do (cd "$dir" && dotnet test --filter TestType!=In
 
 WORKDIR /source/${PROJECT_DIR}
 
-RUN dotnet build ${PROJECT_NAME}.csproj -c $ASPNET_CONFIGURATION -o /app
+RUN dotnet build ${PROJECT_NAME}.csproj --no-restore --nologo -c $ASPNET_CONFIGURATION -o /app
 
-RUN dotnet publish ${PROJECT_NAME}.csproj -c $ASPNET_CONFIGURATION -o /app --no-restore
+RUN dotnet publish ${PROJECT_NAME}.csproj --no-restore --no-build --nologo -c $ASPNET_CONFIGURATION -o /app
 
-#FROM microsoft/dotnet:2.1.5-aspnetcore-runtime-alpine3.7 as final
-FROM microsoft/dotnet:2.2.1-aspnetcore-runtime-alpine3.8 as final
+FROM mcr.microsoft.com/dotnet/core/runtime:3.1-alpine as final
 WORKDIR /app
 EXPOSE 80
 VOLUME /app/logs
