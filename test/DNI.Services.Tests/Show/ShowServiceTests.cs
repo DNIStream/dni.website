@@ -15,7 +15,6 @@ using DNI.Services.Show;
 using DNI.Testing;
 
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
 
 using Moq;
 
@@ -32,13 +31,10 @@ namespace DNI.Services.Tests.Show {
         private readonly Mock<IShowKeywordAggregationService> _showKeywordAggregationServiceMock;
         private readonly Mock<IMapper<PodcastShow, Services.Show.Show>> _podcastShowMapperMock;
         private readonly Mock<ISorter<PodcastShow>> _sorterMock;
-        private readonly Mock<ILogger<ShowService>> _loggerMock;
         private readonly Mock<IMemoryCache> _memoryCacheMock;
 
         public ShowServiceTests(ITestOutputHelper output) {
             _output = output;
-
-            _loggerMock = Mock.Get(_fixture.Create<ILogger<ShowService>>());
 
             _showKeywordAggregationServiceMock = Mock.Get(_fixture.Create<IShowKeywordAggregationService>());
             _pagingCalculatorMock = Mock.Get(_fixture.Create<IPagingCalculator<PodcastShow>>());
@@ -54,7 +50,7 @@ namespace DNI.Services.Tests.Show {
 
         private IShowService GetService() {
             return new ShowService(_podcastServiceMock.Object, _showKeywordAggregationServiceMock.Object,
-                _pagingCalculatorMock.Object, _podcastShowMapperMock.Object, _sorterMock.Object, _loggerMock.Object,
+                _pagingCalculatorMock.Object, _podcastShowMapperMock.Object, _sorterMock.Object,
                 _memoryCacheMock.Object);
         }
 

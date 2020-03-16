@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 using DNI.API.Requests;
 using DNI.API.Validators;
@@ -19,14 +21,11 @@ using FluentValidation.AspNetCore;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
+using Microsoft.OpenApi.Models;
 
 using RestSharp;
 
@@ -38,8 +37,6 @@ namespace DNI.API {
     ///     Program bootstrap configuration
     /// </summary>
     public class Startup {
-        private readonly ILogger<Startup> _logger;
-
         private static string APINameSpace => Assembly.GetEntryAssembly().GetName().Name;
 
         private IConfiguration Configuration { get; }
@@ -48,9 +45,7 @@ namespace DNI.API {
         ///     Program bootstrap configuration
         /// </summary>
         /// <param name="configuration"></param>
-        /// <param name="logger"></param>
-        public Startup(IConfiguration configuration, ILogger<Startup> logger) {
-            _logger = logger;
+        public Startup(IConfiguration configuration) {
             Configuration = configuration;
         }
 
@@ -59,6 +54,27 @@ namespace DNI.API {
         /// </summary>
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services) {
+            // MVC
+            services
+                .AddControllers()
+                //.AddMvc(o => { o.EnableEndpointRouting = false; })
+                //.SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddJsonOptions(options => {
+                    // Configure request / response json serialization options
+                    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    options.JsonSerializerOptions.Converters.Clear();
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+                    //options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    //options.SerializerSettings.Formatting = Formatting.None;
+                    //options.SerializerSettings.Converters.Clear();
+                    //options.SerializerSettings.Converters.Add(new StringEnumConverter {
+                    //    NamingStrategy = new DefaultNamingStrategy(),
+                    //    AllowIntegerValues = true
+                    //});
+                })
+                .AddFluentValidation();
+
             // Options
             services.Configure<CAPTCHAOptions>(Configuration.GetSection("CAPTCHA"));
             services.Configure<GeneralOptions>(Configuration.GetSection("General"));
@@ -82,22 +98,6 @@ namespace DNI.API {
             services
                 .AddTransient<IMapper<PodcastShow, Show>, PodcastShowToShowMapper>();
 
-            // MVC
-            services
-                .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(options => {
-                    // Configure request / response json serialization options
-                    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    options.SerializerSettings.Formatting = Formatting.None;
-                    options.SerializerSettings.Converters.Clear();
-                    options.SerializerSettings.Converters.Add(new StringEnumConverter {
-                        NamingStrategy = new DefaultNamingStrategy(),
-                        AllowIntegerValues = true
-                    });
-                })
-                .AddFluentValidation();
-
             // Validators
             services
                 .AddTransient<IValidator<GetShowsRequest>, GetShowsRequestValidator>();
@@ -105,14 +105,13 @@ namespace DNI.API {
             // Swagger
             services
                 .AddSwaggerGen(c => {
-                    c.SwaggerDoc("v1", new Info {
+                    c.SwaggerDoc("v1", new OpenApiInfo {
                         Title = APINameSpace,
                         Version = $"v{GetVersion()}",
                         Description = "This API provides REST capabilities to the Documentation Not Included website"
                     });
 
-                    // Convert all documentation urls to lowercase
-                    c.DocumentFilter<LowercaseDocumentFilter>();
+                    // TODO: Convert all documentation urls to lowercase
 
                     // Include code comments in API documentation
                     var appPath = AppDomain.CurrentDomain.BaseDirectory;
@@ -133,7 +132,7 @@ namespace DNI.API {
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if(env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
 
@@ -158,10 +157,15 @@ namespace DNI.API {
 
             app.UseHttpsRedirection();
 
+            app.UseRouting();
+
             // app.UseResponseCaching();
 
+            app.UseEndpoints(endpoints => {
+                endpoints.MapControllers();
+            });
             // UseMVC Must come last otherwise CORS doesn't work
-            app.UseMvc();
+            //app.UseMvc();
         }
 
         /// <summary>
