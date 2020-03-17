@@ -31,10 +31,6 @@ namespace DNI.API {
                 logger.Debug("API shutdown");
                 LogManager.Shutdown();
             }
-
-            CreateHostBuilder(args)
-                .Build()
-                .Run();
         }
 
         private static IHostBuilder CreateHostBuilder(string[] args) =>
