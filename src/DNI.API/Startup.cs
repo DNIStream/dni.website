@@ -21,15 +21,14 @@ using FluentValidation.AspNetCore;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 using RestSharp;
 
-using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace DNI.API {
@@ -89,10 +88,11 @@ namespace DNI.API {
                 .AddTransient<ICaptchaService, CaptchaService>()
                 .AddTransient<IEmailService, SystemNetEmailService>()
                 .AddTransient<IPodcastService, FiresidePodcastService>()
-                .AddScoped<IShowService, ShowService>()
                 .AddTransient<IShowKeywordAggregationService, ShowKeywordAggregationService>()
                 .AddTransient<IPagingCalculator<PodcastShow>, PagingCalculator<PodcastShow>>()
-                .AddTransient<ISorter<PodcastShow>, Sorter<PodcastShow>>();
+                .AddTransient<ISorter<PodcastShow>, Sorter<PodcastShow>>()
+                .AddTransient<IMemoryCache, MemoryCache>()
+                .AddScoped<IShowService, ShowService>();
 
             // Mappers
             services
@@ -121,7 +121,7 @@ namespace DNI.API {
                 });
 
             // Response caching
-            // services.AddResponseCaching();
+            services.AddResponseCaching();
 
             // CORS
             services.AddCors();
