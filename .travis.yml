@@ -1,3 +1,7 @@
+branches:
+  only:
+    - master
+    - /^feature\/.*$/
 jobs:
   include:
     # CI Build for /feature branches
