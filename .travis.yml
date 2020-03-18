@@ -28,10 +28,10 @@ jobs:
     # CD Build for PRs and master
     - stage: "CD Docker Build & Deploy"
       name: build
+      language: minimal
       if: branch = master
       services:
         - docker
       script:
         - docker-compose build
-        - echo $DEPLOY_SERVER
-        # TODO: Deploy docker image
+        # TODO: Deploy docker image only when this is master
