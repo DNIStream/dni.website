@@ -40,7 +40,7 @@ jobs:
       services:
         - docker
       script:
-        #- docker-compose build
+        - docker-compose build
         - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then echo PR; fi'
         - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo DEPLOY; fi'
       deploy:
