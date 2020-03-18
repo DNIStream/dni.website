@@ -7,12 +7,10 @@ jobs:
       mono: none
       dotnet: 3.1.2
       if: branch =~ /^feature\/.*$/
-      env:
-        - PROJECT_NAME=DNI.API
       install:
         - dotnet restore
       script:
-        - dotnet build src/$PROJECT_NAME/$PROJECT_NAME.csproj --no-restore --nologo -c $ASPNET_CONFIGURATION
+        - dotnet build --no-restore --nologo -c $ASPNET_CONFIGURATION
         - for dir in test/*.Tests/; do (cd "$dir" && dotnet test -c $ASPNET_CONFIGURATION --no-restore --no-build --nologo --filter TestType!=Integration); done
     - name: "Angular Build, Lint & Test"
       language: node_js
