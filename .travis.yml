@@ -3,11 +3,6 @@ branches:
   only:
     - master
     - /^feature\/.*$/
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    tags: true
 
 # Define stages and jobs for each branch
 jobs:
@@ -48,3 +43,6 @@ jobs:
         #- docker-compose build
         - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then echo PR; fi'
         - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo DEPLOY; fi'
+      deploy:
+        provider: script
+        script: bash deploy.sh
