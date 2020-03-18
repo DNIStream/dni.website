@@ -1,7 +1,10 @@
+# Do not build for branches unless they are listed here
 branches:
   only:
     - master
-    - /^feature\/.*$/
+    #- /^feature\/.*$/
+
+# Define stages and jobs for each branch
 jobs:
   include:
     # CI Build for /feature branches
@@ -37,5 +40,6 @@ jobs:
       services:
         - docker
       script:
-        - docker-compose build
+        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo Running in master; fi'
+        # - docker-compose build
         # TODO: Deploy docker image only when this is master
