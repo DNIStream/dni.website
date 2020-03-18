@@ -30,8 +30,6 @@ RUN for dir in test/*.Tests/; do (cd "$dir" && dotnet test --filter TestType!=In
 
 WORKDIR /source/${PROJECT_DIR}
 
-#RUN dotnet build ${PROJECT_NAME}.csproj --no-restore --nologo -c $ASPNET_CONFIGURATION -o /app
-
 RUN dotnet publish ${PROJECT_NAME}.csproj --no-restore -c $ASPNET_CONFIGURATION -o /app
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine as final

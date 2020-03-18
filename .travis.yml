@@ -2,7 +2,7 @@
 branches:
   only:
     - master
-    #- /^feature\/.*$/
+    - /^feature\/.*$/
 
 # Define stages and jobs for each branch
 jobs:
@@ -40,6 +40,11 @@ jobs:
       services:
         - docker
       script:
-        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo Running in master; fi'
-        # - docker-compose build
-        # TODO: Deploy docker image only when this is master
+        #- docker-compose build
+        - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then echo PR; fi'
+        - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then echo DEPLOY; fi'
+      deploy:
+        provider: script
+        script: bash deploy.sh
+        on:
+          tags: true
