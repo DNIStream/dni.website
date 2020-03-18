@@ -1,7 +1,7 @@
 # Node Angular SSR Dockerfile
 
 #---------------------
-FROM node:10.13-alpine AS restore
+FROM node:12.16.1-alpine AS restore
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ COPY . /app
 
 RUN npm run build:ssr
 
-FROM node:10.13-alpine
+FROM node:12.16.1-alpine
 WORKDIR /app
 
 COPY --from=build /app/package.json /app

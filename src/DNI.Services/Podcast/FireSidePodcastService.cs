@@ -39,14 +39,14 @@ namespace DNI.Services.Podcast {
                 Resource = _options.PodcastServiceResourceUri
             };
 
-            _logger.LogInformation($"{logPrefix} Prepared {request.Method.ToString()} request for Uri '{_restClient.BuildUri(request).AbsoluteUri}'");
+            _logger.LogInformation($"{logPrefix} Prepared {request.Method} request for Uri '{_restClient.BuildUri(request).AbsoluteUri}'");
 
             _logger.LogInformation($"{logPrefix} Sending request");
 
             var response = await _restClient.ExecuteTaskAsync<PodcastStream>(request);
 
             _logger.LogInformation($"{logPrefix} Finished request. Response Uri is '{response.ResponseUri.AbsoluteUri}'");
-            _logger.LogInformation($"{logPrefix} Response status: {response.StatusCode.ToString()}");
+            _logger.LogInformation($"{logPrefix} Response status: {response.StatusCode}");
             _logger.LogInformation($"{logPrefix} Response content length: {response.ContentLength}");
 
             // Only log the response data if its too small to be "complete" (10kb is sensible)
@@ -55,7 +55,7 @@ namespace DNI.Services.Podcast {
                 _logger.LogInformation($"{logPrefix} Response content: {response.Content}");
                 // Create an error entry
                 var errorMessage = new StringBuilder($"{logPrefix} An error occurred when trying to retrieve data from the JSON endpoint:\n");
-                errorMessage.AppendLine($"Status: {response.StatusCode.ToString()}");
+                errorMessage.AppendLine($"Status: {response.StatusCode}");
                 errorMessage.AppendLine($"Content length: {response.ContentLength}");
                 errorMessage.AppendLine($"Content: {response.Content}");
                 _logger.LogError(errorMessage.ToString());

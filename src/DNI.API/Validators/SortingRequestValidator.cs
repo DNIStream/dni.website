@@ -11,6 +11,9 @@ namespace DNI.API.Validators {
     public class GetShowsRequestValidator : AbstractValidator<GetShowsRequest> {
         private readonly string[] acceptedFieldValues = {"PublishedTime", "Title", "DurationInSeconds"};
 
+        /// <summary>
+        ///     Validates a <see cref="GetShowsRequest" /> for the API
+        /// </summary>
         public GetShowsRequestValidator() {
             var acceptedFieldsString = string.Concat("'", string.Join("', '", acceptedFieldValues), "'");
             RuleFor(x => x.Field)

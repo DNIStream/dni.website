@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 namespace DNI.Services.Show {
     public class ShowService : IShowService {
         private readonly IPodcastService _podcastService;
-        private readonly ILogger<ShowService> _logger;
         private readonly IMemoryCache _memoryCache;
         private readonly IShowKeywordAggregationService _showKeywordAggregationService;
         private readonly IPagingCalculator<PodcastShow> _showPagingCalculator;
@@ -23,9 +22,8 @@ namespace DNI.Services.Show {
 
         public ShowService(IPodcastService podcastService, IShowKeywordAggregationService showKeywordAggregationService,
             IPagingCalculator<PodcastShow> showPagingCalculator, IMapper<PodcastShow, Show> podcastShowMapper, ISorter<PodcastShow> showSorter,
-            ILogger<ShowService> logger, IMemoryCache memoryCache) {
+            IMemoryCache memoryCache) {
             _podcastService = podcastService;
-            _logger = logger;
             _memoryCache = memoryCache;
             _showKeywordAggregationService = showKeywordAggregationService;
             _showPagingCalculator = showPagingCalculator;

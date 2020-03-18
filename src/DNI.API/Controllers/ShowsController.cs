@@ -25,7 +25,7 @@ namespace DNI.API.Controllers {
         }
 
         /// <summary>
-        ///     Retrieves a list shows from the podcast service
+        ///     Retrieves a list of shows that have been tagged with a specific keyword from the podcast service
         /// </summary>
         /// <returns></returns>
         /// <response code="400">A validation error occurred. See raised <see cref="APIErrorResponse" /> for more details.</response>
@@ -34,8 +34,8 @@ namespace DNI.API.Controllers {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ShowListAPIResponse), StatusCodes.Status200OK)]
-        [Route("shows/{keyword?}")]
-        public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request, [FromRoute] string keyword = null) {
+        [Route("shows/{keyword}")]
+        public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request, [FromRoute] string keyword) {
             if(!ModelState.IsValid) {
                 return ModelValidationBadRequest();
             }
@@ -62,6 +62,21 @@ namespace DNI.API.Controllers {
             };
 
             return Ok(response);
+        }
+
+        /// <summary>
+        ///     Retrieves a list of all shows from the podcast service
+        /// </summary>
+        /// <returns></returns>
+        /// <response code="400">A validation error occurred. See raised <see cref="APIErrorResponse" /> for more details.</response>
+        /// <response code="200">OK. Shows were successfully returned.</response>
+        /// <response code="204">OK - No Content. No shows were found.</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ShowListAPIResponse), StatusCodes.Status200OK)]
+        [Route("shows")]
+        public async Task<IActionResult> GetShowsAsync([FromQuery] GetShowsRequest request) {
+            return await GetShowsAsync(request, null);
         }
 
         /// <summary>

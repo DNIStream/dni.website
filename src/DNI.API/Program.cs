@@ -1,7 +1,7 @@
 ﻿using System;
 
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 using NLog;
@@ -20,7 +20,7 @@ namespace DNI.API {
             var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try {
                 logger.Debug("API startup");
-                CreateWebHostBuilder(args)
+                CreateHostBuilder(args)
                     .Build()
                     .Run();
             } catch(Exception ex) {
@@ -31,15 +31,13 @@ namespace DNI.API {
                 logger.Debug("API shutdown");
                 LogManager.Shutdown();
             }
-
-            CreateWebHostBuilder(args)
-                .Build()
-                .Run();
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder => {
+                    webBuilder.UseStartup<Startup>();
+                })
                 .ConfigureLogging(logging => {
                     logging.ClearProviders();
                     logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
