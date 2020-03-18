@@ -56,21 +56,11 @@ namespace DNI.API {
             // MVC
             services
                 .AddControllers()
-                //.AddMvc(o => { o.EnableEndpointRouting = false; })
-                //.SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddJsonOptions(options => {
                     // Configure request / response json serialization options
                     options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
                     options.JsonSerializerOptions.Converters.Clear();
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-
-                    //options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                    //options.SerializerSettings.Formatting = Formatting.None;
-                    //options.SerializerSettings.Converters.Clear();
-                    //options.SerializerSettings.Converters.Add(new StringEnumConverter {
-                    //    NamingStrategy = new DefaultNamingStrategy(),
-                    //    AllowIntegerValues = true
-                    //});
                 })
                 .AddFluentValidation();
 
@@ -159,13 +149,9 @@ namespace DNI.API {
 
             app.UseRouting();
 
-            // app.UseResponseCaching();
-
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
             });
-            // UseMVC Must come last otherwise CORS doesn't work
-            //app.UseMvc();
         }
 
         /// <summary>
