@@ -32,10 +32,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.16.1
-    - name: Build angular
+    - name: Install Angular Dependencies
       working-directory: ./src/DNI.Web
       run: |
         npm set progress=false
         npm install --no-progress
-        npm run lint
-        npm run build:ssr
+    - name: Angular Lint
+      working-directory: ./src/DNI.Web
+      run: npm run lint
+    - name: Build Angular SSR
+      working-directory: ./src/DNI.Web
+      run: npm run build:ssr
