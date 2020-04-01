@@ -33,9 +33,10 @@ jobs:
       with:
         node-version: 12.16.1
     - name: Install Angular Dependencies
-      run: cd src/DNI.Web
-      run: npm set progress=false
-      run: npm install --no-progress
+      run: |
+        cd src/DNI.Web
+        npm set progress=false
+        npm install --no-progress
     - name: Lint
       run: npm run lint
     - name: Build SSR
