@@ -33,8 +33,8 @@ jobs:
       with:
         node-version: 12.16.1
     - name: Install Angular Dependencies
+      working-directory: ./src/DNI.Web
       run: |
-        cd src/DNI.Web
         npm set progress=false
         npm install --no-progress
     - name: Lint
