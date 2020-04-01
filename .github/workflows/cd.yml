@@ -1,0 +1,15 @@
+name: DNI Stream Website CD Build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*.*.*"
+
+jobs:
+  dockerimages:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Test release
+      run: pwd
