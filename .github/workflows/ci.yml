@@ -1,0 +1,47 @@
+name: DNI Stream Website CI Build
+
+on:
+  push:
+    branches: [ feature/* ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  dotnetapi:
+    env:
+      ASPNET_CONFIGURATION: Debug
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+    - name: Install .Net dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore --nologo -c $ASPNET_CONFIGURATION
+    - name: Test
+      run: for dir in test/*.Tests/; do (cd "$dir" && dotnet test -c $ASPNET_CONFIGURATION --no-restore --no-build --nologo --filter TestType!=Integration); done
+
+  angularweb:
+    env:
+      WORK_DIR: ./src/DNI.Web
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.16.1
+    - name: Install Angular Dependencies
+      working-directory: $WORK_DIR
+      run: |
+        npm set progress=false
+        npm install --no-progress
+    - name: Lint
+      working-directory: $WORK_DIR
+      run: npm run lint
+    - name: Build SSR
+      working-directory: $WORK_DIR
+      run: npm run build:ssr
