@@ -8,7 +8,8 @@ on:
 
 jobs:
   build:
-
+    env:
+      ASPNET_CONFIGURATION: Debug
     runs-on: ubuntu-latest
 
     steps:
@@ -20,6 +21,6 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: dotnet build --no-restore --nologo -c $ASPNET_CONFIGURATION
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: for dir in test/*.Tests/; do (cd "$dir" && dotnet test -c $ASPNET_CONFIGURATION --no-restore --no-build --nologo --filter TestType!=Integration); done
