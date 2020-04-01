@@ -32,9 +32,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.16.1
+      run: pwd
     - name: Install Angular Dependencies
       working-directory: ./src/DNI.Web
       run: |
+        pwd
         npm set progress=false
         npm install --no-progress
     - name: Lint
