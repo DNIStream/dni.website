@@ -38,6 +38,8 @@ jobs:
         npm set progress=false
         npm install --no-progress
     - name: Lint
+      working-directory: ./src/DNI.Web
       run: npm run lint
     - name: Build SSR
+      working-directory: ./src/DNI.Web
       run: npm run build:ssr
