@@ -26,8 +26,8 @@ services:
         - PROJECT_DIR=src/DNI.API/
         - PROJECT_NAME=DNI.API
         - ASPNET_CONFIGURATION=${ASPNET_CONFIGURATION}
-      cache_from:
-        - ${IMAGE_PREFIX}dniapi/${BUILD_ENVIRONMENT}:latest
+      # cache_from:
+      #   - ${IMAGE_PREFIX}dniapi/${BUILD_ENVIRONMENT}:latest
     volumes:
       - ${LOG_MOUNT_PATH}:/app/logs/
     restart: unless-stopped
@@ -44,6 +44,6 @@ services:
       context: src/DNI.Web/
       args:
         - ANGULAR_ENV=${BUILD_ENVIRONMENT}
-      cache_from:
-        - ${IMAGE_PREFIX}dniweb/${BUILD_ENVIRONMENT}:latest
+      # cache_from:
+      #   - ${IMAGE_PREFIX}dniweb/${BUILD_ENVIRONMENT}:latest
     restart: unless-stopped
