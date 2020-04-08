@@ -16,7 +16,7 @@ jobs:
       - name: Log in to docker packages
         run: docker login docker.pkg.github.com --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
       - name: Run git status
-        run: git status
+        run: git tag
       - name: Get image tags
         # refs/tags/2.0.2
         run: |
