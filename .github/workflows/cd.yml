@@ -18,11 +18,11 @@ jobs:
           API_IMAGE: dniapi/${$BUILD_ENVIRONMENT}
           WEB_IMAGE: dniweb/${BUILD_ENVIRONMENT}
           DOCKER_REGISTRY: docker.pkg.github.com
-          PUSH_PATH: ${DOCKER_REGISTRY}/DNIUStream/dni.website/
+          PUSH_PATH: ${DOCKER_REGISTRY}/DNIStream/dni.website/
       - name: Log in to docker packages
         run: |
           echo $DOCKER_REGISTRY
-          docker login ${$DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
+          docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
       # - name: Get image tags
       #   run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Build docker images
@@ -49,7 +49,7 @@ jobs:
           docker tag ${WEB_IMAGE}:latest ${WEB_IMAGE}:${IMAGE_TAG};
       - name: Push images
         run: |
-          docker push ${API_IMAGE}:${IMAGE_TAG};
-          docker push ${WEB_IMAGE}:${IMAGE_TAG};
+          docker push ${PUSH_PATH}${API_IMAGE}:${IMAGE_TAG};
+          docker push ${PUSH_PATH}${WEB_IMAGE}:${IMAGE_TAG};
       - name: Docker logout
         run: docker logout ${DOCKER_REGISTRY}
