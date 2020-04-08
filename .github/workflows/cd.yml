@@ -57,6 +57,8 @@ jobs:
           docker image ls;
       - name: Push images
         run: |
+          docker push ${API_IMAGE}:latest;
+          docker push ${WEB_IMAGE}:latest;
           docker push ${API_IMAGE}:${IMAGE_TAG};
           docker push ${WEB_IMAGE}:${IMAGE_TAG};
       - name: Docker logout
