@@ -16,9 +16,9 @@ env:
 jobs:
   dockerimages:
     env:
-      IMAGE_PREFIX: ${{ join($DOCKER_REGISTRY, '/DNIStream/dni.website/') }}
-      API_IMAGE: ${{ join($IMAGE_PREFIX, 'dniapi/', $BUILD_ENVIRONMENT) }}
-      WEB_IMAGE: ${{ join($IMAGE_PREFIX, 'dniweb/, $BUILD_ENVIRONMENT) }}
+      IMAGE_PREFIX: docker.pkg.github.com/DNIStream/dni.website/
+      API_IMAGE: docker.pkg.github.com/DNIStream/dni.website/dniapi/prod
+      WEB_IMAGE: docker.pkg.github.com/DNIStream/dni.website/dniweb/prod
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -42,10 +42,7 @@ jobs:
           ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
           ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
-        run: |
-          echo $IMAGE_PREFIX
-          echo $API_IMAGE
-          docker-compose build --parallel --compress
+        run: docker-compose build --parallel --compress
       - name: Tag images
         run: |
           docker tag ${API_IMAGE}:latest ${API_IMAGE}:${IMAGE_TAG};
