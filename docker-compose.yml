@@ -3,8 +3,8 @@ version: '3.6'
 services:
   # Dotnet Core API
   dni.api:
-    #image: ${IMAGE_PREFIX}dniapi/${BUILD_ENVIRONMENT}:latest
-    image: dniapi/${BUILD_ENVIRONMENT}:latest
+    image: ${IMAGE_PREFIX}dniapi/${BUILD_ENVIRONMENT}:latest
+    #image: dniapi/${BUILD_ENVIRONMENT}:latest
     container_name: dniapi.${BUILD_ENVIRONMENT}
     ports:
       - "${LOCAL_API_PORT}:80"
@@ -35,8 +35,8 @@ services:
 
   # Angular Website
   dni.web:
-    #image: ${IMAGE_PREFIX}dniweb/${BUILD_ENVIRONMENT}:latest
-    image: dniweb/${BUILD_ENVIRONMENT}:latest
+    image: ${IMAGE_PREFIX}dniweb/${BUILD_ENVIRONMENT}:latest
+    #image: dniweb/${BUILD_ENVIRONMENT}:latest
     container_name: dniweb.${BUILD_ENVIRONMENT}
     depends_on:
       - dni.api
