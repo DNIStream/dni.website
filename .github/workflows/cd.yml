@@ -16,9 +16,9 @@ env:
 jobs:
   dockerimages:
     env:
-      IMAGE_PREFIX: ${{ join(env.DOCKER_REGISTRY, '/DNIStream/dni.website/') }}
-      API_IMAGE: ${{ join(env.IMAGE_PREFIX, 'dniapi/', env.BUILD_ENVIRONMENT) }}
-      WEB_IMAGE: ${{ join(env.IMAGE_PREFIX, 'dniweb/, env.BUILD_ENVIRONMENT) }}
+      IMAGE_PREFIX: ${{ join($DOCKER_REGISTRY, '/DNIStream/dni.website/') }}
+      API_IMAGE: ${{ join($IMAGE_PREFIX, 'dniapi/', $BUILD_ENVIRONMENT) }}
+      WEB_IMAGE: ${{ join($IMAGE_PREFIX, 'dniweb/, $BUILD_ENVIRONMENT) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
