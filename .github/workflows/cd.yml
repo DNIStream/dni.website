@@ -17,8 +17,8 @@ jobs:
   dockerimages:
     env:
       IMAGE_PREFIX: docker.pkg.github.com/dnistream/dni.website/ # Used in the docker-compose.yml file
-      API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi/prod # Cannot use variable references here - hence repeat info
-      WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb/prod
+      API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi # Cannot use variable references here - hence repeat info
+      WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
