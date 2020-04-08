@@ -16,9 +16,11 @@ jobs:
       - name: Log in to docker packages
         run: docker login docker.pkg.github.com --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
       - name: Get image tags
+        env:
+          IMAGE_TAG: 0.0.0
         run: |
-          IMAGE_TAG=$(git tag --sort=committerdate | tail -1)
-          echo "::set-env name=IMAGE_TAG::$IMAGE_TAG"
+          tag=$(git tag --sort=committerdate | tail -1);
+          echo "::set-env name=IMAGE_TAG::$tag";
       - name: Output tag
         run: echo $IMAGE_TAG
       # - name: Build docker images
