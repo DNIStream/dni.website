@@ -16,9 +16,9 @@ jobs:
       # Build variables
       IMAGE_TAG: 2.0.2 # Remove for prod
       DOCKER_REGISTRY: docker.pkg.github.com
-      IMAGE_PREFIX: $DOCKER_REGISTRY/DNIStream/dni.website/
-      API_IMAGE: ${IMAGE_PREFIX}dniapi/${BUILD_ENVIRONMENT}
-      WEB_IMAGE: ${IMAGE_PREFIX}dniweb/${BUILD_ENVIRONMENT}
+      IMAGE_PREFIX: ${{ env.DOCKER_REGISTRY }}/DNIStream/dni.website/
+      API_IMAGE: ${{ env.IMAGE_PREFIX }}dniapi/${{ env.BUILD_ENVIRONMENT }}
+      WEB_IMAGE: ${{ env.IMAGE_PREFIX }}dniweb/${{ env.BUILD_ENVIRONMENT }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
