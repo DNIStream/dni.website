@@ -11,5 +11,7 @@ jobs:
   dockerimages:
     runs-on: ubuntu-latest
     steps:
-    - name: Test release
-      run: docker info
+    - name: Log in to docker packages
+      run: docker login docker.pkg.github.com
+    - name: Build docker images
+      run: docker-compose build --parallel
