@@ -8,14 +8,14 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
 
+env:
+  BUILD_ENVIRONMENT: prod # Required for docker-compose too
+  IMAGE_TAG: 2.0.2 # Remove for prod
+  DOCKER_REGISTRY: docker.pkg.github.com
+
 jobs:
   dockerimages:
     env:
-      # Docker-compose variables
-      BUILD_ENVIRONMENT: prod # Required for docker-compose too
-      # Build variables
-      IMAGE_TAG: 2.0.2 # Remove for prod
-      DOCKER_REGISTRY: docker.pkg.github.com
       IMAGE_PREFIX: ${{ env.DOCKER_REGISTRY }}/DNIStream/dni.website/
       API_IMAGE: ${{ env.IMAGE_PREFIX }}dniapi/${{ env.BUILD_ENVIRONMENT }}
       WEB_IMAGE: ${{ env.IMAGE_PREFIX }}dniweb/${{ env.BUILD_ENVIRONMENT }}
