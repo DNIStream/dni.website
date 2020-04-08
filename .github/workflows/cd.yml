@@ -11,7 +11,9 @@ jobs:
   dockerimages:
     runs-on: ubuntu-latest
     steps:
-    - name: Build docker images
-      run: docker-compose build --parallel
-    - name: Log in to docker packages
-      run: docker login docker.pkg.github.com --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v2
+      - name: Log in to docker packages
+        run: docker login docker.pkg.github.com --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
+      - name: Build docker images
+        run: docker-compose build --parallel
+
