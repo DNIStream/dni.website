@@ -13,29 +13,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        env:
+          IMAGE_TAG: 2.0.2
+          API_IMAGE: dniapi/${BUILD_ENVIRONMENT}
+          WEB_IMAGE: dniweb/${BUILD_ENVIRONMENT}
+          DOCKER_REGISTRY: docker.pkg.github.com
       - name: Log in to docker packages
-        run: docker login docker.pkg.github.com --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
-      - name: Get image tags
-        # refs/tags/2.0.2
-        run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
-      - name: Output tag
-        run: echo $IMAGE_TAG
-      # - name: Build docker images
-      #   env:
-      #     BUILD_ENVIRONMENT: prod
-      #     ASPNETCORE_ENVIRONMENT: Production
-      #     CAPTCHA_KEY: ${{ secrets.CAPTCHA_KEY }}
-      #     ASPNET_CONFIGURATION: Release
-      #     SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-      #     SMTP_PORT: ${{ secrets.SMTP_PORT }}
-      #     SMTP_ENABLE_SSL: ${{ secrets.SMTP_ENABLE_SSL }}
-      #     SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-      #     SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-      #     LOG_MOUNT_PATH: ${{ secrets.LOG_MOUNT_PATH }}
-      #     LOCAL_WEB_PORT: 8080
-      #     LOCAL_API_PORT: 8181
-      #     ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
-      #     ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
-      #     CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
-      #   run: docker-compose build --parallel
-
+        run: docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
+      # - name: Get image tags
+      #   run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
+      - name: Build docker images
+        env:
+          BUILD_ENVIRONMENT: prod
+          ASPNETCORE_ENVIRONMENT: Production
+          CAPTCHA_KEY: ${{ secrets.CAPTCHA_KEY }}
+          ASPNET_CONFIGURATION: Release
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_ENABLE_SSL: ${{ secrets.SMTP_ENABLE_SSL }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          LOG_MOUNT_PATH: ${{ secrets.LOG_MOUNT_PATH }}
+          LOCAL_WEB_PORT: 8080
+          LOCAL_API_PORT: 8181
+          ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
+          ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
+          CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
+        run: docker-compose build --parallel
+      - name: Tag images
+        run: |
+          docker tag ${API_IMAGE}:latest ${API_IMAGE}:${IMAGE_TAG};
+          docker tag ${WEB_IMAGE}:latest ${WEB_IMAGE}:${IMAGE_TAG};
+      - name: Push images
+        run: |
+          docker push ${API_IMAGE}:${IMAGE_TAG};
+          docker push ${WEB_IMAGE}:${IMAGE_TAG};
+      - name: Docker logout
+        run: docker logout  ${DOCKER_REGISTRY}
