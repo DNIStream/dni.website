@@ -15,11 +15,15 @@ jobs:
       - uses: actions/checkout@v2
         env:
           IMAGE_TAG: 2.0.2
-          API_IMAGE: dniapi/${BUILD_ENVIRONMENT}
-          WEB_IMAGE: dniweb/${BUILD_ENVIRONMENT}
+          API_IMAGE: dniapi/${{ $BUILD_ENVIRONMENT }}
+          WEB_IMAGE: dniweb/${{ $BUILD_ENVIRONMENT }}
           DOCKER_REGISTRY: docker.pkg.github.com
+          PUSH_PATH: ${{ $DOCKER_REGISTRY }}/DNIUStream/dni.website/
       - name: Log in to docker packages
-        run: docker login $DOCKER_REGISTRY --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo $DOCKER_REGISTRY;
+          echo ${{ $DOCKER_REGISTRY }};
+          docker login ${{ $DOCKER_REGISTRY }} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
       # - name: Get image tags
       #   run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Build docker images
@@ -42,11 +46,11 @@ jobs:
         run: docker-compose build --parallel
       - name: Tag images
         run: |
-          docker tag $API_IMAGE:latest $API_IMAGE:$IMAGE_TAG;
-          docker tag $WEB_IMAGE:latest $WEB_IMAGE:$IMAGE_TAG;
+          docker tag ${{ $API_IMAGE }}:latest ${{ $API_IMAGE }}:${{ $IMAGE_TAG }};
+          docker tag ${{ $WEB_IMAGE }}:latest ${{ $WEB_IMAGE }}:${{ $IMAGE_TAG }};
       - name: Push images
         run: |
-          docker push $API_IMAGE:$IMAGE_TAG;
-          docker push $WEB_IMAGE:$IMAGE_TAG;
+          docker push ${{ $API_IMAGE }}:${{ $IMAGE_TAG }};
+          docker push ${{ $WEB_IMAGE }}:${{ $IMAGE_TAG }};
       - name: Docker logout
-        run: docker logout  $DOCKER_REGISTRY
+        run: docker logout ${{ $DOCKER_REGISTRY }}
