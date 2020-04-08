@@ -10,14 +10,14 @@ on:
 
 env:
   BUILD_ENVIRONMENT: prod # Required for docker-compose too
-  IMAGE_TAG: 2.0.2 # Remove for prod
+  IMAGE_TAG: 2.0.2 # Remove for go live - dealt with in the "Get image tags" task
   DOCKER_REGISTRY: docker.pkg.github.com
 
 jobs:
   dockerimages:
     env:
       IMAGE_PREFIX: docker.pkg.github.com/dnistream/dni.website/ # Used in the docker-compose.yml file
-      API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi/prod
+      API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi/prod # Cannot use variable references here - hence repeat info
       WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb/prod
     runs-on: ubuntu-latest
     steps:
@@ -42,11 +42,14 @@ jobs:
           ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
           ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
-        run: docker-compose build --parallel --compress
+        run: |
+          docker-compose build --parallel --compress;
+          docker image ls;
       - name: Tag images
         run: |
           docker tag ${API_IMAGE}:latest ${API_IMAGE}:${IMAGE_TAG};
           docker tag ${WEB_IMAGE}:latest ${WEB_IMAGE}:${IMAGE_TAG};
+          docker image ls;
       - name: Push images
         run: |
           docker push ${API_IMAGE}:${IMAGE_TAG};
