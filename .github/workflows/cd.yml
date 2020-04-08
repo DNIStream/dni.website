@@ -13,13 +13,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Log in to docker packages
         env:
           IMAGE_TAG: 2.0.2
           API_IMAGE: dniapi/${$BUILD_ENVIRONMENT}
           WEB_IMAGE: dniweb/${BUILD_ENVIRONMENT}
           DOCKER_REGISTRY: docker.pkg.github.com
           PUSH_PATH: ${DOCKER_REGISTRY}/DNIStream/dni.website/
-      - name: Log in to docker packages
         run: |
           echo $DOCKER_REGISTRY
           docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
