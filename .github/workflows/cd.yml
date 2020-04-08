@@ -2,8 +2,8 @@ name: DNI Stream Website CD Build
 
 on:
   push:
-    # branches:
-    #   - master
+    branches:
+      - master
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
 
