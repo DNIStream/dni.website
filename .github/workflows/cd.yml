@@ -2,8 +2,9 @@ name: DNI Stream Website CD Build
 
 on:
   push:
+    # TODO: Remove the "branches" node for go live
     branches:
-      - feature/*
+      - release/*
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
 
