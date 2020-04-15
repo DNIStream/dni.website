@@ -29,6 +29,9 @@ jobs:
       - name: Pull latest images for cache
         continue-on-error: true
         run: |
+          docker pull node:12.16.1-alpine;
+          docker pull mcr.microsoft.com/dotnet/core/sdk:3.1-alpine;
+          docker pull mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine;
           docker pull ${API_IMAGE}:latest;
           docker pull ${WEB_IMAGE}:latest;
           docker image ls;
@@ -49,7 +52,7 @@ jobs:
           ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
         run: |
-          docker-compose build --parallel --compress;
+          docker-compose build --compress;
           docker image ls;
       - name: Tag images
         run: |
