@@ -1,8 +1,6 @@
 # Documentation Not Included Website
 
-![CD Build Status](https://github.com/DNIStream/dni.website/workflows/DNI%20Stream%20Website%20CD%20Build/badge.svg)
-
-![Latest CI Build Status](https://github.com/DNIStream/dni.website/workflows/DNI%20Stream%20Website%20CI%20Build/badge.svg?branch=feature%2F*)
+![Latest CD Build Status](https://github.com/DNIStream/dni.website/workflows/DNI%20Stream%20Website%20CD%20Build/badge.svg)
 
 This repository contains the source code for https://www.dnistream.live - a platform agnostic development podcast hosted by [Chris Sebok](https://github.com/Bidthedog) and [Josey Howarth](https://github.com/sudomistress).
 
