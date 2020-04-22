@@ -32,8 +32,12 @@ jobs:
           docker pull node:12.16.1-alpine;
           docker pull mcr.microsoft.com/dotnet/core/sdk:3.1-alpine;
           docker pull mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine;
-          docker pull ${API_IMAGE}:latest;
-          docker pull ${WEB_IMAGE}:latest;
+          docker pull ${API_IMAGE}:latest-restore || true;
+          docker pull ${API_IMAGE}:latest-build || true;
+          docker pull ${API_IMAGE}:latest || true;
+          docker pull ${WEB_IMAGE}:latest-restore || true;
+          docker pull ${WEB_IMAGE}:latest-build || true;
+          docker pull ${WEB_IMAGE}:latest || true;
           docker image ls;
       - name: Build docker images
         env:
@@ -61,7 +65,11 @@ jobs:
           docker image ls;
       - name: Push images
         run: |
+          docker push ${API_IMAGE}:latest-restore;
+          docker push ${API_IMAGE}:latest-build;
           docker push ${API_IMAGE}:latest;
+          docker push ${WEB_IMAGE}:latest-restore;
+          docker push ${WEB_IMAGE}:latest-build;
           docker push ${WEB_IMAGE}:latest;
           docker push ${API_IMAGE}:${IMAGE_TAG};
           docker push ${WEB_IMAGE}:${IMAGE_TAG};

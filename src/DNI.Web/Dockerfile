@@ -15,7 +15,7 @@ RUN set -x \
 
 #---------------------
 FROM restore AS build
-ARG ANGULAR_ENV=
+ARG ANGULAR_ENV
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ COPY . /app
 
 RUN npm run build:ssr
 
-FROM node:12.16.1-alpine
+FROM node:12.16.1-alpine AS final
 WORKDIR /app
 
 COPY --from=build /app/package.json /app

@@ -1,10 +1,38 @@
-version: '3.6'
+version: '3.7'
 
 services:
   # Dotnet Core API
+  dni.api.restore:
+    image: ${IMAGE_PREFIX}dniapi:latest-restore
+    container_name: dniapi.restore.${BUILD_ENVIRONMENT}
+    build: &api-restore-build
+      context: .
+      dockerfile: src/DNI.API/Dockerfile
+      target: restore
+      cache_from:
+        - ${IMAGE_PREFIX}dniapi:latest-restore
+    restart: "no"
+  dni.api.build:
+    image: ${IMAGE_PREFIX}dniapi:latest-build
+    depends_on:
+      - dni.api.restore
+    container_name: dniapi.build.${BUILD_ENVIRONMENT}
+    build: &api-build-build
+      <<: *api-restore-build
+      target: build
+      args:
+        - PROJECT_DIR=src/DNI.API/
+        - PROJECT_NAME=DNI.API
+        - ASPNET_CONFIGURATION=${ASPNET_CONFIGURATION}
+      cache_from:
+        - ${IMAGE_PREFIX}dniapi:latest-restore
+        - ${IMAGE_PREFIX}dniapi:latest-build
+    restart: "no"
   dni.api:
     image: ${IMAGE_PREFIX}dniapi:latest
-    #image: dniapi/${BUILD_ENVIRONMENT}:latest
+    depends_on:
+      - dni.api.restore
+      - dni.api.build
     container_name: dniapi.${BUILD_ENVIRONMENT}
     ports:
       - "${LOCAL_API_PORT}:80"
@@ -21,31 +49,56 @@ services:
       - General__ErrorEmailTo=${ERROR_EMAIL_TO}
       - General__ContactEmailTo=${CONTACT_EMAIL_TO}
     build:
-      context: . # Nnnngh
-      dockerfile: src/DNI.API/Dockerfile
-      args:
-        - PROJECT_DIR=src/DNI.API/
-        - PROJECT_NAME=DNI.API
-        - ASPNET_CONFIGURATION=${ASPNET_CONFIGURATION}
+      <<: *api-build-build
+      target: final
       cache_from:
+        - ${IMAGE_PREFIX}dniapi:latest-restore
+        - ${IMAGE_PREFIX}dniapi:latest-build
         - ${IMAGE_PREFIX}dniapi:latest
     volumes:
       - ${LOG_MOUNT_PATH}:/app/logs/
     restart: unless-stopped
 
   # Angular Website
-  dni.web:
-    image: ${IMAGE_PREFIX}dniweb:latest
-    #image: dniweb/${BUILD_ENVIRONMENT}:latest
-    container_name: dniweb.${BUILD_ENVIRONMENT}
+  dni.web.restore:
+    image: ${IMAGE_PREFIX}dniweb:latest-restore
+    container_name: dniweb.restore.${BUILD_ENVIRONMENT}
     depends_on:
       - dni.api
-    ports:
-     - "${LOCAL_WEB_PORT}:80"
-    build:
+    build: &web-restore-build
       context: src/DNI.Web/
+      target: restore
+      cache_from:
+        - ${IMAGE_PREFIX}dniweb:latest-restore
+    restart: "no"
+  dni.web.build:
+    image: ${IMAGE_PREFIX}dniweb:latest-build
+    container_name: dniweb.build.${BUILD_ENVIRONMENT}
+    depends_on:
+      - dni.web.restore
+    build: &web-build-build
+      <<: *web-restore-build
+      target: build
       args:
         - ANGULAR_ENV=${BUILD_ENVIRONMENT}
       cache_from:
+        - ${IMAGE_PREFIX}dniweb:latest-restore
+        - ${IMAGE_PREFIX}dniweb:latest-build
+    restart: "no"
+  dni.web:
+    image: ${IMAGE_PREFIX}dniweb:latest
+    container_name: dniweb.${BUILD_ENVIRONMENT}
+    depends_on:
+      - dni.web.restore
+      - dni.web.build
+    ports:
+     - "${LOCAL_WEB_PORT}:80"
+    build:
+      <<: *web-build-build
+      target: final
+      cache_from:
+        - ${IMAGE_PREFIX}dniweb:latest-restore
+        - ${IMAGE_PREFIX}dniweb:latest-build
         - ${IMAGE_PREFIX}dniweb:latest
     restart: unless-stopped
+
