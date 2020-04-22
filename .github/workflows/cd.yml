@@ -28,6 +28,7 @@ jobs:
         # run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Check image version does not exists
         continue-on-error: false
+        shell: bash {0}
         run: |
           docker pull ${API_IMAGE}:${IMAGE_TAG} 2>&1;
           if [ "$?" = "0" ] ; then { echo ${API_IMAGE}:${IMAGE_TAG} already exists in registry; exit 1; }; else exit 0; fi
