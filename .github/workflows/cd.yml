@@ -10,7 +10,7 @@ on:
 
 env:
   BUILD_ENVIRONMENT: prod # Required for docker-compose
-  IMAGE_TAG: 2.0.2 # Remove for go live - dealt with in the "Get image tags" task
+  IMAGE_TAG: 2.0.3 # Remove for go live - dealt with in the "Get image tags" task
   DOCKER_REGISTRY: docker.pkg.github.com
 
 jobs:
@@ -25,11 +25,10 @@ jobs:
       - name: Log in to docker packages
         run: docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
       # - name: Get image tags
-                #   run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
+        # run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Check image version does not exists
         continue-on-error: false
         run: |
-          docker image ls;
           docker pull ${API_IMAGE}:${IMAGE_TAG} 2>&1;
           if [ "$?" = "0" ] ; then { echo ${API_IMAGE}:${IMAGE_TAG} already exists in registry; exit 1; }; else exit 0; fi
       - name: Pull latest images for cache
@@ -41,7 +40,7 @@ jobs:
           docker pull ${WEB_IMAGE}:latest-restore || true;
           docker pull ${WEB_IMAGE}:latest-build || true;
           docker pull ${WEB_IMAGE}:latest || true;
-          docker image ls;
+          # docker image ls;
       - name: Build docker images
         env:
           ASPNETCORE_ENVIRONMENT: Production
@@ -60,12 +59,12 @@ jobs:
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
         run: |
           docker-compose build --compress;
-          docker image ls;
+          # docker image ls;
       - name: Tag images
         run: |
           docker tag ${API_IMAGE}:latest ${API_IMAGE}:${IMAGE_TAG};
           docker tag ${WEB_IMAGE}:latest ${WEB_IMAGE}:${IMAGE_TAG};
-          docker image ls;
+          # docker image ls;
       - name: Push images
         run: |
           docker push ${API_IMAGE}:latest-restore;
