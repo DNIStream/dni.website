@@ -79,3 +79,5 @@ jobs:
       - name: Docker logout
         run: docker logout ${DOCKER_REGISTRY}
       # TODO: Pull and run on web server agent (install github actions agent on server)
+      # TODO: Pull docker-compose.yml file on to production server
+      # docker-compose up -d --no-build --scale dni.api.restore=0 --scale dni.api.build=0 --scale dni.web.restore=0 --scale dni.web.build=0
