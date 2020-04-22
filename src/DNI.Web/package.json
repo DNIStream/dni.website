@@ -10,9 +10,11 @@
     "lint": "ng lint dni",
     "lint:w": "chokidar src/**/*.ts src/**/*.htm* src/**/*.scss src/**/*.css src/**/*.json *.json -c \"ng lint dni\" --initial",
     "e2e": "ng e2e",
-    "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
+    "build:ssr-prod": "npm run build:client-and-server-bundles-prod && npm run webpack:server",
+    "build:ssr-dev": "npm run build:client-and-server-bundles-dev && npm run webpack:server",
     "serve:ssr": "node dist/server.js",
-    "build:client-and-server-bundles": "ng build --prod -c prod && ng run dni:server -c prod",
+    "build:client-and-server-bundles-prod": "ng build --prod -c prod && ng run dni:server -c prod",
+    "build:client-and-server-bundles-dev": "ng build && ng run dni:server",
     "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
   },
   "private": true,

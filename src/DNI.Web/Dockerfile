@@ -21,7 +21,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN npm run build:ssr
+RUN echo $ANGULAR_ENV
+
+RUN if [ "$ANGULAR_ENV" = "prod" ] ; then npm run build:ssr-prod ; else npm run build:ssr-dev ; fi
 
 FROM node:12.16.1-alpine AS final
 WORKDIR /app
