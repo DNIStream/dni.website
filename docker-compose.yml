@@ -101,4 +101,3 @@ services:
         - ${IMAGE_PREFIX}dniweb:latest-build
         - ${IMAGE_PREFIX}dniweb:latest
     restart: unless-stopped
-
