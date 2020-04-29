@@ -41,6 +41,7 @@ jobs:
       - name: Pull latest images for cache
         continue-on-error: true
         run: |
+          set -x;
           docker pull ${API_IMAGE}:latest-restore || true;
           docker pull ${API_IMAGE}:latest-build || true;
           docker pull ${API_IMAGE}:latest || true;
@@ -50,15 +51,18 @@ jobs:
           docker image ls;
       - name: Build docker images
         run: |
+          set -x;
           docker-compose build --compress;
           # docker image ls;
       - name: Tag images
         run: |
+          set -x;
           docker tag ${API_IMAGE}:latest ${API_IMAGE}:${IMAGE_TAG};
           docker tag ${WEB_IMAGE}:latest ${WEB_IMAGE}:${IMAGE_TAG};
           # docker image ls;
       - name: Push images
         run: |
+          set -x;
           docker push ${API_IMAGE}:latest-restore;
           docker push ${API_IMAGE}:latest-build;
           docker push ${API_IMAGE}:latest;
@@ -80,6 +84,7 @@ jobs:
       - name: Pull latest images from registry
         continue-on-error: false
         run: |
+          set -x;
           docker pull ${API_IMAGE}:latest-restore || true;
           docker pull ${API_IMAGE}:latest-build || true;
           docker pull ${API_IMAGE}:latest || true;
@@ -102,17 +107,20 @@ jobs:
           ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
         run: |
+          set -x;
           docker-compose up -d --no-build --force-recreate --scale dni.api.restore=0 --scale dni.api.build=0 --scale dni.web.restore=0 --scale dni.web.build=0;
       - name: Clean up docker
         run: |
-          docker ps -a;
+          set -x;
           docker image ls -a;
-          docker container ls -a;
-          docker system prune -f;
-          docker ps -a;
+          docker image rm -f ${API_IMAGE}:latest-restore;
+          docker image rm -f ${API_IMAGE}:latest-build;
+          docker image rm -f ${WEB_IMAGE}:latest-restore;
+          docker image rm -f ${WEB_IMAGE}:latest-build;
           docker image ls -a;
-          docker container ls -a;
       - name: Clean up repo
         run: |
+          set -x;
           ls -la;
-          # rm -rf *;
+          pwd;
+          rm -rf *;
