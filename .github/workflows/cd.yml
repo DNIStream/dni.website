@@ -80,7 +80,11 @@ jobs:
       - name: Pull latest images from registry
         continue-on-error: false
         run: |
+          docker pull ${API_IMAGE}:latest-restore || true;
+          docker pull ${API_IMAGE}:latest-build || true;
           docker pull ${API_IMAGE}:latest || true;
+          docker pull ${WEB_IMAGE}:latest-restore || true;
+          docker pull ${WEB_IMAGE}:latest-build || true;
           docker pull ${WEB_IMAGE}:latest || true;
           docker image ls;
       - name: Docker logout
