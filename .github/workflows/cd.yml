@@ -5,6 +5,7 @@ on:
     branches: [ release/* ]
   pull_request:
     branches: [ master ]
+    
 
 env:
   IMAGE_TAG: 2.0.3 # Remove for go live - dealt with in the "Get image tags" task
