@@ -104,12 +104,15 @@ jobs:
         run: |
           docker-compose up -d --no-build --force-recreate --scale dni.api.restore=0 --scale dni.api.build=0 --scale dni.web.restore=0 --scale dni.web.build=0;
       - name: Clean up docker
-        continue-on-error: false
         run: |
           docker ps -a;
-          docker container ls -a;
           docker image ls -a;
-          docker system prune -af;
+          docker container ls -a;
+          docker system prune -f;
           docker ps -a;
-          docker container ls -a;
           docker image ls -a;
+          docker container ls -a;
+      - name: Clean up repo
+        run: |
+          ls -la;
+          # rm -rf *;
