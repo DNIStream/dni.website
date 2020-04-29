@@ -24,7 +24,7 @@ env:
 
 jobs:
   buildDockerImages:
-    name: Build Docker Images Using Registry Cache
+    name: Build & Publish Docker Images Using Registry Cache
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -70,7 +70,7 @@ jobs:
       - name: Docker logout
         run: docker logout ${DOCKER_REGISTRY}
   deployDockerImages:
-    name: Deploy Docker Images to Production
+    name: Pull & Deploy Docker Images to Production
     runs-on: ubuntu-latest
     needs: [buildDockerImages]
     steps:
@@ -103,3 +103,13 @@ jobs:
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
         run: |
           docker-compose up -d --no-build --force-recreate --scale dni.api.restore=0 --scale dni.api.build=0 --scale dni.web.restore=0 --scale dni.web.build=0;
+      - name: Clean up docker
+        continue-on-error: false
+        run: |
+          docker ps -a;
+          docker container ls -a;
+          docker image ls -a;
+          docker system prune -af;
+          docker ps -a;
+          docker container ls -a;
+          docker image ls -a;
