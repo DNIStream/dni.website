@@ -9,15 +9,20 @@ on:
       - "[0-9]+.[0-9]+.[0-9]+"
 
 env:
-  BUILD_ENVIRONMENT: prod # Required for docker-compose
   IMAGE_TAG: 2.0.3 # Remove for go live - dealt with in the "Get image tags" task
   DOCKER_REGISTRY: docker.pkg.github.com
+  # docker-compose.yml file required environment variables for both build and deploy
+  BUILD_ENVIRONMENT: prod
+  ASPNET_CONFIGURATION: Release
+  LOCAL_WEB_PORT: 8080
+  LOCAL_API_PORT: 8181
+  IMAGE_PREFIX: docker.pkg.github.com/dnistream/dni.website/
+  LOG_MOUNT_PATH: ${{ secrets.LOG_MOUNT_PATH }}
 
 jobs:
   buildDockerImages:
     name: Build Docker Images Using Registry Cache
     env:
-      IMAGE_PREFIX: docker.pkg.github.com/dnistream/dni.website/ # Used in the docker-compose.yml file
       API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi # Cannot use variable references here - hence repeat info
       WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb
     runs-on: ubuntu-latest
@@ -84,15 +89,11 @@ jobs:
         env:
           ASPNETCORE_ENVIRONMENT: Production
           CAPTCHA_KEY: ${{ secrets.CAPTCHA_KEY }}
-          ASPNET_CONFIGURATION: Release
           SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
           SMTP_PORT: ${{ secrets.SMTP_PORT }}
           SMTP_ENABLE_SSL: ${{ secrets.SMTP_ENABLE_SSL }}
           SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
           SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          LOG_MOUNT_PATH: ${{ secrets.LOG_MOUNT_PATH }}
-          LOCAL_WEB_PORT: 8080
-          LOCAL_API_PORT: 8181
           ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
           ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
           CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
