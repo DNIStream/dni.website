@@ -73,6 +73,8 @@ jobs:
           docker push ${WEB_IMAGE}:${IMAGE_TAG};
       - name: Docker logout
         run: docker logout ${DOCKER_REGISTRY}
+  # TODO: Put the below job into a script that can be run on the prod server manually (or with watch tower?)
+  # TODO: Remove deployment specific secrets from github
   deployDockerImages:
     name: Pull & Deploy Docker Images to Production
     runs-on: ubuntu-latest
