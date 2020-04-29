@@ -1,8 +1,8 @@
 name: DNI Stream Website CI Build
 
 on:
-  # push:
-  #   branches: [ feature/* ]
+  push:
+    branches: [ featurex/* ]
   pull_request:
     branches: [ master ]
 

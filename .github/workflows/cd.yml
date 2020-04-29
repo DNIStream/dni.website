@@ -11,6 +11,9 @@ on:
 env:
   IMAGE_TAG: 2.0.3 # Remove for go live - dealt with in the "Get image tags" task
   DOCKER_REGISTRY: docker.pkg.github.com
+  API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi # Cannot use variable references here - hence repeat info
+  WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb
+
   # docker-compose.yml file required environment variables for both build and deploy
   BUILD_ENVIRONMENT: prod
   ASPNET_CONFIGURATION: Release
@@ -22,9 +25,6 @@ env:
 jobs:
   buildDockerImages:
     name: Build Docker Images Using Registry Cache
-    env:
-      API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi # Cannot use variable references here - hence repeat info
-      WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
