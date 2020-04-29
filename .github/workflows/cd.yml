@@ -14,7 +14,8 @@ env:
   DOCKER_REGISTRY: docker.pkg.github.com
 
 jobs:
-  dockerimages:
+  buildDockerImages:
+    name: Build Docker Images Using Registry Cache
     env:
       IMAGE_PREFIX: docker.pkg.github.com/dnistream/dni.website/ # Used in the docker-compose.yml file
       API_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniapi # Cannot use variable references here - hence repeat info
@@ -26,12 +27,12 @@ jobs:
         run: docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
       # - name: Get image tags
         # run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
-      - name: Check image version does not exists
-        continue-on-error: false
-        shell: bash {0}
-        run: |
-          docker pull ${API_IMAGE}:${IMAGE_TAG} 2>&1;
-          if [ "$?" = "0" ] ; then { echo ${API_IMAGE}:${IMAGE_TAG} already exists in registry; exit 1; }; else exit 0; fi
+      # - name: Check image version does not exists
+      #   continue-on-error: false
+      #   shell: bash {0}
+      #   run: |
+      #     docker pull ${API_IMAGE}:${IMAGE_TAG} 2>&1;
+      #     if [ "$?" = "0" ] ; then { echo ${API_IMAGE}:${IMAGE_TAG} already exists in registry; exit 1; }; else exit 0; fi
       - name: Pull latest images for cache
         continue-on-error: true
         run: |
@@ -43,21 +44,6 @@ jobs:
           docker pull ${WEB_IMAGE}:latest || true;
           # docker image ls;
       - name: Build docker images
-        env:
-          ASPNETCORE_ENVIRONMENT: Production
-          CAPTCHA_KEY: ${{ secrets.CAPTCHA_KEY }}
-          ASPNET_CONFIGURATION: Release
-          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
-          SMTP_PORT: ${{ secrets.SMTP_PORT }}
-          SMTP_ENABLE_SSL: ${{ secrets.SMTP_ENABLE_SSL }}
-          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
-          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
-          LOG_MOUNT_PATH: ${{ secrets.LOG_MOUNT_PATH }}
-          LOCAL_WEB_PORT: 8080
-          LOCAL_API_PORT: 8181
-          ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
-          ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
-          CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
         run: |
           docker-compose build --compress;
           # docker image ls;
@@ -78,6 +64,37 @@ jobs:
           docker push ${WEB_IMAGE}:${IMAGE_TAG};
       - name: Docker logout
         run: docker logout ${DOCKER_REGISTRY}
-      # TODO: Pull and run on web server agent (install github actions agent on server)
-      # TODO: Pull docker-compose.yml file on to production server
-      # docker-compose up -d --no-build --scale dni.api.restore=0 --scale dni.api.build=0 --scale dni.web.restore=0 --scale dni.web.build=0
+  deployDockerImages:
+    name: Deploy Docker Images to Production
+    runs-on: ubuntu-latest
+    needs: [buildDockerImages]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Log in to docker packages
+        run: docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
+      - name: Pull latest images from registry
+        continue-on-error: false
+        run: |
+          docker pull ${API_IMAGE}:latest || true;
+          docker pull ${WEB_IMAGE}:latest || true;
+          docker image ls;
+      - name: Docker logout
+        run: docker logout ${DOCKER_REGISTRY}
+      - name: Run new containers
+        env:
+          ASPNETCORE_ENVIRONMENT: Production
+          CAPTCHA_KEY: ${{ secrets.CAPTCHA_KEY }}
+          ASPNET_CONFIGURATION: Release
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_ENABLE_SSL: ${{ secrets.SMTP_ENABLE_SSL }}
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          LOG_MOUNT_PATH: ${{ secrets.LOG_MOUNT_PATH }}
+          LOCAL_WEB_PORT: 8080
+          LOCAL_API_PORT: 8181
+          ERROR_EMAIL_FROM: ${{ secrets.ERROR_EMAIL_FROM }}
+          ERROR_EMAIL_TO: ${{ secrets.ERROR_EMAIL_TO }}
+          CONTACT_EMAIL_TO: ${{ secrets.CONTACT_EMAIL_TO }}
+        run: |
+          docker-compose up -d --no-build --force-recreate --scale dni.api.restore=0 --scale dni.api.build=0 --scale dni.web.restore=0 --scale dni.web.build=0;
