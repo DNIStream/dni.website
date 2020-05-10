@@ -1,5 +1,12 @@
 #!/bin/bash
 # DNI Stream Deployment Script
+# Three additional files must exist on the deployment server for this script to function:
+#
+# .env              - Contains all the required environment variables for the build
+# docker-username   - Contains the account name that has "Read" access to the below DOCKER_REGISTRY
+# docker-password   - Contains the GitHub Personal Access Key for the above account
+#
+# In addition, this script must have execute permissions on the server
 set -e;
 
 DOCKER_REGISTRY=docker.pkg.github.com;
