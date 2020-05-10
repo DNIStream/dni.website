@@ -42,7 +42,7 @@ jobs:
       - name: Check VERSION file is up to date
         continue-on-error: false
         shell: bash {0}
-        run: if [ "$(head -n 1 "VERSION")" != "$IMAGE_TAG" ]; then echo VERSION file mismatches tag. Run version.ps1 to update artifact versions; fi
+        run: if [ "$(head -n 1 "VERSION")" != "$IMAGE_TAG" ]; then echo VERSION file mismatches tag. Run version.ps1 to update artifact versions; exit 1; fi
       - name: Pull latest images for cache
         continue-on-error: true
         run: |
