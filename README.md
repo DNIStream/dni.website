@@ -80,7 +80,7 @@ CONTACT_EMAIL_TO=<REDACTED>
 * Push code to your feature/* branch
 * Wait for the [CI GitHub Action](.github/workflows/ci.yml) to complete.
 
-### Production
+### Production & Release
 
 The production build and docker image packages are compiled with [this GitHub Action](.github/workflows/cd.yml). Deployment of these packages is performed manually<sup>&#177;</sup>, but has been scripted in [deploy.sh](deploy.sh).
 
@@ -88,7 +88,21 @@ The production build and docker image packages are compiled with [this GitHub Ac
 
 It is recommended that you create a new user on your production server and add it to the sudo group, rather than run these commands as root.
 
-To deploy this website, on the deployment target (server):
+#### Release
+
+To deploy this website, considering you want to deploy version `2.0.4`:
+
+* Commit your changes to a `feature/*` branch
+* Run the `version.ps1 2.0.4` in powershell
+* Commit the various version file changes
+* Create a PR into `master`
+* Wait for all CI / PR actions to complete
+* Merge the PR into master
+* Tag the changes with the version `git tag 2.0.4`
+* Push the tags with `git push --tags`
+* Wait for the CD action to complete
+
+On the deployment target (server):
 
 * Copy the latest [deploy.sh](deploy.sh) script to the server
 * Grant the [deploy.sh](deploy.sh) script execute permissions
