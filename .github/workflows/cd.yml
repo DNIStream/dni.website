@@ -31,7 +31,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Log in to docker packages
         run: docker login ${DOCKER_REGISTRY} --username dnistream --password ${{ secrets.GITHUB_TOKEN }}
-      - name: Get image tags
+      - name: Set version from git tag
         run: echo ::set-env name=IMAGE_TAG::${GITHUB_REF/refs\/tags\//}
       - name: Check image version does not exist
         continue-on-error: false
@@ -39,6 +39,10 @@ jobs:
         run: |
           docker pull ${API_IMAGE}:${IMAGE_TAG} 2>&1;
           if [ "$?" = "0" ] ; then { echo ${API_IMAGE}:${IMAGE_TAG} already exists in registry; exit 1; }; else exit 0; fi
+      - name: Check VERSION file is up to date
+        continue-on-error: false
+        shell: bash {0}
+        run: if [ "$(head -n 1 "VERSION")" != "$IMAGE_TAG" ]; then echo VERSION file mismatches tag. Run version.ps1 to update artifact versions; fi
       - name: Pull latest images for cache
         continue-on-error: true
         run: |
