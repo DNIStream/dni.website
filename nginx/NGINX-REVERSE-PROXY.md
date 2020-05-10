@@ -46,9 +46,7 @@ N.B. The SSL certificates must already exist on the server before any sites will
 
 ```
 sudo ln -s /etc/nginx/sites-available/http-to-https.conf /etc/nginx/sites-enabled \
-&& sudo ln -s /etc/nginx/sites-available/prod-api.dnistream.live.conf /etc/nginx/sites-enabled \
-&& sudo ln -s /etc/nginx/sites-available/prod-www.dnistream.live.conf /etc/nginx/sites-enabled \
-&& sudo ln -s /etc/nginx/sites-available/prod-social.dnistream.live.conf /etc/nginx/sites-enabled
+&& sudo ln -s /etc/nginx/sites-available/prod-www.dnistream.live.conf /etc/nginx/sites-enabled
 ```
 
 ##### Restart NGINX
