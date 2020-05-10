@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-    Updates the solutions version. Must be run in ad Administrator Powershell console.
+    Updates the solution's version. Must be run in an Administrator Powershell console.
 .DESCRIPTION
     Performs version increment validation, then updates all artefacts to the specified MAJOR MINOR and PATCH.
     

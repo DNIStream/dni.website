@@ -18,9 +18,9 @@ RUN for file in $(ls *.csproj); do mkdir -p test/${file%.*}/ && mv $file test/${
 RUN dotnet restore
 
 FROM restore AS build
-ARG ASPNET_CONFIGURATION=
-ARG PROJECT_DIR=
-ARG PROJECT_NAME=
+ARG ASPNET_CONFIGURATION
+ARG PROJECT_DIR
+ARG PROJECT_NAME
 
 RUN echo $ASPNET_CONFIGURATION
 
@@ -32,7 +32,7 @@ WORKDIR /source/${PROJECT_DIR}
 
 RUN dotnet publish ${PROJECT_NAME}.csproj --no-restore -c $ASPNET_CONFIGURATION -o /app
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine as final
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-alpine AS final
 WORKDIR /app
 EXPOSE 80
 VOLUME /app/logs

@@ -42,4 +42,4 @@ jobs:
       run: npm run lint
     - name: Build Angular SSR
       working-directory: ./src/DNI.Web
-      run: npm run build:ssr
+      run: npm run build:ssr-dev

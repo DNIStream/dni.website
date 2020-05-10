@@ -15,15 +15,17 @@ RUN set -x \
 
 #---------------------
 FROM restore AS build
-ARG ANGULAR_ENV=
+ARG ANGULAR_ENV
 
 WORKDIR /app
 
 COPY . /app
 
-RUN npm run build:ssr
+RUN echo $ANGULAR_ENV
 
-FROM node:12.16.1-alpine
+RUN if [ "$ANGULAR_ENV" = "prod" ] ; then npm run build:ssr-prod ; else npm run build:ssr-dev ; fi
+
+FROM node:12.16.1-alpine AS final
 WORKDIR /app
 
 COPY --from=build /app/package.json /app
