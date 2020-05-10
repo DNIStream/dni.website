@@ -25,7 +25,7 @@ fi
 DOCKER_REGISTRY=docker.pkg.github.com;
 DOCKER_PATH=${DOCKER_REGISTRY}/dnistream/dni.website/;
 GIT_URL=git@github.com:DNIStream/dni.website.git;
-TEMP_GIT_DIR_NAME=dni.website.temp;
+TEMP_GIT_DIR_NAME=dni.website.temp/;
 API_IMAGE=${DOCKER_PATH}dniapi;
 WEB_IMAGE=${DOCKER_PATH}dniweb;
 DOCKER_USERNAME_FILE=docker-username;
@@ -59,18 +59,26 @@ echo ${DOCKER_PASSWORD} | docker login ${DOCKER_REGISTRY} --username ${DOCKER_US
 
 set -x;
 
+# Delete the temp folder
+rm -rf ${TEMP_GIT_DIR_NAME};
+
 # Clone the tag
 git clone --branch $VERSION --depth 1 ${GIT_URL} ${TEMP_GIT_DIR_NAME};
 
 # Pull down the versioned images
 docker pull ${API_IMAGE}:latest-restore;
 docker pull ${API_IMAGE}:latest-build;
-docker pull ${API_IMAGE}:${VERSION};
+docker pull ${API_IMAGE}:latest;
 docker pull ${WEB_IMAGE}:latest-restore;
 docker pull ${WEB_IMAGE}:latest-build;
-docker pull ${WEB_IMAGE}:${VERSION};
+docker pull ${WEB_IMAGE}:latest;
 
 docker logout ${DOCKER_REGISTRY};
+
+# Copy required files
+cp $DOCKER_USERNAME_FILE ${TEMP_GIT_DIR_NAME};
+cp $DOCKER_PASSWORD_FILE ${TEMP_GIT_DIR_NAME};
+cp $ENV_FILE ${TEMP_GIT_DIR_NAME};
 
 # Switch to the temp git dir
 pushd ${TEMP_GIT_DIR_NAME};
@@ -88,8 +96,8 @@ docker image rm -f ${WEB_IMAGE}:latest-build;
 cp nginx/http-to-https.conf /etc/nginx/sites-available/http-to-https.conf;
 cp nginx/prod-www.dnistream.live.conf /etc/nginx/sites-available/prod-www.dnistream.live.conf;
 
-ln -s /etc/nginx/sites-available/http-to-https.conf /etc/nginx/sites-enabled;
-ln -s /etc/nginx/sites-available/prod-www.dnistream.live.conf /etc/nginx/sites-enabled;
+ln -s /etc/nginx/sites-available/http-to-https.conf /etc/nginx/sites-enabled || true;
+ln -s /etc/nginx/sites-available/prod-www.dnistream.live.conf /etc/nginx/sites-enabled || true;
 
 service nginx reload;
 

@@ -2,9 +2,6 @@ name: DNI Stream Website CD Build
 
 on:
   push:
-    # The "branches" node is just for testing
-    # branches:
-    #   - release/*
     # Devs must "tag and push" to release a new version
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
