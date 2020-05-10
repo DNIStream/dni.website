@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FormsModule } from '@angular/forms';
 
-import { CollapseModule } from 'ngx-bootstrap';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 import { ShowArchiveComponent } from './show-archive.component';
 import { SafePipe } from 'app/components/shared/safe-pipe/safe.pipe';

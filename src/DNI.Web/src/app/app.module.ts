@@ -5,7 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgStringPipesModule } from 'angular-pipes';
 import { NgxCaptchaModule } from 'ngx-captcha';
-import { TabsModule, CollapseModule, PaginationModule } from 'ngx-bootstrap';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+
 // Replace this import and delete the code once the 3rd party component has been published to npm
 import { CookieLawModule } from 'app/components/shared/angular2-cookie-law/angular2-cookie-law.module';
 // import { CookieLawModule } from 'angular2-cookie-law';
