@@ -65,8 +65,4 @@ export class PagerComponent implements OnInit {
     console.log('child onPageChanged');
     this.pageChanged.emit(pageInfo);
   }
-
-  public getLastText(): string {
-    return this.lastText || this._lastText;
-  }
 }
