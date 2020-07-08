@@ -51,6 +51,10 @@
                  [totalPages]="getShowsResponse.pageInfo.totalPages"
                  [currentPage]="req.currentPage"
                  [showTotals]="false"
+                 previousText="&lsaquo;"
+                 nextText="&rsaquo;"
+                 firstText="&laquo;"
+                 lastText="&raquo;"
                  (pageChanged)="onPaginationChanged($event)">
       </dni-pager>
 
@@ -98,6 +102,10 @@
                  [totalPages]="getShowsResponse.pageInfo.totalPages"
                  [currentPage]="req.currentPage"
                  itemType="podcasts"
+                 previousText="&lsaquo;"
+                 nextText="&rsaquo;"
+                 firstText="&laquo;"
+                 lastText="&raquo;"
                  (pageChanged)="onPaginationChanged($event)">
       </dni-pager>
 

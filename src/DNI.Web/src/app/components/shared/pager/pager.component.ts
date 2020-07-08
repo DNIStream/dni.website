@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ThrowStmt } from '@angular/compiler';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'dni-pager',
@@ -45,10 +47,11 @@ export class PagerComponent implements OnInit {
   public nextText: string = '&rsaquo;';
 
   @Input()
-  public firstText = '&laquo;';
+  public firstText: string = '&laquo;';
 
   @Input()
-  public lastText = '&raquo;';
+  public lastText: string = '&raquo;';
+
 
   @Output()
   public pageChanged = new EventEmitter<any>();
