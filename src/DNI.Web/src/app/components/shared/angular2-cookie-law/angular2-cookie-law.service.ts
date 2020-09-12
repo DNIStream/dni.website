@@ -1,10 +1,3 @@
-/**
- * angular2-cookie-law
- *
- * Copyright 2016-2018, @andreasonny83, All rights reserved.
- *
- * @author: @andreasonny83 <andreasonny83@gmail.com>
- */
 
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';

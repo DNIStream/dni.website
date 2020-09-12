@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   @HostListener('click', ['$event.target.id'])
-  private onComponentClicked(id: string): void {
+  protected onComponentClicked(id: string): void {
     if (id !== 'listenDropdown') {
       this.showListenMenu = false;
     }

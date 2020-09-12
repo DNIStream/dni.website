@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, timer, of } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment-timezone';
 import { TickData } from 'app/services/countdown/tick-data';

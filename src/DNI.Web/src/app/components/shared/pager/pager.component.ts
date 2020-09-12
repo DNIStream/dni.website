@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
-import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'dni-pager',

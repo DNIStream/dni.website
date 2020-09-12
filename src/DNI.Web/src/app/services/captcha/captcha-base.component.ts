@@ -1,12 +1,10 @@
-import { ViewChild, Inject, PLATFORM_ID, Component } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { ViewChild, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ReCaptcha2Component } from 'ngx-captcha';
 
 import { CaptchaService } from 'app/services/captcha/captcha.service';
 import { PlatformService } from 'app/services/platform/platform.service';
-
 
 @Component({
     template: ''

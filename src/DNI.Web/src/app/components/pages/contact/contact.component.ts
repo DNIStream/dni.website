@@ -10,7 +10,6 @@ import { ContactModel } from 'app/services/contact/contact-model';
 import { SEOService } from 'app/services/seo/seo.service';
 import { PlatformService } from 'app/services/platform/platform.service';
 
-
 @Component({
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.scss']
@@ -46,10 +45,10 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
 
     this.contactService
       .sendContactEmail(this.model)
-      .subscribe(x => {
+      .subscribe(() => {
         this.state = 'sent';
         this.messageHtml = 'Thank you for your message, we\'ll get back you as soon as possible.';
-      }, e => {
+      }, () => {
         this.state = 'error';
         this.messageHtml = 'There was an unexpected error when trying to send your message; please try again or contact us using one of other methods. Please let us know if this form isn\'t working!';
       });

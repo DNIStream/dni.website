@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
-import { switchMap, share, delay } from 'rxjs/operators';
+import { switchMap, share } from 'rxjs/operators';
 
 import { ShowService } from 'app/services/show/show.service';
 import { SEOService } from 'app/services/seo/seo.service';
@@ -103,7 +103,7 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
         this.getShowsResponse = showResponse;
         this.errorMessage = null;
         this.loading = false;
-      }, e => {
+      }, () => {
         this.errorMessage = 'Oops! An error occurred when trying to retrieve the podcast episodes - please let us know!';
         this.loading = false;
       });

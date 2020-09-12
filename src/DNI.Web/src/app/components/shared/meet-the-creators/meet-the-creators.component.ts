@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { switchMap, map, share } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { DataService } from 'app/services/data/data.service';
 import { Creator } from 'app/model/creator';

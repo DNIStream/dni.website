@@ -15,9 +15,6 @@ import { SEOService } from 'app/services/seo/seo.service';
 export class ShowDetailComponent implements OnInit {
 
   public show$: Observable<Show>;
-
-  private showData: Show;
-
   constructor(
     private route: ActivatedRoute,
     private showService: ShowService,
@@ -25,8 +22,6 @@ export class ShowDetailComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.showData = null;
-
     this.show$ = this.route
       .paramMap
       .pipe(
@@ -35,7 +30,6 @@ export class ShowDetailComponent implements OnInit {
           return this.showService.getShow(slug);
         }),
         map(show => {
-          this.showData = show;
           this.seoService.setTitle(show.title + ' | Documentation Not Included Podcast');
           this.seoService.setDescription(show.summary);
           return show;
