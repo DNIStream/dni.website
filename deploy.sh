@@ -49,7 +49,7 @@ fi
 
 if [ $ERRORS_TRAPPED -gt 0 ]; then
     printf "${RED}" "$ERRORS_TRAPPED script validation errors."
-    exit 1;
+    return 1;
 fi
 
 set -e;
