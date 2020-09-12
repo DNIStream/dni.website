@@ -13,7 +13,7 @@ env:
   WEB_IMAGE: docker.pkg.github.com/dnistream/dni.website/dniweb
 
   # docker-compose.yml file required environment variables for both build and deploy
-  BUILD_ENVIRONMENT: prod
+  ANGULAR_ENV: production
   ASPNET_CONFIGURATION: Release
   LOCAL_WEB_PORT: 8080
   LOCAL_API_PORT: 8181

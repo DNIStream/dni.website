@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { HomeComponent } from 'app/components/pages/home/home.component';
-import { PageNotFoundComponent } from 'app/components/pages/page-not-found/page-not-found.component';
-import { PrivacyComponent } from 'app/components/pages/privacy/privacy.component';
-import { EthicsComponent } from 'app/components/pages/ethics/ethics.component';
+import { HomeComponent } from './components/pages/home/home.component';
+import { CommunityGuidelinesComponent } from './components/pages/community-guidelines/community-guidelines.component';
+import { FaqComponent } from './components/pages/faq/faq.component';
+import { PrivacyComponent } from './components/pages/privacy/privacy.component';
 import { ShowArchiveComponent } from './components/pages/show-archive/show-archive.component';
-import { ContactComponent } from 'app/components/pages/contact/contact.component';
-import { FaqComponent } from 'app/components/pages/faq/faq.component';
-import { CommunityGuidelinesComponent } from 'app/components/pages/community-guidelines/community-guidelines.component';
-import { ShowDetailComponent } from 'app/components/pages/show-detail/show-detail.component';
+import { ShowDetailComponent } from './components/pages/show-detail/show-detail.component';
+import { ContactComponent } from './components/pages/contact/contact.component';
+import { EthicsComponent } from './components/pages/ethics/ethics.component';
+import { PageNotFoundComponent } from './components/pages/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,7 +25,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled', initialNavigation: 'enabled' })],
+  imports: [RouterModule.forRoot(routes, {
+    scrollPositionRestoration: 'enabled',
+    initialNavigation: 'enabled'
+  })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

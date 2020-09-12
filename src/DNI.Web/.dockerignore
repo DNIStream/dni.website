@@ -1,6 +1,7 @@
 e2e/
 dist/
 node_modules/
+.vscode/
 
 .dockerignore
 .editorconfig

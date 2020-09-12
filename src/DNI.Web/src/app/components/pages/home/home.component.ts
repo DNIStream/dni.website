@@ -2,10 +2,9 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 
 import { Observable } from 'rxjs';
-
-import { TickData } from 'app/services/countdown/tick-data';
-import { CountdownService } from 'app/services/countdown/countdown.service';
-import { SEOService } from 'app/services/seo/seo.service';
+import { TickData } from '../../../services/countdown/tick-data';
+import { CountdownService } from '../../../services/countdown/countdown.service';
+import { SEOService } from '../../../services/seo/seo.service';
 
 @Component({
   selector: 'dni-root',

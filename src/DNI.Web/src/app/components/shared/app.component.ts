@@ -1,10 +1,12 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 
-import { environment } from 'environments/environment';
-import { DiscoveryPlatform } from 'app/model/discovery-platform';
-import { DataService } from 'app/services/data/data.service';
-import { catchError } from 'rxjs/internal/operators/catchError';
-import { throwError } from 'rxjs/internal/observable/throwError';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+import { environment } from '../../../environments/environment';
+import { DiscoveryPlatform } from '../../model/discovery-platform';
+import { DataService } from '../../services/data/data.service';
+import { PlatformService } from '../../services/platform/platform.service';
 
 @Component({
   selector: 'dni-root',
@@ -21,7 +23,10 @@ export class AppComponent implements OnInit {
 
   public discoveryPlatforms: DiscoveryPlatform[];
 
-  constructor(private dataService: DataService) { }
+  constructor(
+    private dataService: DataService,
+    public platform: PlatformService
+  ) { }
 
   @HostListener('click', ['$event.target.id'])
   protected onComponentClicked(id: string): void {
@@ -41,7 +46,6 @@ export class AppComponent implements OnInit {
     this.dataService
       .discoveryPlatforms()
       .pipe(catchError(err => {
-        console.log(err);
         return throwError(err);
       }))
       .subscribe(discoveryPlatforms => {

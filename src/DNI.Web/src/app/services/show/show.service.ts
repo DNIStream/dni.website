@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { environment } from 'environments/environment';
-
-import { Show } from 'app/model/show';
-import { UriHelper } from 'app/components/shared/uriHelper';
-import { GetShowsRequest } from 'app/services/show/get-shows-request';
 import { GetShowsResponse } from './get-shows-response';
+import { GetShowsRequest } from './get-shows-request';
+import { environment } from '../../../environments/environment';
+import { UriHelper } from '../../components/shared/uriHelper';
+import { Show } from '../../model/show';
 
 @Injectable({
   providedIn: 'root'

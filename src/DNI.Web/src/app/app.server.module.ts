@@ -2,18 +2,14 @@ import { NgModule } from '@angular/core';
 import { ServerModule } from '@angular/platform-server';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { AppModule } from 'app/app.module';
+import { AppModule } from './app.module';
 import { AppComponent } from './components/shared/app.component';
 
 @NgModule({
     imports: [
         ServerModule,
-        ModuleMapLoaderModule,
         NoopAnimationsModule,
         AppModule
-    ],
-    providers: [
-        // Add universal-only providers here
     ],
     bootstrap: [AppComponent]
 })

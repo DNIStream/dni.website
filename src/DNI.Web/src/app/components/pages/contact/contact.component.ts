@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
-import { environment } from 'environments/environment';
-
-import { CaptchaService } from 'app/services/captcha/captcha.service';
-import { ContactService } from 'app/services/contact/contact.service';
-import { CaptchaBaseComponent } from 'app/services/captcha/captcha-base.component';
-import { ContactModel } from 'app/services/contact/contact-model';
-import { SEOService } from 'app/services/seo/seo.service';
-import { PlatformService } from 'app/services/platform/platform.service';
+import { environment } from '../../../../environments/environment';
+import { CaptchaBaseComponent } from '../../../services/captcha/captcha-base.component';
+import { ContactModel } from '../../../services/contact/contact-model';
+import { CaptchaService } from '../../../services/captcha/captcha.service';
+import { ContactService } from '../../../services/contact/contact.service';
+import { PlatformService } from '../../../services/platform/platform.service';
+import { SEOService } from '../../../services/seo/seo.service';
 
 @Component({
   templateUrl: './contact.component.html',

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
-import { ShowService } from 'app/services/show/show.service';
-import { Show } from 'app/model/show';
-import { SEOService } from 'app/services/seo/seo.service';
+import { Show } from '../../../model/show';
+import { ShowService } from '../../../services/show/show.service';
+import { SEOService } from '../../../services/seo/seo.service';
+
 
 @Component({
   selector: 'dni-show-detail',
@@ -15,6 +17,7 @@ import { SEOService } from 'app/services/seo/seo.service';
 export class ShowDetailComponent implements OnInit {
 
   public show$: Observable<Show>;
+
   constructor(
     private route: ActivatedRoute,
     private showService: ShowService,

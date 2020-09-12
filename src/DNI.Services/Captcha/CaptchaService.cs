@@ -46,7 +46,7 @@ namespace DNI.Services.Captcha {
             _logger.LogDebug($"CAPTCHA: REQ URI: {request.Resource}");
             _logger.LogDebug($"CAPTCHA: REQ RESPONSE: {userResponse}");
             _logger.LogDebug($"CAPTCHA: REQ IP: {userIP}");
-            var response = await _restClient.ExecuteAsync<SiteVerifyResponse>(request);
+            var response = await _restClient.ExecuteGetAsync<SiteVerifyResponse>(request);
 
             if(response.ResponseStatus == ResponseStatus.Completed) {
                 return response.Data.Success;

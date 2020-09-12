@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { DataService } from 'app/services/data/data.service';
-import { Creator } from 'app/model/creator';
-
+import { Creator } from '../../../model/creator';
+import { DataService } from '../../../services/data/data.service';
 
 @Component({
   selector: 'dni-meet-the-creators',

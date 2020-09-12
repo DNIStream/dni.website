@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { Observable } from 'rxjs';
 
 @Component({
@@ -60,7 +61,6 @@ export class PagerComponent implements OnInit {
   }
 
   public onPageChanged(pageInfo: any): void {
-    console.log('child onPageChanged');
     this.pageChanged.emit(pageInfo);
   }
 }

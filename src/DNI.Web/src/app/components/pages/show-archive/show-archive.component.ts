@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { BehaviorSubject, of } from 'rxjs';
 import { switchMap, share } from 'rxjs/operators';
 
-import { ShowService } from 'app/services/show/show.service';
-import { SEOService } from 'app/services/seo/seo.service';
-import { GetShowsRequest } from 'app/services/show/get-shows-request';
-import { GetShowsResponse } from 'app/services/show/get-shows-response';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { GetShowsResponse } from '../../../services/show/get-shows-response';
+import { GetShowsRequest } from '../../../services/show/get-shows-request';
+import { ShowService } from '../../../services/show/show.service';
+import { SEOService } from '../../../services/seo/seo.service';
+
 
 @Component({
   templateUrl: './show-archive.component.html',

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 
-import { Creator } from 'app/model/creator';
-import { environment } from 'environments/environment';
-import { DiscoveryPlatform } from 'app/model/discovery-platform';
+import { Creator } from '../../model/creator';
+import { environment } from '../../../environments/environment';
+import { DiscoveryPlatform } from '../../model/discovery-platform';
 
 @Injectable({
   providedIn: 'root'

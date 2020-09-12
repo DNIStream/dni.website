@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 using AutoFixture;
@@ -51,7 +52,7 @@ namespace DNI.Services.Tests.Podcast {
         public async Task GetAllAsync_CallsRESTClientWithInjectedDataUrl() {
             // Arrange
             _restClientMock
-                .Setup(x => x.ExecuteTaskAsync<PodcastStream>(It.IsAny<RestRequest>()))
+                .Setup(x => x.ExecuteGetAsync<PodcastStream>(It.IsAny<RestRequest>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => _fixture.Create<IRestResponse<PodcastStream>>());
             var service = GetService();
 
@@ -60,17 +61,17 @@ namespace DNI.Services.Tests.Podcast {
 
             // Assert
             _restClientMock
-                .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>
+                .Verify(x => x.ExecuteGetAsync<PodcastStream>(It.Is<RestRequest>(r =>
                     r.Resource == _generalOptions.Object.Value.PodcastServiceResourceUri
-                )), Times.Once(), "Podcast Service Resource Uri expected");
+                ), It.IsAny<CancellationToken>()), Times.Once(), "Podcast Service Resource Uri expected");
             _restClientMock
-                .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>
+                .Verify(x => x.ExecuteGetAsync<PodcastStream>(It.Is<RestRequest>(r =>
                     r.RequestFormat == DataFormat.Xml
-                )), Times.Once(), "Podcast Service Data format should be XML");
+                ), It.IsAny<CancellationToken>()), Times.Once(), "Podcast Service Data format should be XML");
             _restClientMock
-                .Verify(x => x.ExecuteTaskAsync<PodcastStream>(It.Is<RestRequest>(r =>
+                .Verify(x => x.ExecuteGetAsync<PodcastStream>(It.Is<RestRequest>(r =>
                     r.Method == Method.GET
-                )), Times.Once(), "GET Expected");
+                ), It.IsAny<CancellationToken>()), Times.Once(), "GET Expected");
         }
 
         [Fact]
@@ -78,7 +79,7 @@ namespace DNI.Services.Tests.Podcast {
             // Arrange
             var expectedResult = _fixture.Create<IRestResponse<PodcastStream>>();
             _restClientMock
-                .Setup(x => x.ExecuteTaskAsync<PodcastStream>(It.IsAny<RestRequest>()))
+                .Setup(x => x.ExecuteGetAsync<PodcastStream>(It.IsAny<RestRequest>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(() => expectedResult);
 
             var service = GetService();
