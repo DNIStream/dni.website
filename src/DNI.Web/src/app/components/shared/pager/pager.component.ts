@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+
 import { Observable } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
-import { SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'dni-pager',
@@ -62,7 +61,6 @@ export class PagerComponent implements OnInit {
   }
 
   public onPageChanged(pageInfo: any): void {
-    console.log('child onPageChanged');
     this.pageChanged.emit(pageInfo);
   }
 }

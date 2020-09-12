@@ -1,11 +1,3 @@
-/**
- * angular2-cookie-law
- *
- * Copyright 2016-2018, @andreasonny83, All rights reserved.
- *
- * @author: @andreasonny83 <andreasonny83@gmail.com>
- */
-
 import {
   Component,
   OnInit,
@@ -39,7 +31,7 @@ export class CookieLawContainerComponent implements OnInit {
   @HostBinding('attr.seen')
   public seen: boolean;
 
-  @ViewChild(CookieLawComponent, { static: false })
+  @ViewChild(CookieLawComponent)
   public cookieLawComponent: CookieLawComponent;
 
   @Input()

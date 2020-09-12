@@ -1,4 +1,4 @@
-import { Link } from 'app/model/link';
+import { Link } from './link';
 
 export class Creator {
     public name: string;

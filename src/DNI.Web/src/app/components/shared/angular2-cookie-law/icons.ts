@@ -1,11 +1,3 @@
-/**
- * angular2-cookie-law
- *
- * Copyright 2016-2018, @andreasonny83, All rights reserved.
- *
- * @author: @andreasonny83 <andreasonny83@gmail.com>
- */
-
 export const closeIcon = `
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
     <path d="M377.047 184.198q0 8.26-6.037 14.297L313.505 256l57.505 57.505q6.037 6.037 6.037 14.297 0 8.578-6.037

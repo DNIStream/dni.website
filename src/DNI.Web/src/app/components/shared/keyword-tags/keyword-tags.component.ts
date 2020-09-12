@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ShowKeyword } from 'app/model/show-keyword';
+
+import { ShowKeyword } from '../../../model/show-keyword';
 
 @Component({
   selector: 'dni-keyword-tags',

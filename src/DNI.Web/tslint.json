@@ -3,6 +3,18 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "directive-selector": [
+      true,
+      "attribute",
+      "dni",
+      "camelCase"
+    ],
+    "component-selector": [
+      true,
+      "element",
+      "dni",
+      "kebab-case"
+    ],
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -73,7 +85,6 @@
     "no-trailing-whitespace": true,
     "no-unnecessary-initializer": true,
     "no-unused-expression": true,
-    "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-sort-keys": false,
     "one-line": [

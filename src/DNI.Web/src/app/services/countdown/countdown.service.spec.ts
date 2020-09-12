@@ -6,7 +6,7 @@ describe('CountdownService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: CountdownService = TestBed.get(CountdownService);
+    const service: CountdownService = TestBed.inject(CountdownService);
     expect(service).toBeTruthy();
   });
 });

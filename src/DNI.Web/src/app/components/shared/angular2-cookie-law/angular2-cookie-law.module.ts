@@ -1,12 +1,4 @@
-/**
- * angular2-cookie-law
- *
- * Copyright 2016-2018, @andreasonny83, All rights reserved.
- *
- * @author: @andreasonny83 <andreasonny83@gmail.com>
- */
-
-import { NgModule, Optional, SkipSelf, ModuleWithProviders } from '@angular/core';
+import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CookieLawComponent } from './angular2-cookie-law.component';

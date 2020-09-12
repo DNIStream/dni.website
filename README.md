@@ -33,10 +33,10 @@ Both the local development environment **and** the local docker deployment testi
 ##### Production values
 ```
 IMAGE_PREFIX=docker.pkg.github.com/dnistream/dni.website/
-BUILD_ENVIRONMENT=prod
+ANGULAR_ENV=production
 ASPNETCORE_ENVIRONMENT=Production
-CAPTCHA_KEY=<REDACTED>
 ASPNET_CONFIGURATION=Release
+CAPTCHA_KEY=<REDACTED>
 SMTP_SERVER=<REDACTED>
 SMTP_PORT=25
 SMTP_ENABLE_SSL=True
@@ -52,10 +52,10 @@ CONTACT_EMAIL_TO=<REDACTED>
 ##### Development values (local Windows development and local docker deployment testing):
 ```
 IMAGE_PREFIX=docker.pkg.github.com/dnistream/dni.website/ (or empty)
-BUILD_ENVIRONMENT=dev
+ANGULAR_ENV=dev
 ASPNETCORE_ENVIRONMENT=Development
-CAPTCHA_KEY=<REDACTED>
 ASPNET_CONFIGURATION=Debug
+CAPTCHA_KEY=<REDACTED>
 SMTP_SERVER=host.docker.internal
 SMTP_ENABLE_SSL=False
 SMTP_USERNAME=

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { SEOService } from 'app/services/seo/seo.service';
+import { SEOService } from '../../../services/seo/seo.service';
 
 @Component({
   templateUrl: './privacy.component.html',
@@ -14,6 +14,6 @@ export class PrivacyComponent implements OnInit {
 
   ngOnInit() {
     this.seoService.setTitle('Cookie and Privacy Policy');
-    this.seoService.setDescription('The lega stuff - our cookie and privacy policy covering how we gather and process your data');
+    this.seoService.setDescription('The legal stuff - our cookie and privacy policy covering how we gather and process your data');
   }
 }

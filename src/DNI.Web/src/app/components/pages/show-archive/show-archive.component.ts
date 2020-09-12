@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { BehaviorSubject, of } from 'rxjs';
-import { switchMap, share, delay } from 'rxjs/operators';
-
-import { ShowService } from 'app/services/show/show.service';
-import { SEOService } from 'app/services/seo/seo.service';
-import { GetShowsRequest } from 'app/services/show/get-shows-request';
-import { GetShowsResponse } from 'app/services/show/get-shows-response';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
+import { BehaviorSubject, of } from 'rxjs';
+import { switchMap, share } from 'rxjs/operators';
+
+import { GetShowsResponse } from '../../../services/show/get-shows-response';
+import { GetShowsRequest } from '../../../services/show/get-shows-request';
+import { ShowService } from '../../../services/show/show.service';
+import { SEOService } from '../../../services/seo/seo.service';
+
 
 @Component({
   templateUrl: './show-archive.component.html',
@@ -103,7 +105,7 @@ export class ShowArchiveComponent implements OnInit, OnDestroy {
         this.getShowsResponse = showResponse;
         this.errorMessage = null;
         this.loading = false;
-      }, e => {
+      }, () => {
         this.errorMessage = 'Oops! An error occurred when trying to retrieve the podcast episodes - please let us know!';
         this.loading = false;
       });

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { SEOService } from 'app/services/seo/seo.service';
+import { SEOService } from '../../../services/seo/seo.service';
 
 @Component({
   templateUrl: './ethics.component.html',

@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
@@ -11,7 +11,7 @@ import { MeetTheCreatorsComponent } from 'app/components/shared/meet-the-creator
 import { LoadingComponent } from 'app/components/shared/loading/loading.component';
 
 describe('HomeComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
@@ -28,7 +28,7 @@ describe('HomeComponent', () => {
     }).compileComponents();
   }));
 
-  it('should create component', async(() => {
+  it('should create component', waitForAsync(() => {
     const fixture = TestBed.createComponent(HomeComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();

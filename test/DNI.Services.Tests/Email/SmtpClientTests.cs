@@ -29,6 +29,10 @@ namespace DNI.Services.Tests.Email {
             config = TestHelpers.GetConfigFromFile();
         }
 
+        /// <summary>
+        ///     This test sometimes fails because the appsettings.json from the DNI.API project overrides the appsettings.json from
+        ///     the DNI.Services.Tests project. Can't pin it down atm.
+        /// </summary>
         [Fact]
         public void Send_SendsSSLMailMessage() {
             // Arrange

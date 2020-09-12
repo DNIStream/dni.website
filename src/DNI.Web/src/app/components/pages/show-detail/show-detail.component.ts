@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 
-import { ShowService } from 'app/services/show/show.service';
-import { Show } from 'app/model/show';
-import { SEOService } from 'app/services/seo/seo.service';
+import { Show } from '../../../model/show';
+import { ShowService } from '../../../services/show/show.service';
+import { SEOService } from '../../../services/seo/seo.service';
+
 
 @Component({
   selector: 'dni-show-detail',
@@ -16,8 +18,6 @@ export class ShowDetailComponent implements OnInit {
 
   public show$: Observable<Show>;
 
-  private showData: Show;
-
   constructor(
     private route: ActivatedRoute,
     private showService: ShowService,
@@ -25,8 +25,6 @@ export class ShowDetailComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    this.showData = null;
-
     this.show$ = this.route
       .paramMap
       .pipe(
@@ -35,7 +33,6 @@ export class ShowDetailComponent implements OnInit {
           return this.showService.getShow(slug);
         }),
         map(show => {
-          this.showData = show;
           this.seoService.setTitle(show.title + ' | Documentation Not Included Podcast');
           this.seoService.setDescription(show.summary);
           return show;

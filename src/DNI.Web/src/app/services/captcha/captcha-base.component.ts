@@ -1,10 +1,13 @@
-import { ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { ViewChild, Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ReCaptcha2Component } from 'ngx-captcha';
+import { CaptchaService } from './captcha.service';
+import { PlatformService } from '../platform/platform.service';
 
-import { CaptchaService } from 'app/services/captcha/captcha.service';
-import { isPlatformBrowser } from '@angular/common';
-
+@Component({
+    template: ''
+})
 export abstract class CaptchaBaseComponent {
     public captchaErrorMessage: string;
 
@@ -12,17 +15,20 @@ export abstract class CaptchaBaseComponent {
     public captchaLoaded = false;
     public captchaReady = false;
 
-    @ViewChild('ReCaptcha', { static: false })
-    protected captcha: ReCaptcha2Component;
+    public reCaptchaFormGroup: FormGroup;
 
-    public get isBrowser(): boolean {
-        return isPlatformBrowser(this.platformId);
-    }
+    @ViewChild('ReCaptcha')
+    protected captcha: ReCaptcha2Component;
 
     constructor(
         protected captchaService: CaptchaService,
-        @Inject(PLATFORM_ID) protected platformId: Object
-    ) { }
+        protected formBuilder: FormBuilder,
+        public platform: PlatformService
+    ) {
+        this.reCaptchaFormGroup = this.formBuilder.group({
+            recaptcha: ['', Validators.required]
+        });
+    }
 
     public handleCaptchaResponse(userResponse: string) {
         this.captchaErrorMessage = null;
@@ -46,10 +52,11 @@ export abstract class CaptchaBaseComponent {
     }
 
     public handleCaptchaReady() {
-        // Short delay to make sure the CAPTCHA is fully loaded and rendered
-        setTimeout(() => {
-            this.captchaReady = true;
-        }, 1000);
+        this.captchaReady = true;
+    }
+
+    public handleReset() {
+        this.captchaValid = false;
     }
 }
 

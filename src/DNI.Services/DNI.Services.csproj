@@ -1,27 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
-    <AssemblyVersion>2.0.5.0</AssemblyVersion>
-    <FileVersion>2.0.5.0</FileVersion>
-    <Version>2.0.5.0</Version>
+    <AssemblyVersion>2.0.6.0</AssemblyVersion>
+    <FileVersion>2.0.6.0</FileVersion>
+    <Version>2.0.6.0</Version>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Email\EmailTemplates\contact.json" />
-    <None Remove="Email\EmailTemplates\layout.html" />
+    <None Remove="Email\EmailTemplates\**\*" />
+    <EmbeddedResource Include="Email\EmailTemplates\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Email\EmailTemplates\contact.json" />
-    <EmbeddedResource Include="Email\EmailTemplates\layout.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.6.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.2" />
+    <PackageReference Include="FluentValidation" Version="9.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.8" />
     <PackageReference Include="Microsoft.SyndicationFeed.ReaderWriter" Version="1.0.2" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NLog" Version="4.6.8" />
-    <PackageReference Include="RestSharp" Version="106.6.9" />
-    <PackageReference Include="Sendgrid" Version="9.13.0" />
+    <PackageReference Include="NLog" Version="4.7.4" />
+    <PackageReference Include="RestSharp" Version="106.11.4" />
+    <PackageReference Include="Sendgrid" Version="9.21.0" />
     <PackageReference Include="System.Net.Mail.Abstractions" Version="1.1.2" />
   </ItemGroup>
   <ItemGroup>
