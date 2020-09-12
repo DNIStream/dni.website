@@ -1,4 +1,5 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 import { environment } from 'environments/environment';
 
@@ -7,6 +8,7 @@ import { ContactService } from 'app/services/contact/contact.service';
 import { CaptchaBaseComponent } from 'app/services/captcha/captcha-base.component';
 import { ContactModel } from 'app/services/contact/contact-model';
 import { SEOService } from 'app/services/seo/seo.service';
+import { PlatformService } from 'app/services/platform/platform.service';
 
 
 @Component({
@@ -24,16 +26,17 @@ export class ContactComponent extends CaptchaBaseComponent implements OnInit {
   constructor(
     protected captchaService: CaptchaService,
     protected contactService: ContactService,
-    @Inject(PLATFORM_ID) protected platformId: Object,
+    public platform: PlatformService,
+    protected formBuilder: FormBuilder,
     private seoService: SEOService
   ) {
-    super(captchaService, platformId);
+    super(captchaService, formBuilder, platform);
+
+    this.seoService.setTitle('Contact Us');
+    this.seoService.setDescription('Contact us to enquire about being a guest on the show or if you have any comments or suggestions.');
   }
 
   ngOnInit() {
-    this.seoService.setTitle('Contact Us');
-    this.seoService.setDescription('The various different methods you can use to contact us - email, Discord and our social channels');
-
     this.reCaptchaSiteKey = environment.recaptchaSiteKey;
     this.state = 'init';
   }
