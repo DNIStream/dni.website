@@ -5,13 +5,9 @@
     <FileVersion>2.0.5.0</FileVersion>
     <Version>2.0.5.0</Version>
   </PropertyGroup>
-  <ItemGroup>
-    <None Remove="Email\EmailTemplates\contact.json" />
-    <None Remove="Email\EmailTemplates\layout.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Email\EmailTemplates\contact.json" />
-    <EmbeddedResource Include="Email\EmailTemplates\layout.html" />
+    <ItemGroup>
+      <None Remove="Email\EmailTemplates\**\*" />
+      <EmbeddedResource Include="Email\EmailTemplates\**\*" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />

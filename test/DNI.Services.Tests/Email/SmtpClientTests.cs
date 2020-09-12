@@ -11,6 +11,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 namespace DNI.Services.Tests.Email {
+
     [Trait(TraitConstants.TraitTestType, TraitConstants.TraitTestTypeIntegration)]
     public class SmtpClientTests {
         private readonly ITestOutputHelper _output;

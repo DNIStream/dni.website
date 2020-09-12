@@ -8,7 +8,7 @@
     "build:prod": "ng build --prod -c prod",
     "test": "ng test dni --watch",
     "lint": "ng lint dni",
-    "lint:w": "chokidar src/**/*.ts src/**/*.htm* src/**/*.scss src/**/*.css src/**/*.json *.json -c \"ng lint dni\" --initial",
+    "lint:w": "chokidar *.ts src/**/*.ts src/**/*.htm* src/**/*.scss src/**/*.css src/**/*.json *.json -c \"ng lint dni\" --initial",
     "e2e": "ng e2e",
     "build:ssr-prod": "npm run build:client-and-server-bundles-prod && npm run webpack:server",
     "build:ssr-dev": "npm run build:client-and-server-bundles-dev && npm run webpack:server",

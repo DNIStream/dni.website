@@ -8,9 +8,15 @@
     <Version>2.0.5.0</Version>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="appsettings.json" />
     <None Remove="TestResources\contact.json" />
     <None Remove="TestResources\FiresideRss.xml" />
     <None Remove="TestResources\layout.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="TestResources\contact.json" />
@@ -37,9 +43,6 @@
     <ProjectReference Include="..\..\src\DNI.Testing\DNI.Testing.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="keys.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

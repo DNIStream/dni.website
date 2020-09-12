@@ -1,6 +1,4 @@
-﻿using System;
-
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
 namespace DNI.Testing {
@@ -13,14 +11,10 @@ namespace DNI.Testing {
         /// </summary>
         /// <returns></returns>
         public static IConfiguration GetConfigFromFile() {
-            var envVariable = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-            var config = new ConfigurationBuilder()
+            return new ConfigurationBuilder()
                 .AddEnvironmentVariables()
                 .AddJsonFile("appsettings.json")
-                .AddJsonFile($"appsettings.{envVariable}.json", optional: true)
                 .Build();
-            return config;
         }
 
         /// <summary>
