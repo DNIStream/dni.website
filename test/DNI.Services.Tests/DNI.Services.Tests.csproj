@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
@@ -9,30 +9,24 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="appsettings.json" />
-    <None Remove="TestResources\contact.json" />
-    <None Remove="TestResources\FiresideRss.xml" />
-    <None Remove="TestResources\layout.html" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="appsettings.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="TestResources\contact.json" />
-    <EmbeddedResource Include="TestResources\FiresideRss.xml" />
-    <EmbeddedResource Include="TestResources\layout.html" />
+    <None Remove="TestResources\**\*" />
+    <EmbeddedResource Include="TestResources\**\*" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoFixture" Version="4.11.0" />
-    <PackageReference Include="AutoFixture.AutoMoq" Version="4.11.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.2" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
-    <PackageReference Include="Moq" Version="4.13.1" />
-    <PackageReference Include="Sendgrid" Version="9.13.0" />
+    <PackageReference Include="AutoFixture" Version="4.14.0" />
+    <PackageReference Include="AutoFixture.AutoMoq" Version="4.14.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.8" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.1.8" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.7.1" />
+    <PackageReference Include="Moq" Version="4.14.5" />
+    <PackageReference Include="Sendgrid" Version="9.21.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -41,10 +35,5 @@
     <ProjectReference Include="..\..\src\DNI.API\DNI.API.csproj" />
     <ProjectReference Include="..\..\src\DNI.Services\DNI.Services.csproj" />
     <ProjectReference Include="..\..\src\DNI.Testing\DNI.Testing.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="keys.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>
