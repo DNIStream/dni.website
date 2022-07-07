@@ -31,7 +31,7 @@
     "core-js": "^2.6.2",
     "express": "^4.15.2",
     "jquery": "^3.5.1",
-    "moment": "^2.25.3",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.31",
     "ngx-bootstrap": "^5.6.1",
     "ngx-captcha": "^8.0.1",
