@@ -1,0 +1,8 @@
+[
+  { "name": "GitHub", "icon": "github", "url": "https://github.com/dnistream" },
+  { "name": "X", "icon": "x", "url": "https://x.com/dnistream" },
+  { "name": "Twitch", "icon": "twitch", "url": "https://www.twitch.tv/dnistream" },
+  { "name": "YouTube", "icon": "youtube", "url": "https://www.youtube.com/channel/UCvmKhmixJzc6Qe8mIqWn1pg" },
+  { "name": "Discord", "icon": "discord", "url": "https://discord.gg/KsCt2hx" },
+  { "name": "LinkedIn", "icon": "linkedin", "url": "https://www.linkedin.com/company/dnistream" }
+]

@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+description: "DNI Stream: a live knowledge repository for software professionals. Listen to every episode of the Documentation Not Included podcast."
+---
+<section class="hero">
+  <div class="wrap hero__inner">
+    <div class="hero__text">
+      <h1>{{ home.headline }}</h1>
+      <p class="hero__strapline">{{ home.strapline }}</p>
+      {%- for paragraph in home.intro %}
+      <p>{{ paragraph }}</p>
+      {%- endfor %}
+    </div>
+    {% include "partials/latest-episode.njk" %}
+  </div>
+  <img class="hero__moth" src="/assets/img/moth.svg" alt="" width="500" height="500">
+</section>
+
+<section class="wrap section" aria-label="What DNI does">
+  <ul class="feature-cards">
+    {%- for card in home.cards %}
+    <li class="feature-card">
+      <h2>{{ card.title }}</h2>
+      <p>{{ card.text }}</p>
+      <a class="button button--quiet" href="{{ card.url }}"{% if card.url.startsWith("http") %} rel="noopener noreferrer"{% endif %}>{{ card.action }}</a>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>
+
+<section class="wrap section creators" aria-labelledby="creators">
+  <h2 id="creators">Meet the creators</h2>
+  <ul class="creators__list">
+    {%- for creator in creators %}
+    <li class="creator">
+      <img src="{{ creator.photo }}" alt="" width="160" height="160" loading="lazy" decoding="async">
+      <div>
+        <h3>{{ creator.name }}</h3>
+        <p>{{ creator.bio }}</p>
+        <ul class="social">
+          {%- for link in creator.links %}
+          <li><a href="{{ link.url }}" rel="noopener noreferrer">{% icon link.icon, link.label %}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>

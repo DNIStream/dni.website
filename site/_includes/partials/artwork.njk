@@ -1,0 +1,10 @@
+{#- Episode artwork from the podcast host, over the site's own placeholder. Expects `episode`, and
+    optionally `artworkSizes`, and `artworkHref` to make it a link (a duplicate of the title link, so
+    it is hidden from assistive technology and the tab order). -#}
+{%- if artworkHref %}<a class="artwork-link" href="{{ artworkHref }}" tabindex="-1" aria-hidden="true">{% endif %}
+<div class="artwork">
+  {%- if episode.image %}
+  <img class="artwork__img" src="{{ episode.image }}" alt="" width="500" height="500" loading="lazy" decoding="async"{% if artworkSizes %} sizes="{{ artworkSizes }}"{% endif %}>
+  {%- endif %}
+</div>
+{%- if artworkHref %}</a>{% endif %}

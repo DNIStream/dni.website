@@ -1,0 +1,36 @@
+---
+layout: layouts/base.njk
+section: archive
+pagination:
+  data: episodes.archivePages
+  size: 1
+  alias: pager
+  addAllPagesToCollections: true
+permalink: "{{ pager.href }}"
+eleventyComputed:
+  title: "{% if pager.number > 1 %}Podcast Archive, page {{ pager.number }}{% else %}Podcast Archive{% endif %}"
+  description: "Every episode of Documentation Not Included, the DNI Stream podcast{% if pager.number > 1 %}: page {{ pager.number }} of {{ pager.total }}{% endif %}."
+---
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ title }}</h1>
+    <p>{{ episodes.episodes | length }} awesome episodes of {{ site.podcastName }}, free for your listening pleasure.</p>
+  </header>
+
+  <section class="top-keywords" aria-labelledby="top-keywords">
+    <h2 id="top-keywords" class="top-keywords__title">Popular topics</h2>
+    <ul class="pills">
+      {%- for keyword in episodes.topKeywords %}
+      <li><a href="{{ keyword.href }}">{{ keyword.name }} <span class="pill__count">{{ keyword.count }}</span></a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+
+  <ul class="episode-grid">
+    {%- for episode in pager.items %}
+    {% include "partials/episode-card.njk" %}
+    {%- endfor %}
+  </ul>
+
+  {% include "partials/pager.njk" %}
+</div>

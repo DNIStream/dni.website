@@ -1,0 +1,32 @@
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="site-footer__grid">
+      <nav aria-label="Site">
+        <h2>Site</h2>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/show-archive/">Podcast Archive</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Community and policies">
+        <h2>Community and policies</h2>
+        <ul>
+          <li><a href="/faq/">FAQ</a></li>
+          <li><a href="/community-guidelines/">Community Guidelines</a></li>
+          <li><a href="/ethics/">Code of Ethics</a></li>
+          <li><a href="/privacy/">Privacy &amp; Cookies</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Follow DNI</h2>
+        <ul class="social">
+          {%- for profile in social %}
+          <li><a href="{{ profile.url }}" rel="noopener noreferrer">{% icon profile.icon, profile.name %}</a></li>
+          {%- endfor %}
+        </ul>
+      </div>
+    </div>
+    <p class="site-footer__legal">&copy; {{ site.copyright }} {{ site.copyrightSince }}&ndash;{{ "" | year }}</p>
+  </div>
+</footer>

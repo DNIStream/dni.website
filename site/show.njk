@@ -1,0 +1,15 @@
+---
+layout: layouts/episode.njk
+section: archive
+ogType: article
+pagination:
+  data: episodes.episodes
+  size: 1
+  alias: episode
+  addAllPagesToCollections: true
+permalink: "/show/{{ episode.slug }}/"
+eleventyComputed:
+  title: "{{ episode.title }} | {{ site.podcastName }}"
+  description: "{{ episode.summary }}"
+  ogImage: "{{ episode.image }}"
+---

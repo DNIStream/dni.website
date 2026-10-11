@@ -1,0 +1,16 @@
+{#- Expects `episode`. -#}
+<li class="episode-card">
+  {%- set artworkHref = "/show/" + episode.slug + "/" %}
+  {% include "partials/artwork.njk" %}
+  {%- set artworkHref = null %}
+  <div class="episode-card__body">
+    <h2 class="episode-card__title"><a href="/show/{{ episode.slug }}/">{{ episode.title }}</a></h2>
+    <p class="episode-card__meta">
+      <time datetime="{{ episode.published | isoDate }}">{{ episode.published | displayDate }}</time>
+      {%- if episode.durationLabel %}<span class="episode-card__duration">{{ episode.durationLabel }}</span>{% endif %}
+    </p>
+    {%- if episode.summary %}<p class="episode-card__summary">{{ episode.summary }}</p>{% endif %}
+    {%- set keywordNames = episode.keywords %}
+    {% include "partials/keyword-pills.njk" %}
+  </div>
+</li>

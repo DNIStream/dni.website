@@ -1,0 +1,25 @@
+{%- set fullTitle = (title + " | " + site.name) if title else site.name -%}
+{%- set canonical = env.siteUrl + page.url -%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ fullTitle }}</title>
+<meta name="description" content="{{ description or site.description }}">
+<link rel="canonical" href="{{ canonical }}">
+{% if noindex %}<meta name="robots" content="noindex">{% endif %}
+<meta property="og:type" content="{{ ogType or 'website' }}">
+<meta property="og:site_name" content="{{ site.name }}">
+<meta property="og:title" content="{{ title or site.name }}">
+<meta property="og:description" content="{{ description or site.description }}">
+<meta property="og:url" content="{{ canonical }}">
+<meta property="og:image" content="{{ ogImage or (env.siteUrl + '/assets/img/icons/android-chrome-256x256.png') }}">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="{{ site.themeColor }}">
+<link rel="alternate" type="application/rss+xml" title="{{ site.feedTitle }}" href="{{ site.feedUrl }}">
+<link rel="icon" href="/assets/img/icons/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/img/icons/favicon-32x32.png">
+<link rel="apple-touch-icon" href="/assets/img/icons/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="preload" href="/assets/fonts/montserrat-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{ '/assets/css/site.css' | asset }}">
+<script>document.documentElement.classList.add("js")</script>
+{% if env.plausibleDomain %}<script defer data-domain="{{ env.plausibleDomain }}" data-api="/stats/api/event" src="/stats/js/s.js"></script>{% endif %}

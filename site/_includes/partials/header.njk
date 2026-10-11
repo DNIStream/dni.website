@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="wrap site-header__bar">
+    <a class="brand" href="/">
+      <img src="/assets/img/logo.svg" alt="" width="52" height="34">
+      <span>{{ site.name }}</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      {% icon "menu" %}<span>Menu</span>
+    </button>
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <ul>
+        <li><a href="/"{% if page.url == "/" %} aria-current="page"{% endif %}>Home</a></li>
+        <li><a href="/show-archive/"{% if section == "archive" %} aria-current="page"{% endif %}>Podcast Archive</a></li>
+        <li>
+          <details class="listen">
+            <summary>Listen / Subscribe</summary>
+            <ul class="listen__menu">
+              {%- for platform in platforms %}
+              <li><a class="listen__platform" href="{{ platform.url }}" rel="noopener noreferrer"><img src="{{ platform.icon }}" alt="" width="24" height="24">{{ platform.name }}</a></li>
+              {%- endfor %}
+              <li><a href="{{ site.feedUrl }}">{% icon "rss" %}RSS feed</a></li>
+            </ul>
+          </details>
+        </li>
+        <li><a href="/contact/"{% if page.url == "/contact/" %} aria-current="page"{% endif %}>Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
