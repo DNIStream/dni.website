@@ -1,0 +1,9 @@
+{#- Expects `keywordNames`: the episode's keyword names. -#}
+{%- if keywordNames | length %}
+<ul class="pills" aria-label="Keywords">
+  {%- for name in keywordNames %}
+  {%- set keyword = episodes.keywordByName[name] %}
+  <li><a href="{{ keyword.href }}">{{ name }}</a></li>
+  {%- endfor %}
+</ul>
+{%- endif %}

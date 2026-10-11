@@ -1,0 +1,6 @@
+{#- Episode artwork from the podcast host, over the site's own placeholder. Expects `episode`, and optionally `artworkSizes`. -#}
+<div class="artwork">
+  {%- if episode.image %}
+  <img class="artwork__img" src="{{ episode.image }}" alt="" width="500" height="500" loading="lazy" decoding="async"{% if artworkSizes %} sizes="{{ artworkSizes }}"{% endif %}>
+  {%- endif %}
+</div>
