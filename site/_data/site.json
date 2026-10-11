@@ -1,0 +1,11 @@
+{
+  "name": "DNI Stream",
+  "podcastName": "Documentation Not Included",
+  "description": "DNI Stream: Documentation Not Included, a podcast about software development, and Development Now Included, live coding on Twitch.",
+  "feedUrl": "https://feeds.fireside.fm/dnistream/rss",
+  "feedTitle": "DNI Stream: Development Podcast",
+  "web3formsKey": "df519f5e-f071-4f08-adce-93be0833cc8c",
+  "copyright": "DNI Stream",
+  "copyrightSince": 2018,
+  "themeColor": "#2b253b"
+}
