@@ -2,10 +2,13 @@
 layout: layouts/base.njk
 permalink: /404.html
 title: Page not found
+description: "This page does not exist."
 noindex: true
 eleventyExcludeFromCollections: true
 ---
-<div class="wrap section">
+<div class="wrap section not-found">
+  <img class="not-found__moth" src="/assets/img/moth.svg" alt="" width="500" height="500">
   <h1>Page not found</h1>
-  <p><a href="/">Go to the home page</a></p>
+  <p>These aren't the <code>byte[]</code> you're looking for. The page may have moved, or the address may be mistyped.</p>
+  <p><a class="button" href="/">Go to the home page</a> <a class="button button--quiet" href="/show-archive/">Browse the episodes</a></p>
 </div>
