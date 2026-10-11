@@ -1,0 +1,12 @@
+{#- Expects `pager`: a page from lib/paging.js. -#}
+{%- if pager.total > 1 %}
+<nav class="pager" aria-label="Pages">
+  <ul>
+    {%- if pager.first %}<li><a href="{{ pager.first }}" aria-label="First page">First</a></li>{% endif %}
+    {%- if pager.previous %}<li><a href="{{ pager.previous }}" aria-label="Previous page">Previous</a></li>{% endif %}
+    <li><span aria-current="page">Page {{ pager.number }} of {{ pager.total }}</span></li>
+    {%- if pager.next %}<li><a href="{{ pager.next }}" aria-label="Next page">Next</a></li>{% endif %}
+    {%- if pager.last %}<li><a href="{{ pager.last }}" aria-label="Last page">Last</a></li>{% endif %}
+  </ul>
+</nav>
+{%- endif %}
