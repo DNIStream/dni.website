@@ -18,6 +18,24 @@ test.describe("episode page", () => {
     await expect(page.locator(".episode__notes iframe, .episode__notes script")).toHaveCount(0);
   });
 
+  test("goes back to the archive page listing the episode", async ({ page }) => {
+    // Episode 84 is the newest, so page 1; "the-mvp" is an older episode further back.
+    await page.goto("/show/84-debugging/");
+    await expect(page.getByRole("link", { name: "Back to Archive" })).toHaveAttribute("href", "/show-archive/");
+    await page.goto("/show-archive/page/3/");
+    await page.locator(".episode-card a.artwork-link").first().click();
+    await expect(page).toHaveURL(/\/show\/[a-z0-9-]+\/$/);
+    await page.getByRole("link", { name: "Back to Archive" }).click();
+    await expect(page).toHaveURL(/\/show-archive\/page\/3\/$/);
+  });
+
+  test("goes back to the keyword list it was opened from", async ({ page }) => {
+    await page.goto("/show-archive/gaming/");
+    await page.locator(".episode-card h2 a").first().click();
+    await page.getByRole("link", { name: "Back to Archive" }).click();
+    await expect(page).toHaveURL(/\/show-archive\/gaming\/$/);
+  });
+
   test("keeps addresses without a number and without a trailing slash", async ({ page }) => {
     for (const path of ["/show/the-mvp", "/show/the-mvp/"]) {
       const response = await page.goto(path);

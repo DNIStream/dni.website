@@ -6,7 +6,9 @@ layout: layouts/base.njk
     {%- set artworkSizes = "(min-width: 48rem) 22rem, 100vw" %}
     {% include "partials/artwork.njk" %}
     <div class="episode__intro">
-      <p class="episode__show"><a href="/show-archive/">{{ site.podcastName }}</a></p>
+      {#- The archive page that lists this episode; site.js swaps in the list the visitor came from. -#}
+      {%- set archivePage = (pagination.pageNumber // 12) + 1 %}
+      <p class="episode__back"><a class="back-to-archive" href="/show-archive/{% if archivePage > 1 %}page/{{ archivePage }}/{% endif %}">Back to Archive</a></p>
       <h1>{{ episode.title }}</h1>
       <p class="episode__meta">
         <time datetime="{{ episode.published | isoDate }}">{{ episode.published | displayDate }}</time>

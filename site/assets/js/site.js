@@ -40,6 +40,21 @@
     }
   }
 
+  // The link defaults to the archive page that lists the episode; when the visitor came from an
+  // archive or keyword list on this site, send them back to that exact page instead.
+  function initBackToArchive() {
+    var link = document.querySelector("a.back-to-archive");
+    if (!link || !document.referrer) return;
+    try {
+      var from = new URL(document.referrer);
+      if (from.origin === location.origin && from.pathname.indexOf("/show-archive/") === 0) {
+        link.href = from.pathname;
+      }
+    } catch (error) {
+      // An unparseable referrer leaves the default link in place.
+    }
+  }
+
   var MESSAGES = {
     captcha: 'Please complete the "I am human" check before sending.',
     sending: "Sending…",
@@ -104,5 +119,6 @@
 
   initNavToggle();
   initArtworkFallback();
+  initBackToArchive();
   initContactForm();
 })();
