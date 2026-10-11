@@ -12,6 +12,8 @@ PORT=${E2E_PORT:-8089}
 cleanup() { docker rm -f "$CONTAINER" >/dev/null 2>&1 || true; }
 trap cleanup EXIT
 
+# The same offline build as the image's: tests/e2e/every-page.spec.js lists its pages from dist/.
+FEED_OFFLINE=1 npm run -s build >/dev/null
 docker build --target site --build-arg FEED_OFFLINE=1 -t "$IMAGE" .
 cleanup
 docker run -d --name "$CONTAINER" \

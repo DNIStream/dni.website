@@ -1,6 +1,6 @@
 // Layer: E2E — constitution Principle VI: every built page is opened in a browser against the
 // served image. What each page holds is proven in tests/build; this proves each one loads cleanly.
-// The page list comes from dist/, which the E2E script's own build step leaves in place.
+// The page list comes from dist/, which scripts/test-e2e.sh builds from the same sources as the image.
 import { test, expect } from "@playwright/test";
 import { pages } from "../build/helpers.mjs";
 import { firstPartyOnly } from "./third-party.js";
