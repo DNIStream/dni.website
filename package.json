@@ -30,5 +30,12 @@
     "sanitize-html": "^2.18.0",
     "simple-icons": "^16.35.0",
     "terser": "^5.51.2"
+  },
+  "overrides": {
+    "gray-matter": {
+      "js-yaml": {
+        "argparse": "^2.0.1"
+      }
+    }
   }
 }
