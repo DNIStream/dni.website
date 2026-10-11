@@ -12,6 +12,7 @@ test.describe("podcast archive", () => {
     const first = cards(page).first();
     await expect(first.locator("h2 a")).toHaveAttribute("href", /^\/show\/[a-z0-9-]+\/$/);
     await expect(first.locator("img.artwork__img")).toHaveAttribute("loading", "lazy");
+    await expect(first.locator("a.artwork-link")).toHaveAttribute("href", await first.locator("h2 a").getAttribute("href"));
     await expect(first.locator(".episode-card__summary")).not.toBeEmpty();
     await expect(first.locator("time")).toHaveAttribute("datetime", /^\d{4}-\d{2}-\d{2}/);
     await expect(first.locator(".episode-card__duration")).not.toBeEmpty();
