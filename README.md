@@ -1,5 +1,21 @@
 # DNI Stream website
 
+[![Static site](https://github.com/DNIStream/dni.website/actions/workflows/site.yml/badge.svg?branch=master)](https://github.com/DNIStream/dni.website/actions/workflows/site.yml)
+[![Release](https://img.shields.io/github/v/tag/DNIStream/dni.website?sort=semver&label=release)](https://github.com/DNIStream/dni.website/tags)
+[![Last commit](https://img.shields.io/github/last-commit/DNIStream/dni.website/master)](https://github.com/DNIStream/dni.website/commits/master)
+[![Open issues](https://img.shields.io/github/issues/DNIStream/dni.website)](https://github.com/DNIStream/dni.website/issues)
+[![Licence: MIT](https://img.shields.io/github/license/DNIStream/dni.website)](LICENSE)
+
+[![Node.js 24](https://img.shields.io/badge/Node.js-24-5FA04E?logo=nodedotjs&logoColor=white)](https://nodejs.org/)
+[![Eleventy 3](https://img.shields.io/badge/Eleventy-3-222222?logo=eleventy&logoColor=white)](https://www.11ty.dev/)
+[![nginx on Alpine](https://img.shields.io/badge/nginx-Alpine-009639?logo=nginx&logoColor=white)](docker/nginx.conf)
+[![Tested with Playwright](https://img.shields.io/badge/tested%20with-Playwright-2EAD33?logo=playwright&logoColor=white)](tests/e2e)
+
+[![Apple Podcasts](https://img.shields.io/badge/Apple%20Podcasts-listen-9933CC?logo=applepodcasts&logoColor=white)](https://podcasts.apple.com/gb/podcast/documentation-not-included/id1468075833)
+[![Spotify](https://img.shields.io/badge/Spotify-listen-1ED760?logo=spotify&logoColor=white)](https://open.spotify.com/show/21KuGIBltgawtEqlXHSuGd)
+[![RSS feed](https://img.shields.io/badge/RSS-feed-FFA500?logo=rss&logoColor=white)](https://feeds.fireside.fm/dnistream/rss)
+[![Discord](https://img.shields.io/badge/Discord-join-5865F2?logo=discord&logoColor=white)](https://discord.gg/KsCt2hx)
+
 The website of DNI Stream and its podcast, Documentation Not Included, hosted by
 [Chris Sebok](https://github.com/Bidthedog) and [Josey Howarth](https://github.com/sudomistress).
 
