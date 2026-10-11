@@ -124,13 +124,13 @@ message reaches the mailbox (manual).
 
 ### Tests first
 
-- [ ] T042 [US3] E2E tests in `tests/e2e/contact.spec.js` with `https://api.web3forms.com/submit` and the captcha script stubbed via `page.route`, per contracts/contact-form.md: required `name` and `email`, `message` required with `maxlength="5000"`, hidden `access_key`, `subject`, `from_name`; honeypot `botcheck` hidden from people and assistive technology; submit without a captcha token → the "I am human" message and no request; success → status text, form reset; service error → its message, values kept; network failure → the network message, values kept; Send disabled while sending and a second click sends nothing; a plain link to the Discord invite and the social profiles; no `iframe` on the page; the message field shows its 5,000-character limit as visible hint text tied to the field with `aria-describedby`
+- [x] T042 [US3] E2E tests in `tests/e2e/contact.spec.js` with `https://api.web3forms.com/submit` and the captcha script stubbed via `page.route`, per contracts/contact-form.md: required `name` and `email`, `message` required with `maxlength="5000"`, hidden `access_key`, `subject`, `from_name`; honeypot `botcheck` hidden from people and assistive technology; submit without a captcha token → the "I am human" message and no request; success → status text, form reset; service error → its message, values kept; network failure → the network message, values kept; Send disabled while sending and a second click sends nothing; a plain link to the Discord invite and the social profiles; no `iframe` on the page; the message field shows its 5,000-character limit as visible hint text tied to the field with `aria-describedby`
 
 ### Implementation
 
-- [ ] T043 [US3] Create `site/contact.njk` per contracts/contact-form.md (captcha script on this page only; visible 5,000-character limit hint on the message field)
-- [ ] T044 [US3] Add the contact-form enhancement to `site/assets/js/site.js` (states and texts as contracts/contact-form.md, in-flight guard)
-- [ ] T045 [US3] Add form, field, status and honeypot styles to `site/assets/css/site.css`
+- [x] T043 [US3] Create `site/contact.njk` per contracts/contact-form.md (captcha script on this page only; visible 5,000-character limit hint on the message field)
+- [x] T044 [US3] Add the contact-form enhancement to `site/assets/js/site.js` (states and texts as contracts/contact-form.md, in-flight guard)
+- [x] T045 [US3] Add form, field, status and honeypot styles to `site/assets/css/site.css`
 
 ---
 

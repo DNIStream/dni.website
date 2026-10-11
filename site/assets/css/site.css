@@ -912,6 +912,97 @@ img {
   border-radius: var(--radius-control);
 }
 
+/* Contact */
+.contact__layout {
+  display: grid;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+@media (min-width: 60rem) {
+  .contact__layout {
+    grid-template-columns: minmax(0, 40rem) minmax(0, 1fr);
+  }
+}
+
+.contact-form {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6) var(--space-5);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.field label {
+  font-weight: 700;
+}
+
+.field input,
+.field textarea {
+  width: 100%;
+  padding: var(--space-3);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 10rem;
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible {
+  border-color: var(--accent);
+}
+
+.field__hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.field-hp {
+  position: absolute;
+  left: -5000px;
+}
+
+.contact-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.form-status {
+  margin: 0;
+  font-weight: 600;
+}
+
+.form-status.is-ok {
+  color: var(--ok);
+}
+
+.form-status.is-error {
+  color: var(--error);
+}
+
+.contact__elsewhere {
+  max-width: 28rem;
+}
+
+.contact__elsewhere h2 {
+  font-size: var(--step-2);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
