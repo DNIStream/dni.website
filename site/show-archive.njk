@@ -5,6 +5,7 @@ pagination:
   data: episodes.archivePages
   size: 1
   alias: pager
+  addAllPagesToCollections: true
 permalink: "{{ pager.href }}"
 eleventyComputed:
   title: "{% if pager.number > 1 %}Podcast Archive, page {{ pager.number }}{% else %}Podcast Archive{% endif %}"

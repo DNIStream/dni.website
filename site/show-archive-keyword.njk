@@ -5,6 +5,7 @@ pagination:
   data: episodes.keywordPages
   size: 1
   alias: pager
+  addAllPagesToCollections: true
 permalink: "{{ pager.href }}"
 eleventyComputed:
   title: "{{ pager.keyword.name }} episodes{% if pager.number > 1 %}, page {{ pager.number }}{% endif %}"
