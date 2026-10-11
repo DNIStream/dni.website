@@ -162,11 +162,11 @@ message reaches the mailbox (manual).
 
 ### Tests first
 
-- [ ] T053 [US6] Unit tests in `tests/unit/feed-refresh.test.mjs`: the refresh writes the snapshot only when the fetched copy parses and holds at least as many items as the current snapshot; otherwise it exits non-zero and leaves the snapshot unchanged; an added item appears first in `loadEpisodes`
+- [x] T053 [US6] Unit tests in `tests/unit/feed-refresh.test.mjs`: the refresh writes the snapshot only when the fetched copy parses and holds at least as many items as the current snapshot; otherwise it exits non-zero and leaves the snapshot unchanged; an added item appears first in `loadEpisodes`
 
 ### Implementation
 
-- [ ] T054 [US6] Create `scripts/feed-refresh.mjs` (`npm run feed:refresh`) to pass T053
+- [x] T054 [US6] Create `scripts/feed-refresh.mjs` (`npm run feed:refresh`) to pass T053
 
 ---
 
