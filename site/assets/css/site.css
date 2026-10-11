@@ -458,6 +458,247 @@ img {
   border-radius: var(--radius-control);
 }
 
+/* Pills */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pills a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--text);
+  font-size: var(--step--1);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.pills a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pill__count {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* Artwork: the podcast host's image over the site's placeholder */
+.artwork {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-card);
+  background: var(--surface-raised) url("/assets/img/episode-placeholder.svg") center / cover no-repeat;
+}
+
+.artwork__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.artwork__img.is-failed {
+  visibility: hidden;
+}
+
+/* Archive */
+.top-keywords {
+  margin-bottom: var(--space-6);
+}
+
+.top-keywords__title {
+  font-size: var(--step-0);
+  letter-spacing: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.episode-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 40rem) {
+  .episode-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 60rem) {
+  .episode-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 80rem) {
+  .episode-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.episode-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.episode-card .artwork {
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+.episode-card__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+.episode-card__title {
+  margin: 0;
+  font-size: var(--step-1);
+}
+
+.episode-card__title a {
+  color: var(--text);
+  text-decoration: none;
+}
+
+.episode-card__title a:hover {
+  color: var(--accent);
+}
+
+.episode-card__meta,
+.episode__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.episode-card__duration,
+.episode__duration {
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--line);
+}
+
+.episode-card__summary {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--step--1);
+}
+
+.episode-card .pills {
+  margin-top: auto;
+}
+
+/* Pager */
+.pager {
+  margin-top: var(--space-7);
+}
+
+.pager ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pager a,
+.pager span {
+  display: block;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-control);
+  font-weight: 600;
+}
+
+.pager a {
+  border: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.pager a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pager span {
+  color: var(--muted);
+}
+
+/* Episode page */
+.episode {
+  padding-top: var(--space-7);
+}
+
+.episode__head {
+  display: grid;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 48rem) {
+  .episode__head {
+    grid-template-columns: 22rem minmax(0, 1fr);
+  }
+}
+
+.episode__intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.episode__intro h1 {
+  margin: 0;
+}
+
+.episode__show {
+  margin: 0;
+  font-weight: 600;
+}
+
+.episode__player {
+  width: 100%;
+  max-width: 36rem;
+}
+
+.episode__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.episode__notes {
+  margin-top: var(--space-7);
+}
+
+.episode__notes img {
+  border-radius: var(--radius-control);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

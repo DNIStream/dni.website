@@ -76,18 +76,18 @@ and play it; repeat with JavaScript disabled.
 
 ### Tests first
 
-- [ ] T027 [P] [US1] Build-output tests in `tests/build/archive.test.mjs`: 7 archive pages at `/show-archive/` and `/show-archive/page/2/`…`/7/`; 84 episode pages at `/show/<slug>/`; a page per keyword at `/show-archive/<keyword-slug>/` (including `c-sharp` and `c-plus-plus`) with extra pages where a keyword has more than 12 episodes
-- [ ] T028 [P] [US1] E2E tests in `tests/e2e/archive.spec.js`: 12 cards per page, newest first, each with title, artwork, summary, keyword pills, date and duration; pager first/previous/next/last; 1, 2, 3 and 4 columns at 375, 768, 1024 and 1440 px; top-10 keywords with counts; a keyword pill opens that keyword's list and names it; `/show-archive` without a slash answers 200; paging and filtering work with JavaScript disabled
-- [ ] T029 [P] [US1] E2E tests in `tests/e2e/episode.spec.js`: `/show/84-debugging` and `/show/the-mvp` (with and without a trailing slash) show title, artwork, date, duration, keywords, an `<audio>` element with the enclosure source, a download link, a link to the episode on the podcast host, and show notes with no `iframe` or `script`; artwork has `loading="lazy"`, `decoding="async"`, width and height, and its frame shows the placeholder; when the artwork request is aborted the placeholder stays and no broken image is shown; the page carries `PodcastEpisode` JSON-LD
+- [x] T027 [P] [US1] Build-output tests in `tests/build/archive.test.mjs`: 7 archive pages at `/show-archive/` and `/show-archive/page/2/`…`/7/`; 84 episode pages at `/show/<slug>/`; a page per keyword at `/show-archive/<keyword-slug>/` (including `c-sharp` and `c-plus-plus`) with extra pages where a keyword has more than 12 episodes
+- [x] T028 [P] [US1] E2E tests in `tests/e2e/archive.spec.js`: 12 cards per page, newest first, each with title, artwork, summary, keyword pills, date and duration; pager first/previous/next/last; 1, 2, 3 and 4 columns at 375, 768, 1024 and 1440 px; top-10 keywords with counts; a keyword pill opens that keyword's list and names it; `/show-archive` without a slash answers 200; paging and filtering work with JavaScript disabled
+- [x] T029 [P] [US1] E2E tests in `tests/e2e/episode.spec.js`: `/show/84-debugging` and `/show/the-mvp` (with and without a trailing slash) show title, artwork, date, duration, keywords, an `<audio>` element with the enclosure source, a download link, a link to the episode on the podcast host, and show notes with no `iframe` or `script`; artwork has `loading="lazy"`, `decoding="async"`, width and height, and its frame shows the placeholder; when the artwork request is aborted the placeholder stays and no broken image is shown; the page carries `PodcastEpisode` JSON-LD
 
 ### Implementation
 
-- [ ] T030 [P] [US1] Create the placeholder artwork `site/assets/img/episode-placeholder.svg` in the brand colours
-- [ ] T031 [P] [US1] Create partials `site/_includes/partials/episode-card.njk` (artwork frame with placeholder background, lazy/async image with width and height, title linking to `/show/<slug>`, summary, keyword pills, date, duration), `site/_includes/partials/pager.njk` and `site/_includes/partials/keyword-pills.njk`
-- [ ] T032 [US1] Create `site/show-archive.njk`, paginating `archivePages` to `/show-archive/` and `/show-archive/page/<n>/`, with the top-keywords block
-- [ ] T033 [US1] Create `site/show-archive-keyword.njk`, paginating `keywordPages` to `/show-archive/<keyword-slug>/` and its `page/<n>/` pages, with the keyword named in the title and heading
-- [ ] T034 [US1] Create `site/_includes/layouts/episode.njk` and `site/show.njk`, paginating `episodes` (size 1) to `/show/<slug>/`, with the audio player, download link, podcast-host link, sanitised notes and `PodcastEpisode` JSON-LD
-- [ ] T035 [US1] Add archive grid (1–4 columns, no gaps mid-row), card, pager, pill, artwork frame and episode-page styles to `site/assets/css/site.css`
+- [x] T030 [P] [US1] Create the placeholder artwork `site/assets/img/episode-placeholder.svg` in the brand colours
+- [x] T031 [P] [US1] Create partials `site/_includes/partials/episode-card.njk` (artwork frame with placeholder background, lazy/async image with width and height, title linking to `/show/<slug>`, summary, keyword pills, date, duration), `site/_includes/partials/pager.njk` and `site/_includes/partials/keyword-pills.njk`
+- [x] T032 [US1] Create `site/show-archive.njk`, paginating `archivePages` to `/show-archive/` and `/show-archive/page/<n>/`, with the top-keywords block
+- [x] T033 [US1] Create `site/show-archive-keyword.njk`, paginating `keywordPages` to `/show-archive/<keyword-slug>/` and its `page/<n>/` pages, with the keyword named in the title and heading
+- [x] T034 [US1] Create `site/_includes/layouts/episode.njk` and `site/show.njk`, paginating `episodes` (size 1) to `/show/<slug>/`, with the audio player, download link, podcast-host link, sanitised notes and `PodcastEpisode` JSON-LD
+- [x] T035 [US1] Add archive grid (1–4 columns, no gaps mid-row), card, pager, pill, artwork frame and episode-page styles to `site/assets/css/site.css`
 
 **Checkpoint**: US1 passes T027–T029 against the image.
 
