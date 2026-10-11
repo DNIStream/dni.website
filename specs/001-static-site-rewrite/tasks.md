@@ -200,11 +200,11 @@ tested the site in the local container.
 Each task runs only after the manual test group for what replaced it is signed off, and the PR lists
 the deletions grouped by replacement.
 
-- [ ] T064 [US7] Delete the old application and its tests: `src/`, `test/`, `DNI.sln`, `nuget.config`, `run-service-hosts.ps1`, `setup-env-vars.ps1`, `version.ps1`
-- [ ] T065 [US7] Delete the deployment material: `deploy.sh`, `docker-compose.yml`, `.dockerignore`, `nginx/` (proxy configs, maintenance page, notes), `.github/workflows/cd.yml`; remove the `docker-username` and `docker-password` lines from `.gitignore`
-- [ ] T066 [US7] Delete `.github/workflows/ci.yml` and update `.github/CONTRIBUTING.md` to the new commands
-- [ ] T067 [US7] Rewrite `README.md` for the new site only, and update `.claude/worktree-prep.json` (copy `node_modules`, run `npm ci`, ports `LOCAL_WEB_PORT` only, no `dotnet restore`)
-- [ ] T068 [US7] Build-output test `tests/build/clean.test.mjs`: no tracked file under the deleted paths; no tracked file carries hosting detail: deploy or proxy server names, IP addresses, server paths, registry names or credentials, TLS certificate paths, or deployment steps (public third-party service URLs the site uses, such as the feed, the form service and listening platforms, are allowed)
+- [x] T064 [US7] Delete the old application and its tests: `src/`, `test/`, `DNI.sln`, `nuget.config`, `run-service-hosts.ps1`, `setup-env-vars.ps1`, `version.ps1`
+- [x] T065 [US7] Delete the deployment material: `deploy.sh`, `docker-compose.yml`, `.dockerignore`, `nginx/` (proxy configs, maintenance page, notes), `.github/workflows/cd.yml`; remove the `docker-username` and `docker-password` lines from `.gitignore`
+- [x] T066 [US7] Delete `.github/workflows/ci.yml` and update `.github/CONTRIBUTING.md` to the new commands
+- [x] T067 [US7] Rewrite `README.md` for the new site only, and update `.claude/worktree-prep.json` (copy `node_modules`, run `npm ci`, ports `LOCAL_WEB_PORT` only, no `dotnet restore`)
+- [x] T068 [US7] Build-output test `tests/build/clean.test.mjs`: no tracked file under the deleted paths; no tracked file carries hosting detail: deploy or proxy server names, IP addresses, server paths, registry names or credentials, TLS certificate paths, or deployment steps (public third-party service URLs the site uses, such as the feed, the form service and listening platforms, are allowed)
 
 ---
 
