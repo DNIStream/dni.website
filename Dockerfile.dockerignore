@@ -1,0 +1,8 @@
+*
+!package.json
+!package-lock.json
+!eleventy.config.js
+!lib/
+!scripts/optimize-assets.mjs
+!site/
+!docker/
