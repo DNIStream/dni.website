@@ -283,6 +283,66 @@ img {
   }
 }
 
+/* Listen / Subscribe: a disclosure, so it works without JavaScript */
+.listen {
+  position: relative;
+}
+
+.listen summary {
+  list-style: none;
+}
+
+.listen summary::-webkit-details-marker {
+  display: none;
+}
+
+.listen summary::after {
+  content: "";
+  display: inline-block;
+  width: 0.45em;
+  height: 0.45em;
+  margin-left: 0.5em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-0.2em) rotate(45deg);
+}
+
+.listen[open] summary::after {
+  transform: translateY(0.05em) rotate(-135deg);
+}
+
+.site-nav .listen__menu {
+  display: grid;
+  gap: var(--space-1);
+  min-width: 15rem;
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+@media (min-width: 48rem) {
+  .site-nav .listen__menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    box-shadow: 0 1rem 2rem rgb(0 0 0 / 0.35);
+  }
+}
+
+.site-nav .listen__menu a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.listen__menu img {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.3rem;
+}
+
 /* Footer */
 .site-footer {
   margin-top: var(--space-8);
@@ -456,6 +516,159 @@ img {
   padding: var(--space-4);
   background: var(--surface);
   border-radius: var(--radius-control);
+}
+
+/* Home */
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-8) var(--space-7);
+  border-bottom: 1px solid var(--line);
+}
+
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--space-7);
+  align-items: end;
+}
+
+@media (min-width: 60rem) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) 18rem;
+  }
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 1.8rem + 6vw, 6.5rem);
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+  margin-bottom: var(--space-5);
+}
+
+.hero__text {
+  max-width: 44rem;
+}
+
+.hero__strapline {
+  color: var(--accent);
+  font-size: var(--step-2);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.hero__text p:not(.hero__strapline) {
+  color: var(--muted);
+  max-width: var(--measure);
+}
+
+.hero__moth {
+  position: absolute;
+  right: -6rem;
+  top: -4rem;
+  width: min(38rem, 80vw);
+  opacity: var(--moth-tint);
+  transform: rotate(-12deg);
+  pointer-events: none;
+}
+
+.latest-episode h2 {
+  margin-bottom: var(--space-3);
+  color: var(--muted);
+  font-size: var(--step-0);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.latest-episode__link {
+  display: grid;
+  gap: var(--space-3);
+  color: var(--text);
+  font-weight: 700;
+  font-size: var(--step-1);
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.latest-episode__link .artwork {
+  box-shadow: 0 1.5rem 3rem rgb(0 0 0 / 0.35);
+}
+
+.latest-episode__link:hover .latest-episode__title {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.feature-cards {
+  display: grid;
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 60rem) {
+  .feature-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.feature-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-6) var(--space-5);
+  border-top: 4px solid var(--accent);
+  background: var(--surface);
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+}
+
+.feature-card h2 {
+  font-size: var(--step-2);
+}
+
+.feature-card p {
+  flex: 1;
+  color: var(--muted);
+}
+
+.creators__list {
+  display: grid;
+  gap: var(--space-6);
+  margin: var(--space-5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 60rem) {
+  .creators__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.creator {
+  display: grid;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+@media (min-width: 30rem) {
+  .creator {
+    grid-template-columns: 8rem minmax(0, 1fr);
+  }
+}
+
+.creator img {
+  width: 8rem;
+  height: 8rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+}
+
+.creator p {
+  color: var(--muted);
 }
 
 /* Pills */
