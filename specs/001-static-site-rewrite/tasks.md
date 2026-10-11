@@ -26,10 +26,10 @@ signed off.
 
 ## Phase 1: Setup
 
-- [ ] T001 Create `package.json` (`"type": "module"`, `engines.node >=24`) with scripts `clean`, `build` (`clean && eleventy && node scripts/optimize-assets.mjs`), `serve` (`eleventy --serve --port 8080`), `test:unit` (`node --test tests/unit/`), `test:build` (`node --test tests/build/`), `test:e2e` (`bash scripts/test-e2e.sh`), `feed:refresh`, `container:up`, `container:down`, `container:stats`; install `@11ty/eleventy`, `fast-xml-parser`, `sanitize-html`, `html-minifier-terser`, `clean-css`, `terser`, `@fontsource-variable/montserrat`, `@playwright/test`, `@axe-core/playwright` as devDependencies; commit `package-lock.json`
-- [ ] T002 [P] Create `eleventy.config.js`: input `site/`, includes `_includes`, data `_data`, output `dist/`; Nunjucks for `.njk` and Markdown; passthrough `site/assets/` → `dist/assets/` and the Montserrat Latin variable WOFF2 from `node_modules/@fontsource-variable/montserrat/files/` → `dist/assets/fonts/`; global data `env.siteUrl` from `SITE_URL` (default `http://localhost:8080`) and `env.plausibleDomain` from `PLAUSIBLE_DOMAIN` (default empty)
-- [ ] T003 [P] Add `test-results/` and `playwright-report/` under the existing ignore sections of `.gitignore` (`node_modules/` and `dist/` are already ignored)
-- [ ] T004 [P] Create `playwright.config.js`: `testDir: tests/e2e`, Chromium only, `baseURL` from `BASE_URL` (default `http://localhost:8089`), 2 workers, 1 retry, trace on first retry, list reporter
+- [x] T001 Create `package.json` (`"type": "module"`, `engines.node >=24`) with scripts `clean`, `build` (`clean && eleventy && node scripts/optimize-assets.mjs`), `serve` (`eleventy --serve --port 8080`), `test:unit` (`node --test tests/unit/`), `test:build` (`node --test tests/build/`), `test:e2e` (`bash scripts/test-e2e.sh`), `feed:refresh`, `container:up`, `container:down`, `container:stats`; install `@11ty/eleventy`, `fast-xml-parser`, `sanitize-html`, `html-minifier-terser`, `clean-css`, `terser`, `@fontsource-variable/montserrat`, `@playwright/test`, `@axe-core/playwright` as devDependencies; commit `package-lock.json`
+- [x] T002 [P] Create `eleventy.config.js`: input `site/`, includes `_includes`, data `_data`, output `dist/`; Nunjucks for `.njk` and Markdown; passthrough `site/assets/` → `dist/assets/` and the Montserrat Latin variable WOFF2 from `node_modules/@fontsource-variable/montserrat/files/` → `dist/assets/fonts/`; global data `env.siteUrl` from `SITE_URL` (default `http://localhost:8080`) and `env.plausibleDomain` from `PLAUSIBLE_DOMAIN` (default empty)
+- [x] T003 [P] Add `test-results/` and `playwright-report/` under the existing ignore sections of `.gitignore` (`node_modules/` and `dist/` are already ignored)
+- [x] T004 [P] Create `playwright.config.js`: `testDir: tests/e2e`, Chromium only, `baseURL` from `BASE_URL` (default `http://localhost:8089`), 2 workers, 1 retry, trace on first retry, list reporter
 
 ---
 
