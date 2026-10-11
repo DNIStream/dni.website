@@ -37,18 +37,18 @@ signed off.
 
 ### Tests first
 
-- [ ] T005 [P] Unit tests for keyword normalising and slugs in `tests/unit/keywords.test.mjs`: trim, lowercase, spaces → `-`; empties dropped; de-duplicated keeping order; slug `c#` → `c-sharp`, `c++` → `c-plus-plus`, other characters outside `[a-z0-9-]` → `-`, runs of `-` collapsed; a slug equal to `page` throws
-- [ ] T006 [P] Unit tests for paging in `tests/unit/paging.test.mjs`: `PAGE_SIZE = 12`; `total = ceil(count / 12)`, at least 1; 84 items → 7 pages of 12; 13 items → pages of 12 and 1; `href` for page 1 is the root and page n is `<root>page/<n>/`; `first`/`previous` null on page 1, `next`/`last` null on the last page
-- [ ] T007 [P] Unit tests for show-notes sanitising in `tests/unit/sanitize.test.mjs`: keeps `p ul ol li h2 h3 h4 strong em b i a img br blockquote code pre`; removes `script`, `iframe`, `style` elements, `on*` attributes and `style` attributes; allows only `http`, `https` and `mailto` links; adds `rel="noopener noreferrer"` to external links
-- [ ] T008 [P] Unit tests for the feed in `tests/unit/feed.test.mjs` against `site/_data/feed-snapshot.xml`: 84 Episodes, newest first, ties in feed order; every `slug` matches `^[a-z0-9-]+$` and is unique (duplicate or mismatch throws); `title` and `published` required; `summary` from `itunes:subtitle`, else first 200 plain-text characters of `description`; `durationSeconds` from `H:MM:SS`, `MM:SS` or seconds, null when absent, `durationLabel` `1h 04m` / `47m`; `image` from `itunes:image`, else the channel image; `audio.url` required, `audio.type` defaults to `audio/mpeg`; keywords normalised; fallback to the snapshot (and a one-line log) when the fetch rejects, exceeds the 15-second timeout, returns non-XML, or yields no items; `FEED_OFFLINE=1` never fetches
-- [ ] T009 Commit the live feed as `site/_data/feed-snapshot.xml` (fetched from `https://feeds.fireside.fm/dnistream/rss`, 84 items)
+- [x] T005 [P] Unit tests for keyword normalising and slugs in `tests/unit/keywords.test.mjs`: trim, lowercase, spaces → `-`; empties dropped; de-duplicated keeping order; slug `c#` → `c-sharp`, `c++` → `c-plus-plus`, other characters outside `[a-z0-9-]` → `-`, runs of `-` collapsed; a slug equal to `page` throws
+- [x] T006 [P] Unit tests for paging in `tests/unit/paging.test.mjs`: `PAGE_SIZE = 12`; `total = ceil(count / 12)`, at least 1; 84 items → 7 pages of 12; 13 items → pages of 12 and 1; `href` for page 1 is the root and page n is `<root>page/<n>/`; `first`/`previous` null on page 1, `next`/`last` null on the last page
+- [x] T007 [P] Unit tests for show-notes sanitising in `tests/unit/sanitize.test.mjs`: keeps `p ul ol li h2 h3 h4 strong em b i a img br blockquote code pre`; removes `script`, `iframe`, `style` elements, `on*` attributes and `style` attributes; allows only `http`, `https` and `mailto` links; adds `rel="noopener noreferrer"` to external links
+- [x] T008 [P] Unit tests for the feed in `tests/unit/feed.test.mjs` against `site/_data/feed-snapshot.xml`: 84 Episodes, newest first, ties in feed order; every `slug` matches `^[a-z0-9-]+$` and is unique (duplicate or mismatch throws); `title` and `published` required; `summary` from `itunes:subtitle`, else first 200 plain-text characters of `description`; `durationSeconds` from `H:MM:SS`, `MM:SS` or seconds, null when absent, `durationLabel` `1h 04m` / `47m`; `image` from `itunes:image`, else the channel image; `audio.url` required, `audio.type` defaults to `audio/mpeg`; keywords normalised; fallback to the snapshot (and a one-line log) when the fetch rejects, exceeds the 15-second timeout, returns non-XML, or yields no items; `FEED_OFFLINE=1` never fetches
+- [x] T009 Commit the live feed as `site/_data/feed-snapshot.xml` (fetched from `https://feeds.fireside.fm/dnistream/rss`, 84 items)
 
 ### Implementation
 
-- [ ] T010 [P] Implement `lib/keywords.js` (`normaliseKeywords`, `keywordSlug`) to pass T005
-- [ ] T011 [P] Implement `lib/paging.js` (`PAGE_SIZE`, `paginate(items, root)`) to pass T006
-- [ ] T012 [P] Implement `lib/sanitize.js` (`sanitizeNotes`) with `sanitize-html` to pass T007
-- [ ] T013 Implement `lib/feed.js` (`loadEpisodes({ offline, fetchImpl, timeoutMs })`: fetch, fallback, parse with `fast-xml-parser`, normalise per data-model.md, sort) to pass T008
+- [x] T010 [P] Implement `lib/keywords.js` (`normaliseKeywords`, `keywordSlug`) to pass T005
+- [x] T011 [P] Implement `lib/paging.js` (`PAGE_SIZE`, `paginate(items, root)`) to pass T006
+- [x] T012 [P] Implement `lib/sanitize.js` (`sanitizeNotes`) with `sanitize-html` to pass T007
+- [x] T013 Implement `lib/feed.js` (`loadEpisodes({ offline, fetchImpl, timeoutMs })`: fetch, fallback, parse with `fast-xml-parser`, normalise per data-model.md, sort) to pass T008
 - [ ] T014 Create `site/_data/episodes.js` exposing `{ source, episodes, latest, keywords, topKeywords (10 by count, ties by name), archivePages, keywordPages }` from `lib/feed.js`, `lib/keywords.js` and `lib/paging.js`; log episode and keyword counts and the source (live or snapshot)
 - [ ] T015 [P] Create `site/_data/site.json`: `name` "DNI Stream", `description`, `feedUrl` (the public feed), `web3formsKey` "df519f5e-f071-4f08-adce-93be0833cc8c", `copyright`
 - [ ] T016 [P] Create `site/_data/creators.json` from the old `src/DNI.Web/src/assets/data/creators.json` and add the two creator photos, resized to 320 px WebP, in `site/assets/img/creators/`

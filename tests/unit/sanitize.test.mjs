@@ -4,7 +4,7 @@ import { sanitizeNotes } from "../../lib/sanitize.js";
 
 test("keeps the allowed formatting", () => {
   const html =
-    "<h2>Links</h2><p><strong>Bold</strong> and <em>em</em><br>line</p>" +
+    "<h2>Links</h2><p><strong>Bold</strong> and <em>em</em><br />line</p>" +
     "<ul><li>one</li></ul><ol><li>two</li></ol><blockquote>q</blockquote><pre><code>x</code></pre>";
   assert.equal(sanitizeNotes(html), html);
 });
