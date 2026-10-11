@@ -1,0 +1,28 @@
+{
+  "headline": "DNI Stream",
+  "strapline": "A live knowledge repository for software professionals.",
+  "intro": [
+    "We aim to make development more accessible to everyone, lowering the barrier to entry with accurate information that benefits our community and the software industry.",
+    "Our shows were streamed live so we could answer our members' questions as they came in. Every podcast episode is here to listen to."
+  ],
+  "cards": [
+    {
+      "title": "Documentation Not Included",
+      "text": "The podcast: an hour-long dive into the world of the IT professional, from languages and frameworks to professional practices and processes.",
+      "action": "Browse the episodes",
+      "url": "/show-archive/"
+    },
+    {
+      "title": "Development Now Included",
+      "text": "The live stream: deep dives into technical subjects, from web development to enterprise architecture and indie game development.",
+      "action": "Watch on Twitch",
+      "url": "https://www.twitch.tv/dnistream"
+    },
+    {
+      "title": "The DNI'ers",
+      "text": "Our Discord server, with IT professionals from all over the world. Come along for geeky discussion, or vent about the system that just won't do what you want.",
+      "action": "Join the Discord",
+      "url": "https://discord.gg/KsCt2hx"
+    }
+  ]
+}
