@@ -101,15 +101,15 @@ and play it; repeat with JavaScript disabled.
 
 ### Tests first
 
-- [ ] T036 [P] [US2] E2E tests in `tests/e2e/home.spec.js`: introduction, three feature cards (podcast → archive, live stream → Twitch, community → Discord invite), creators; the latest episode's title, artwork (lazy, placeholder) and a link to its page, with no date shown; no countdown and no embedded player
-- [ ] T037 [P] [US2] E2E tests in `tests/e2e/navigation.spec.js`: header and footer on every page type; the menu button toggles navigation at 375 px with `aria-expanded`; Listen / Subscribe lists only the platforms in `platforms.json` and none named Google Podcasts or Stitcher; every social link points at its direct profile URL (no `discord.` or `youtube.` subdomain of the old site); navigation works with JavaScript disabled
+- [x] T036 [P] [US2] E2E tests in `tests/e2e/home.spec.js`: introduction, three feature cards (podcast → archive, live stream → Twitch, community → Discord invite), creators; the latest episode's title, artwork (lazy, placeholder) and a link to its page, with no date shown; no countdown and no embedded player
+- [x] T037 [P] [US2] E2E tests in `tests/e2e/navigation.spec.js`: header and footer on every page type; the menu button toggles navigation at 375 px with `aria-expanded`; Listen / Subscribe lists only the platforms in `platforms.json` and none named Google Podcasts or Stitcher; every social link points at its direct profile URL (no `discord.` or `youtube.` subdomain of the old site); navigation works with JavaScript disabled
 
 ### Implementation
 
-- [ ] T038 [P] [US2] Create `site/_includes/partials/latest-episode.njk` (title, artwork via the episode-card artwork frame, link; no date)
-- [ ] T039 [US2] Create `site/index.njk`: introduction, the three feature cards, the latest episode and the creators from `creators.json`
-- [ ] T040 [US2] Add the Listen / Subscribe disclosure menu (works without JavaScript via `<details>`) to `site/_includes/partials/header.njk`
-- [ ] T041 [US2] Add home hero, feature-card, creator and Listen / Subscribe styles to `site/assets/css/site.css`
+- [x] T038 [P] [US2] Create `site/_includes/partials/latest-episode.njk` (title, artwork via the episode-card artwork frame, link; no date)
+- [x] T039 [US2] Create `site/index.njk`: introduction, the three feature cards, the latest episode and the creators from `creators.json`
+- [x] T040 [US2] Add the Listen / Subscribe disclosure menu (works without JavaScript via `<details>`) to `site/_includes/partials/header.njk`
+- [x] T041 [US2] Add home hero, feature-card, creator and Listen / Subscribe styles to `site/assets/css/site.css`
 
 **Checkpoint**: US1 and US2 pass together.
 
