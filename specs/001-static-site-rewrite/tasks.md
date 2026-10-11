@@ -175,11 +175,11 @@ message reaches the mailbox (manual).
 **Goal**: the user can run the production image locally, with production limits, and see its size
 and resource use.
 
-- [ ] T055 [US5] Create `compose.yaml`: service `web` built from `Dockerfile` (`target: site`, args `SITE_URL`, `PLAUSIBLE_DOMAIN` defaulting to empty), `read_only: true`, `tmpfs: [/tmp]`, `mem_limit: 48m`, `cpus: 0.25`, `cap_drop: [ALL]`, `security_opt: [no-new-privileges:true]`, ports `${LOCAL_WEB_PORT:-8080}:8080`
-- [ ] T056 [US5] Create `scripts/container-stats.sh` (image size in MB, running memory and CPU from `docker stats --no-stream`, user and port, `/healthz` result) and wire `container:up` (`docker compose up -d --build --wait`), `container:down` and `container:stats` in `package.json`
-- [ ] T057 [US5] Create `scripts/check-image.sh`, run at the end of `scripts/test-e2e.sh`: fails when the image is 30 MB or more, when memory in use after the E2E run is 48 MB or more, or when the process runs as root
-- [ ] T058 [US5] Create `.github/workflows/site.yml`: on pull requests and pushes to `master`, `npm ci`, `test:unit`, `FEED_OFFLINE=1 npm run build`, `test:build`, `test:e2e`; no publishing, no deployment
-- [ ] T059 [US5] Add a "New static site" section at the top of `README.md`: prerequisites, `npm run build`, `npm run serve`, `npm run container:up` / `container:stats` / `container:down`, the test commands, `npm run feed:refresh`
+- [x] T055 [US5] Create `compose.yaml`: service `web` built from `Dockerfile` (`target: site`, args `SITE_URL`, `PLAUSIBLE_DOMAIN` defaulting to empty), `read_only: true`, `tmpfs: [/tmp]`, `mem_limit: 48m`, `cpus: 0.25`, `cap_drop: [ALL]`, `security_opt: [no-new-privileges:true]`, ports `${LOCAL_WEB_PORT:-8080}:8080`
+- [x] T056 [US5] Create `scripts/container-stats.sh` (image size in MB, running memory and CPU from `docker stats --no-stream`, user and port, `/healthz` result) and wire `container:up` (`docker compose up -d --build --wait`), `container:down` and `container:stats` in `package.json`
+- [x] T057 [US5] Create `scripts/check-image.sh`, run at the end of `scripts/test-e2e.sh`: fails when the image is 30 MB or more, when memory in use after the E2E run is 48 MB or more, or when the process runs as root
+- [x] T058 [US5] Create `.github/workflows/site.yml`: on pull requests and pushes to `master`, `npm ci`, `test:unit`, `FEED_OFFLINE=1 npm run build`, `test:build`, `test:e2e`; no publishing, no deployment
+- [x] T059 [US5] Add a "New static site" section at the top of `README.md`: prerequisites, `npm run build`, `npm run serve`, `npm run container:up` / `container:stats` / `container:down`, the test commands, `npm run feed:refresh`
 
 **Checkpoint — stop for the user's local test.** Phases 9 and 10 do not start until the user has
 tested the site in the local container.
