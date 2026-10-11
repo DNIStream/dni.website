@@ -25,4 +25,4 @@ container's port).
 - Any other address, including `/api/...` → the 404 page with status **404**.
 - `/page/1/` forms are not published; page 1 lives at the list root.
 - Every page carries `<link rel="alternate" type="application/rss+xml">` to the podcast feed and a
-  canonical `<link>` built from `site.url`.
+  canonical `<link>` built from the `SITE_URL` build setting.

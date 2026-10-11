@@ -66,5 +66,7 @@ From `site/_data/social.json`: `name`, `icon` (partial name), `url` (direct prof
 
 ## Site settings
 
-From `site/_data/site.json`: `name`, `url` (canonical origin), `description`, `feedUrl`,
-`web3formsKey` (public), `copyright`. `PLAUSIBLE_DOMAIN` comes from the build environment only.
+From `site/_data/site.json`: `name`, `description`, `feedUrl`, `web3formsKey` (public),
+`copyright`. Two values come from the build environment only, so no hosting domain is committed:
+`SITE_URL` (canonical origin for canonical links, Open Graph and the sitemap; defaults to
+`http://localhost:8080`) and `PLAUSIBLE_DOMAIN` (analytics; unset means no analytics script).
