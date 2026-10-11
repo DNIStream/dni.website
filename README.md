@@ -81,3 +81,14 @@ an episode, update the snapshot and commit it:
 ```sh
 npm run feed:refresh       # never replaces the snapshot with a feed holding fewer episodes
 ```
+
+## Releases
+
+A release is an annotated `vX.Y.Z` tag on `master`, matching `VERSION`. `compose.production.yaml`
+describes the production image; `.env.example` lists the two build settings it needs, `SITE_URL`
+and `PLAUSIBLE_DOMAIN`.
+
+```sh
+git tag -a v3.0.0 -m "Release v3.0.0"
+git push origin v3.0.0
+```
