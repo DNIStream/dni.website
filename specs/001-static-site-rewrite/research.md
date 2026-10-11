@@ -98,8 +98,7 @@ All Technical Context unknowns are resolved below. Measurements were taken on 20
   argument), every page's `<head>` gets
   `<script defer data-domain="…" data-api="/stats/api/event" src="/stats/js/s.js"></script>`.
   Without it, no script is emitted. The container serves nothing under `/stats/`.
-- **Rationale**: FR-025. The first-party proxy for those paths sits in front of the container, so
-  locally and in tests the domain is unset and no request is made.
+- **Rationale**: FR-025. Locally and in tests the domain is unset, so no analytics request is made.
 
 ## R10. Fonts and icons
 
