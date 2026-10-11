@@ -707,6 +707,14 @@ img {
 }
 
 /* Artwork: the podcast host's image over the site's placeholder */
+.artwork-link {
+  display: block;
+}
+
+.artwork-link:hover .artwork__img {
+  opacity: 0.85;
+}
+
 .artwork {
   aspect-ratio: 1;
   overflow: hidden;
@@ -863,7 +871,9 @@ img {
 }
 
 /* Episode page */
-.episode {
+/* A narrower, centred column; the show notes fill it rather than stopping at the reading measure. */
+.wrap.episode {
+  width: min(100% - 2 * var(--space-5), 52rem);
   padding-top: var(--space-7);
 }
 
@@ -873,10 +883,14 @@ img {
   align-items: start;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 40rem) {
   .episode__head {
-    grid-template-columns: 22rem minmax(0, 1fr);
+    grid-template-columns: 15rem minmax(0, 1fr);
   }
+}
+
+.episode .prose {
+  max-width: none;
 }
 
 .episode__intro {
@@ -889,14 +903,13 @@ img {
   margin: 0;
 }
 
-.episode__show {
+.episode__back {
   margin: 0;
   font-weight: 600;
 }
 
 .episode__player {
   width: 100%;
-  max-width: 36rem;
 }
 
 .episode__actions {
