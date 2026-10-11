@@ -469,6 +469,8 @@ img {
 
 .prose {
   max-width: var(--measure);
+  /* Show notes carry long bare URLs. */
+  overflow-wrap: anywhere;
 }
 
 .prose h2 {
@@ -1001,6 +1003,32 @@ img {
 
 .contact__elsewhere h2 {
   font-size: var(--step-2);
+}
+
+/* 404 */
+.not-found {
+  position: relative;
+  overflow: hidden;
+  min-height: 50vh;
+}
+
+.not-found__moth {
+  position: absolute;
+  right: -4rem;
+  top: 0;
+  width: min(24rem, 60vw);
+  opacity: var(--moth-tint);
+  transform: rotate(14deg);
+  pointer-events: none;
+}
+
+.not-found p {
+  position: relative;
+  max-width: var(--measure);
+}
+
+.not-found .button {
+  margin-right: var(--space-3);
 }
 
 @media (prefers-reduced-motion: reduce) {
