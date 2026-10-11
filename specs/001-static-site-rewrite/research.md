@@ -112,8 +112,8 @@ All Technical Context unknowns are resolved below. Measurements were taken on 20
 ## R11. Listening platforms
 
 - **Decision**: drop Google Podcasts and Stitcher, both shut down. Keep Apple Podcasts, Spotify,
-  Pocket Casts, Overcast, Castro, Castbox and TuneIn, each linking to the show. The build's link
-  check marks a platform link that no longer resolves.
+  Pocket Casts, Overcast, Castro, Castbox and TuneIn, each linking to the show. Each link is checked
+  by hand once when the data file is written, and dropped if it no longer resolves.
 - **Rationale**: spec Assumptions and FR-003.
 
 ## R12. Social links

@@ -41,7 +41,7 @@ signed off.
 - [ ] T006 [P] Unit tests for paging in `tests/unit/paging.test.mjs`: `PAGE_SIZE = 12`; `total = ceil(count / 12)`, at least 1; 84 items → 7 pages of 12; 13 items → pages of 12 and 1; `href` for page 1 is the root and page n is `<root>page/<n>/`; `first`/`previous` null on page 1, `next`/`last` null on the last page
 - [ ] T007 [P] Unit tests for show-notes sanitising in `tests/unit/sanitize.test.mjs`: keeps `p ul ol li h2 h3 h4 strong em b i a img br blockquote code pre`; removes `script`, `iframe`, `style` elements, `on*` attributes and `style` attributes; allows only `http`, `https` and `mailto` links; adds `rel="noopener noreferrer"` to external links
 - [ ] T008 [P] Unit tests for the feed in `tests/unit/feed.test.mjs` against `site/_data/feed-snapshot.xml`: 84 Episodes, newest first, ties in feed order; every `slug` matches `^[a-z0-9-]+$` and is unique (duplicate or mismatch throws); `title` and `published` required; `summary` from `itunes:subtitle`, else first 200 plain-text characters of `description`; `durationSeconds` from `H:MM:SS`, `MM:SS` or seconds, null when absent, `durationLabel` `1h 04m` / `47m`; `image` from `itunes:image`, else the channel image; `audio.url` required, `audio.type` defaults to `audio/mpeg`; keywords normalised; fallback to the snapshot (and a one-line log) when the fetch rejects, exceeds the 15-second timeout, returns non-XML, or yields no items; `FEED_OFFLINE=1` never fetches
-- [ ] T009 Commit the live feed as `site/_data/feed-snapshot.xml` (fetched from the URL in the spec's FR-012 source, 84 items)
+- [ ] T009 Commit the live feed as `site/_data/feed-snapshot.xml` (fetched from `https://feeds.fireside.fm/dnistream/rss`, 84 items)
 
 ### Implementation
 
@@ -52,15 +52,15 @@ signed off.
 - [ ] T014 Create `site/_data/episodes.js` exposing `{ source, episodes, latest, keywords, topKeywords (10 by count, ties by name), archivePages, keywordPages }` from `lib/feed.js`, `lib/keywords.js` and `lib/paging.js`; log episode and keyword counts and the source (live or snapshot)
 - [ ] T015 [P] Create `site/_data/site.json`: `name` "DNI Stream", `description`, `feedUrl` (the public feed), `web3formsKey` "df519f5e-f071-4f08-adce-93be0833cc8c", `copyright`
 - [ ] T016 [P] Create `site/_data/creators.json` from the old `src/DNI.Web/src/assets/data/creators.json` and add the two creator photos, resized to 320 px WebP, in `site/assets/img/creators/`
-- [ ] T017 [P] Create `site/_data/platforms.json` (Apple Podcasts, Spotify, Pocket Casts, Overcast, Castro, Castbox, TuneIn; Google Podcasts and Stitcher dropped) with their icons in `site/assets/img/platforms/`, links taken from the old `src/DNI.Web/src/assets/data/discovery-platforms.json`
+- [ ] T017 [P] Create `site/_data/platforms.json` (Apple Podcasts, Spotify, Pocket Casts, Overcast, Castro, Castbox, TuneIn; Google Podcasts and Stitcher dropped) with their icons in `site/assets/img/platforms/`, links taken from the old `src/DNI.Web/src/assets/data/discovery-platforms.json` and each checked once by hand to still resolve
 - [ ] T018 [P] Create `site/_data/social.json` with direct profile URLs (GitHub, X, Twitch, the YouTube channel, the Discord invite, LinkedIn) and inline SVG icon partials in `site/_includes/partials/icons/`
 - [ ] T019 Create the design system in `site/assets/css/site.css`: tokens in `:root` (dark purple base, DNI orange accent, text, surfaces, type scale, spacing, radii) with a `@media (prefers-color-scheme: light)` override, both meeting WCAG AA contrast; Montserrat `@font-face` with `font-display: swap`; base elements, skip link, focus styles, header, nav, footer, container, card, button, pill, prose, `prefers-reduced-motion`
-- [ ] T020 Create `site/_includes/layouts/base.njk`, `site/_includes/layouts/page.njk` and partials `head.njk` (title, description, canonical and Open Graph from `env.siteUrl`, RSS alternate link, theme colour, favicon, Plausible script only when `env.plausibleDomain` is set), `header.njk` (logo, Home, Podcast Archive, Listen / Subscribe, Contact, menu button), `footer.njk` (site links, policy links, social links, copyright) in `site/_includes/partials/`
+- [ ] T020 Create `site/_includes/layouts/base.njk`, `site/_includes/layouts/page.njk` and partials `head.njk` (title, description, canonical and Open Graph from `env.siteUrl`, RSS alternate link, theme colour, favicon, Plausible script only when `env.plausibleDomain` is set; CSS and JS URLs carry `?v=<content hash>` from a filter in `eleventy.config.js`), `header.njk` (logo, Home, Podcast Archive, Listen / Subscribe, Contact, menu button), `footer.njk` (site links, policy links, social links, copyright) in `site/_includes/partials/`
 - [ ] T021 Create `site/assets/js/site.js` (deferred, dependency-free): mobile nav toggle with `aria-expanded`, and the artwork fallback that hides failed images (`complete && naturalWidth === 0` at start-up plus a capture-phase `error` listener)
 - [ ] T022 Create `scripts/optimize-assets.mjs` (minify `dist/**/*.css` with `clean-css` and `dist/**/*.js` with `terser`, failures non-fatal) and add an HTML-minify transform in `eleventy.config.js`
 - [ ] T023 [P] Build-output tests in `tests/build/budget.test.mjs`: every page's first-party CSS plus JS under 30 KB minified; no page references a host outside the allow-list in contracts/container.md; no `iframe` anywhere; no `/api/` links
-- [ ] T024 [P] E2E container contract tests in `tests/e2e/container.spec.js` per contracts/container.md: `/healthz` → 200 `ok` with `no-store`; security headers including `Content-Security-Policy` on an HTML page, a CSS file and the 404; HTML `no-cache`; long cache on assets; gzip on a text asset; `/api/shows` and `/nope` → 404 with the branded page; `/contact` answered without a redirect
-- [ ] T025 Create `Dockerfile` (stage `build`: `node:24-alpine`, `npm ci`, copy sources, `ARG SITE_URL PLAUSIBLE_DOMAIN`, `FEED_OFFLINE=1 npm run build`; stage `site`: `alpine:3.22`, `apk add --no-cache nginx`, copy `docker/` config and `dist/`, `USER nginx`, `EXPOSE 8080`, `HEALTHCHECK` on `/healthz`), `Dockerfile.dockerignore`, `docker/nginx.conf` (one worker, pid and temp paths in `/tmp`, listen 8080, `absolute_redirect off`, `try_files $uri $uri/ $uri.html =404`, gzip, caching, `error_page 404 /404.html`, `/healthz`) and `docker/security-headers.conf` (included in every location) to pass T024
+- [ ] T024 [P] E2E container contract tests in `tests/e2e/container.spec.js` per contracts/container.md: `/healthz` → 200 `ok` with `no-store`; security headers including `Content-Security-Policy` on an HTML page, a CSS file and the 404; HTML `no-cache`; long cache on assets; gzip on a text asset; `/api/shows` and `/nope` → 404 with the site's 404 page
+- [ ] T025 Create `Dockerfile` (stage `build`: `node:24-alpine`, `npm ci`, copy sources, `ARG SITE_URL PLAUSIBLE_DOMAIN`, `FEED_OFFLINE=1 npm run build`; stage `site`: `alpine:3.22`, `apk add --no-cache nginx`, copy `docker/` config and `dist/`, `USER nginx`, `EXPOSE 8080`, `HEALTHCHECK` on `/healthz`), `Dockerfile.dockerignore`, `docker/nginx.conf` (one worker, pid and temp paths in `/tmp`, listen 8080, `absolute_redirect off`, `try_files $uri $uri/ $uri.html =404`, gzip, caching, `error_page 404 /404.html`, `/healthz`) and `docker/security-headers.conf` (included in every location), plus a minimal `site/404.njk` (permalink `/404.html`) and a placeholder `site/index.njk`, to pass T024
 - [ ] T026 Create `scripts/test-e2e.sh`: `FEED_OFFLINE` build of the image, run it as production does (`--read-only --tmpfs /tmp --memory 48m --cpus 0.25 --cap-drop ALL --security-opt no-new-privileges:true -p 8089:8080`), wait for `/healthz`, run Playwright with `BASE_URL=http://localhost:8089`, always remove the container
 
 **Checkpoint**: an empty site builds, the image serves it, and the foundation tests pass.
@@ -124,11 +124,11 @@ message reaches the mailbox (manual).
 
 ### Tests first
 
-- [ ] T042 [US3] E2E tests in `tests/e2e/contact.spec.js` with `https://api.web3forms.com/submit` and the captcha script stubbed via `page.route`, per contracts/contact-form.md: required `name` and `email`, `message` required with `maxlength="5000"`, hidden `access_key`, `subject`, `from_name`; honeypot `botcheck` hidden from people and assistive technology; submit without a captcha token → the "I am human" message and no request; success → status text, form reset; service error → its message, values kept; network failure → the network message, values kept; Send disabled while sending and a second click sends nothing; a plain link to the Discord invite and the social profiles; no `iframe` on the page
+- [ ] T042 [US3] E2E tests in `tests/e2e/contact.spec.js` with `https://api.web3forms.com/submit` and the captcha script stubbed via `page.route`, per contracts/contact-form.md: required `name` and `email`, `message` required with `maxlength="5000"`, hidden `access_key`, `subject`, `from_name`; honeypot `botcheck` hidden from people and assistive technology; submit without a captcha token → the "I am human" message and no request; success → status text, form reset; service error → its message, values kept; network failure → the network message, values kept; Send disabled while sending and a second click sends nothing; a plain link to the Discord invite and the social profiles; no `iframe` on the page; the message field shows its 5,000-character limit as visible hint text tied to the field with `aria-describedby`
 
 ### Implementation
 
-- [ ] T043 [US3] Create `site/contact.njk` per contracts/contact-form.md (captcha script on this page only)
+- [ ] T043 [US3] Create `site/contact.njk` per contracts/contact-form.md (captcha script on this page only; visible 5,000-character limit hint on the message field)
 - [ ] T044 [US3] Add the contact-form enhancement to `site/assets/js/site.js` (states and texts as contracts/contact-form.md, in-flight guard)
 - [ ] T045 [US3] Add form, field, status and honeypot styles to `site/assets/css/site.css`
 
@@ -143,14 +143,14 @@ message reaches the mailbox (manual).
 ### Tests first
 
 - [ ] T046 [P] [US4] E2E tests in `tests/e2e/pages.spec.js`: `/faq`, `/privacy`, `/ethics`, `/community-guidelines` each answer 200 with the title in contracts/urls.md and a first heading; the privacy page names Web3Forms, hCaptcha, the podcast host and Plausible, and does not name Google Analytics, reCAPTCHA or the old mail server; the 404 page has a link home and status 404
-- [ ] T047 [P] [US4] E2E accessibility tests in `tests/e2e/accessibility.spec.js`: an axe-core scan (WCAG 2.2 A and AA tags) with no violations on home, archive, a keyword list, an episode, contact, privacy and 404, in both dark and light colour schemes; no horizontal scrolling at 320 px
-- [ ] T048 [P] [US4] Build-output tests in `tests/build/seo.test.mjs`: every page has a unique title and description, a canonical link and Open Graph tags; `sitemap.xml` lists every page in contracts/urls.md; `robots.txt` names the sitemap
+- [ ] T047 [P] [US4] E2E accessibility tests in `tests/e2e/accessibility.spec.js`: an axe-core scan (WCAG 2.2 A and AA tags) with no violations on home, archive, a keyword list, an episode, contact, privacy and 404, in both dark and light colour schemes; no horizontal scrolling at 320 px; no cookie and no `localStorage` or `sessionStorage` entry is set on any of those pages (FR-024); the captcha script and form service are stubbed so the scan makes no third-party request
+- [ ] T048 [P] [US4] Build-output tests in `tests/build/seo.test.mjs`: every page has a unique title and description, a canonical link and Open Graph tags; `sitemap.xml` lists every page in contracts/urls.md; `robots.txt` names the sitemap; every page links the podcast feed as `rel="alternate" type="application/rss+xml"`; a build without `PLAUSIBLE_DOMAIN` emits no analytics script, and a build into a temporary directory with `PLAUSIBLE_DOMAIN=example.com` emits it with `data-api="/stats/api/event"` on every page
 
 ### Implementation
 
 - [ ] T049 [P] [US4] Create `site/faq.md`, `site/ethics.md` and `site/community-guidelines.md` with permalinks `/faq/`, `/ethics/`, `/community-guidelines/`, carrying over the text from the old `src/DNI.Web/src/app/components/pages/` FAQ, ethics and community-guidelines components
 - [ ] T050 [P] [US4] Create `site/privacy.md` (`/privacy/`), carrying over the old policy and rewriting its third-party section per FR-024: Web3Forms, hCaptcha via Web3Forms, the podcast host for audio and artwork, cookieless Plausible; no cookies or non-essential storage; Google Analytics, reCAPTCHA and the site's own mail server removed
-- [ ] T051 [P] [US4] Create `site/404.njk` (permalink `/404.html`, link home, excluded from the sitemap)
+- [ ] T051 [P] [US4] Complete `site/404.njk`: branded content, a link home, `noindex`, excluded from the sitemap
 - [ ] T052 [P] [US4] Create `site/sitemap.xml.njk`, `site/robots.txt.njk` and `site/site.webmanifest.njk`, and copy the favicons from the old `src/DNI.Web/src/assets/icons/` into `site/assets/img/icons/`
 
 ---
@@ -209,7 +209,7 @@ the deletions grouped by replacement.
 
 ## Phase 11: Polish
 
-- [ ] T069 Run the quickstart.md scenarios end to end against the local container and record the image size and memory figures in the PR description
+- [ ] T069 Run the quickstart.md scenarios end to end against the local container; run a Lighthouse audit (`npx lighthouse` against the container, mobile profile, using Playwright's Chromium) on home, archive, an episode and contact; record the scores against SC-002 and SC-003 and the image size and memory figures against SC-006 in the PR description
 
 ---
 

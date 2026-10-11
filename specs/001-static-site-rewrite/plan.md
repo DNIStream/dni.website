@@ -59,7 +59,7 @@ page, minified (constitution II); WCAG 2.2 AA; works without JavaScript; read-on
 | VI. Verified by Test | Test-first per task; unit, build-output and E2E layers (R13); E2E runs against the production image |
 | Migration and Cleanup | New site built alongside the old one (`site/` beside `src/`). Old files deleted only after sign-off, listed in the PR |
 
-No violations; Complexity Tracking is empty.
+One justified deviation, recorded under Complexity Tracking.
 
 ## Project Structure
 
@@ -146,4 +146,6 @@ sign-off: `src/`, `test/`, `DNI.sln`, `nuget.config`, `run-service-hosts.ps1`,
 
 ## Complexity Tracking
 
-None.
+| Violation | Why Needed | Simpler Alternative Rejected Because |
+|-----------|------------|-------------------------------------|
+| Principle IV: the 404 page and `/healthz` are not in the sitemap | A sitemap lists pages meant to be indexed; the 404 page is `noindex` and `/healthz` is not a page | Listing them would ask search engines to index an error page and a health check |
