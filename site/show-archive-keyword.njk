@@ -1,0 +1,26 @@
+---
+layout: layouts/base.njk
+section: archive
+pagination:
+  data: episodes.keywordPages
+  size: 1
+  alias: pager
+permalink: "{{ pager.href }}"
+eleventyComputed:
+  title: "{{ pager.keyword.name }} episodes{% if pager.number > 1 %}, page {{ pager.number }}{% endif %}"
+  description: "Documentation Not Included episodes about {{ pager.keyword.name }}."
+---
+<div class="wrap">
+  <header class="page-head">
+    <h1>{{ title }}</h1>
+    <p>{{ pager.keyword.count }} {{ "episode" if pager.keyword.count == 1 else "episodes" }} about {{ pager.keyword.name }}. <a href="/show-archive/">Back to every episode</a></p>
+  </header>
+
+  <ul class="episode-grid">
+    {%- for episode in pager.items %}
+    {% include "partials/episode-card.njk" %}
+    {%- endfor %}
+  </ul>
+
+  {% include "partials/pager.njk" %}
+</div>
