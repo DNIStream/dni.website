@@ -1,0 +1,47 @@
+---
+layout: layouts/base.njk
+---
+<article class="wrap episode">
+  <div class="episode__head">
+    {%- set artworkSizes = "(min-width: 48rem) 22rem, 100vw" %}
+    {% include "partials/artwork.njk" %}
+    <div class="episode__intro">
+      <p class="episode__show"><a href="/show-archive/">{{ site.podcastName }}</a></p>
+      <h1>{{ episode.title }}</h1>
+      <p class="episode__meta">
+        <time datetime="{{ episode.published | isoDate }}">{{ episode.published | displayDate }}</time>
+        {%- if episode.durationLabel %}<span class="episode__duration">{{ episode.durationLabel }}</span>{% endif %}
+      </p>
+      {%- set keywordNames = episode.keywords %}
+      {% include "partials/keyword-pills.njk" %}
+      <audio class="episode__player" controls preload="none">
+        <source src="{{ episode.audio.url }}" type="{{ episode.audio.type }}">
+        <a href="{{ episode.audio.url }}">Download the episode</a>
+      </audio>
+      <p class="episode__actions">
+        <a class="button" href="{{ episode.audio.url }}" download>{% icon "download" %}Download</a>
+        <a class="button button--quiet" href="{{ episode.hostUrl }}" rel="noopener noreferrer">{% icon "external" %}Listen on Fireside</a>
+      </p>
+    </div>
+  </div>
+
+  {%- if episode.notesHtml %}
+  <section class="episode__notes prose" aria-labelledby="show-notes">
+    <h2 id="show-notes">Show notes</h2>
+    {{ episode.notesHtml | safe }}
+  </section>
+  {%- endif %}
+</article>
+{%- set ld = {
+  "@context": "https://schema.org",
+  "@type": "PodcastEpisode",
+  "name": episode.title,
+  "url": env.siteUrl + page.url,
+  "datePublished": episode.published | isoDate,
+  "description": episode.summary,
+  "image": episode.image,
+  "timeRequired": episode.durationSeconds | isoDuration,
+  "associatedMedia": { "@type": "MediaObject", "contentUrl": episode.audio.url },
+  "partOfSeries": { "@type": "PodcastSeries", "name": site.podcastName, "url": env.siteUrl + "/show-archive/" }
+} %}
+<script type="application/ld+json">{{ ld | json | safe }}</script>
