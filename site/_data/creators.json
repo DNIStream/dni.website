@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Josey Howarth",
+    "photo": "/assets/img/creators/josey.webp",
+    "bio": "Whether wielding a keyboard or a whip, Josey knows how to get results, and has the right persona on tap to ensure success: Darth Securitas finds your lack of security disturbing; her Rogue Verbal Alchemist mixes unique social story combinations; and Love Sudo keeps those personas contained. She is proud of her ever growing rubber duck army.",
+    "links": [
+      { "label": "Josey on LinkedIn", "icon": "linkedin", "url": "https://www.linkedin.com/in/joseyhowarth/" },
+      { "label": "Love Sudo, Josey's company website", "icon": "globe", "url": "https://www.lovesudo.com/" },
+      { "label": "Josey on X", "icon": "x", "url": "https://x.com/joseyhowarth" }
+    ]
+  },
+  {
+    "name": "Chris Sebok",
+    "photo": "/assets/img/creators/chris.webp",
+    "bio": "Every development team needs a giant-dwarf, and Chris provides this service to us free of charge. He's been involved in web site and app development since the inception of the internet, and today manages his own software consultancy - covering everything from DevOps to Technical Architecture. He's also got a better beard than you.",
+    "links": [
+      { "label": "Chris on LinkedIn", "icon": "linkedin", "url": "https://www.linkedin.com/in/shadow-moses-developments/" },
+      { "label": "Shadow Moses Developments, Chris's company website", "icon": "globe", "url": "https://www.shadowmoses.co.uk/" },
+      { "label": "Chris on X", "icon": "x", "url": "https://x.com/nineteenninjas" }
+    ]
+  }
+]
