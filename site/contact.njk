@@ -1,0 +1,56 @@
+---
+layout: layouts/base.njk
+permalink: /contact/
+title: Contact
+description: "Send the DNI Stream team a message, or find us on Discord and social media."
+scripts:
+  - https://web3forms.com/client/script.js
+---
+<div class="wrap contact">
+  <header class="page-head">
+    <h1>Contact</h1>
+    <p>Questions, ideas for a show, or feedback: send us a message and we'll reply by email.</p>
+  </header>
+
+  <div class="contact__layout">
+    <form class="contact-form" action="https://api.web3forms.com/submit" method="post">
+      <input type="hidden" name="access_key" value="{{ site.web3formsKey }}">
+      <input type="hidden" name="subject" value="New DNI Stream contact message">
+      <input type="hidden" name="from_name" value="DNI Stream Website">
+
+      <div class="field">
+        <label for="contact-name">Name</label>
+        <input id="contact-name" name="name" type="text" required maxlength="400" autocomplete="name">
+      </div>
+      <div class="field">
+        <label for="contact-email">Email</label>
+        <input id="contact-email" name="email" type="email" required maxlength="400" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="contact-message">Message</label>
+        <textarea id="contact-message" name="message" required maxlength="5000" rows="7" aria-describedby="contact-message-hint"></textarea>
+        <p class="field__hint" id="contact-message-hint">Up to 5,000 characters.</p>
+      </div>
+
+      <input class="field-hp" type="checkbox" name="botcheck" tabindex="-1" aria-hidden="true" autocomplete="off">
+      <div class="h-captcha" data-captcha="true"></div>
+
+      <div class="contact-form__actions">
+        <button class="button" type="submit">Send</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+
+    <aside class="contact__elsewhere" aria-labelledby="elsewhere">
+      <h2 id="elsewhere">Elsewhere</h2>
+      <p>Chat with us and the rest of the DNI'ers on our Discord server.</p>
+      <p><a class="button button--quiet" href="https://discord.gg/KsCt2hx" rel="noopener noreferrer">{% icon "discord" %}Join the Discord</a></p>
+      <p>Or find us on social media:</p>
+      <ul class="social">
+        {%- for profile in social %}
+        <li><a href="{{ profile.url }}" rel="noopener noreferrer">{% icon profile.icon, profile.name %}</a></li>
+        {%- endfor %}
+      </ul>
+    </aside>
+  </div>
+</div>
