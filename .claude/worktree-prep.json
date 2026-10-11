@@ -1,18 +1,16 @@
 {
-  "copy": [
-    ".env"
-  ],
+  "copy": [],
   "modify": {
     "files": [],
     "paths": true,
     "ports": [
-      "LOCAL_WEB_PORT", "LOCAL_API_PORT"
+      "SITE_PORT"
     ],
     "suffix": {},
     "context": []
   },
   "run": [
-    "dotnet restore"
+    "npm ci"
   ],
   "teardown": []
 }
