@@ -61,7 +61,8 @@ export default function (eleventyConfig) {
       conservativeCollapse: true,
       removeComments: true,
       minifyCSS: true,
-      minifyJS: true,
+      // Inline scripts stay byte-for-byte: the CSP allows the one inline script by its hash.
+      minifyJS: false,
     });
   });
 
