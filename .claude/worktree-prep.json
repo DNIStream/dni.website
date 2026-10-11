@@ -1,0 +1,16 @@
+{
+  "copy": [],
+  "modify": {
+    "files": [],
+    "paths": true,
+    "ports": [
+      "SITE_PORT"
+    ],
+    "suffix": {},
+    "context": []
+  },
+  "run": [
+    "npm ci"
+  ],
+  "teardown": []
+}

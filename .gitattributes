@@ -1,0 +1,10 @@
+* text=auto
+
+# Shell scripts run inside Linux containers and CI.
+*.sh text eol=lf
+
+*.png binary
+*.ico binary
+*.webp binary
+*.jpg binary
+*.woff2 binary

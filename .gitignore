@@ -1,0 +1,30 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Test output
+playwright-report/
+test-results/
+
+# Environment files; only the example is tracked
+.env
+.env.*
+!.env.example
+
+# Editors and operating systems
+.vs/
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.log
+
+# Claude Code - keep .claude/skills and shared settings tracked
+.claude/worktrees/
+.claude/settings.local.json
+.claude/**/*.local.*
+CLAUDE.local.md
+.remember/
+.claude/.speckit-autopilot/
+
+# Spec Kit - machine-local state is ignored by .specify/.gitignore
