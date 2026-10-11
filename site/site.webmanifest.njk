@@ -1,0 +1,16 @@
+---
+permalink: /site.webmanifest
+eleventyExcludeFromCollections: true
+---
+{
+  "name": {{ site.name | json | safe }},
+  "short_name": "DNI",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#1c1726",
+  "theme_color": {{ site.themeColor | json | safe }},
+  "icons": [
+    { "src": "/assets/img/icons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/img/icons/android-chrome-256x256.png", "sizes": "256x256", "type": "image/png" }
+  ]
+}
