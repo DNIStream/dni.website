@@ -1,6 +1,8 @@
 {#- Expects `episode`. -#}
 <li class="episode-card">
+  {%- set artworkHref = "/show/" + episode.slug + "/" %}
   {% include "partials/artwork.njk" %}
+  {%- set artworkHref = null %}
   <div class="episode-card__body">
     <h2 class="episode-card__title"><a href="/show/{{ episode.slug }}/">{{ episode.title }}</a></h2>
     <p class="episode-card__meta">
