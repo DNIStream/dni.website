@@ -1,0 +1,22 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: site
+      args:
+        SITE_URL: ${SITE_URL:-http://localhost:8080}
+        PLAUSIBLE_DOMAIN: ${PLAUSIBLE_DOMAIN:-}
+    image: dni-website:local
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 48m
+    memswap_limit: 48m
+    cpus: 0.25
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "127.0.0.1:${SITE_PORT:-8080}:8080"
