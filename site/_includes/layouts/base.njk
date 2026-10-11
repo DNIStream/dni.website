@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+{% include "partials/head.njk" %}
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+{% include "partials/header.njk" %}
+<main id="main">
+{{ content | safe }}
+</main>
+{% include "partials/footer.njk" %}
+<script src="{{ '/assets/js/site.js' | asset }}" defer></script>
+{% for src in scripts %}<script src="{{ src }}" async defer></script>{% endfor %}
+</body>
+</html>
