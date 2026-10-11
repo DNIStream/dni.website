@@ -1,0 +1,25 @@
+x-webapp:
+  app: dnistream
+  images:
+    web:
+      build:
+        context: .
+        dockerfile: Dockerfile
+        target: site
+        args: [SITE_URL, PLAUSIBLE_DOMAIN]
+  publish: [web]
+  services:
+    web:
+      mem_mb: 48
+      read_only: true
+      tmpfs: [/tmp]
+      probe: { http: /healthz, expect: ok, timeout: 60 }
+      backup: { driver: none }
+  analytics: true
+  env:
+    required: [SITE_URL, PLAUSIBLE_DOMAIN]
+
+services:
+  web:
+    image: ${WEBAPP_IMAGE_WEB}
+    ports: ["127.0.0.1:${WEBAPP_PORT_WEB}:8080"]

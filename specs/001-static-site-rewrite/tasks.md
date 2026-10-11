@@ -188,10 +188,10 @@ tested the site in the local container.
 
 ## Phase 9: User Story 5 — Production onboarding (P1, after the local test)
 
-- [ ] T060 [US5] Build-output test `tests/build/compose.test.mjs`: `compose.production.yaml` matches contracts/production-compose.md (one service, image `${WEBAPP_IMAGE_WEB}`, loopback port `${WEBAPP_PORT_WEB}:8080`, no `build`, `container_name` or `env_file`; `x-webapp` keys as specified); `.env.example` holds exactly `SITE_URL` and `PLAUSIBLE_DOMAIN`; no other `.env*` file is tracked
-- [ ] T061 [US5] Create `compose.production.yaml` per contracts/production-compose.md, with no comments about hosting
-- [ ] T062 [US5] Create `.env.example` (`SITE_URL=https://example.com`, `PLAUSIBLE_DOMAIN=example.com`) and replace the `*.env` rule in `.gitignore` with `.env`, `.env.*`, `!.env.example`
-- [ ] T063 [US5] Set `VERSION` to `3.0.0` as the single version source, and document the release as a `v3.0.0` git tag in `README.md`
+- [x] T060 [US5] Build-output test `tests/build/compose.test.mjs`: `compose.production.yaml` matches contracts/production-compose.md (one service, image `${WEBAPP_IMAGE_WEB}`, loopback port `${WEBAPP_PORT_WEB}:8080`, no `build`, `container_name` or `env_file`; `x-webapp` keys as specified); `.env.example` holds exactly `SITE_URL` and `PLAUSIBLE_DOMAIN`; no other `.env*` file is tracked
+- [x] T061 [US5] Create `compose.production.yaml` per contracts/production-compose.md, with no comments about hosting
+- [x] T062 [US5] Create `.env.example` (`SITE_URL=https://example.com`, `PLAUSIBLE_DOMAIN=example.com`) and replace the `*.env` rule in `.gitignore` with `.env`, `.env.*`, `!.env.example`
+- [x] T063 [US5] Set `VERSION` to `3.0.0` as the single version source, and document the release as a `v3.0.0` git tag in `README.md`
 
 ---
 

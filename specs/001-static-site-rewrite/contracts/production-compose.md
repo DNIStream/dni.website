@@ -6,9 +6,9 @@ Built **after** the user's local container test (research R15).
 
 ```yaml
 x-webapp:
-  app: dni
+  app: dnistream
   images:
-    web: { build: { context: ., dockerfile: Dockerfile, args: [SITE_URL, PLAUSIBLE_DOMAIN] } }
+    web: { build: { context: ., dockerfile: Dockerfile, target: site, args: [SITE_URL, PLAUSIBLE_DOMAIN] } }
   publish: [web]
   services:
     web:
