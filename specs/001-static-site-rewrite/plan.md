@@ -51,7 +51,7 @@ page, minified (constitution II); WCAG 2.2 AA; works without JavaScript; read-on
 
 | Principle | How the plan meets it |
 |---|---|
-| I. Static by Default | No server code. Feed data fetched at build (R3). The only runtime third-party call is the form post (R8). Every page renders without JavaScript |
+| I. Static by Default | No server code. Feed data fetched at build (R3). The only runtime third-party call is the form post with its managed captcha, on the contact page only (R8). Plausible is loaded and reports through the site's own `/stats/` paths, so the browser makes no third-party call for it (R9). Every page renders without JavaScript |
 | II. Lightweight and Fast | No framework, CSS framework, jQuery or icon font. Per-page CSS+JS budget enforced by `test:build`. Self-hosted WOFF2. Third-party artwork lazy, async, space reserved (R7) |
 | III. Template-Driven Content | One base layout and one set of partials. Lists generated from feed and data files. A new episode needs `feed:refresh` and a rebuild only. Old addresses kept (contracts/urls.md) |
 | IV. Responsive, Accessible, Modern | Mobile-first grid from 320 px; tokens in one `:root` block with a `prefers-color-scheme: light` override; axe scan per template; title, description, OG and sitemap per page |

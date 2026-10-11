@@ -58,10 +58,10 @@ signed off.
 - [ ] T020 Create `site/_includes/layouts/base.njk`, `site/_includes/layouts/page.njk` and partials `head.njk` (title, description, canonical and Open Graph from `env.siteUrl`, RSS alternate link, theme colour, favicon, Plausible script only when `env.plausibleDomain` is set; CSS and JS URLs carry `?v=<content hash>` from a filter in `eleventy.config.js`), `header.njk` (logo, Home, Podcast Archive, Listen / Subscribe, Contact, menu button), `footer.njk` (site links, policy links, social links, copyright) in `site/_includes/partials/`
 - [ ] T021 Create `site/assets/js/site.js` (deferred, dependency-free): mobile nav toggle with `aria-expanded`, and the artwork fallback that hides failed images (`complete && naturalWidth === 0` at start-up plus a capture-phase `error` listener)
 - [ ] T022 Create `scripts/optimize-assets.mjs` (minify `dist/**/*.css` with `clean-css` and `dist/**/*.js` with `terser`, failures non-fatal) and add an HTML-minify transform in `eleventy.config.js`
-- [ ] T023 [P] Build-output tests in `tests/build/budget.test.mjs`: every page's first-party CSS plus JS under 30 KB minified; no page references a host outside the allow-list in contracts/container.md; no `iframe` anywhere; no `/api/` links
+- [ ] T023 [P] Build-output tests in `tests/build/budget.test.mjs`: every page's first-party CSS plus JS under 30 KB minified; no page's static HTML references a host outside those named in the Content-Security-Policy in contracts/container.md; no `iframe` element in any page's static HTML (the managed captcha injects its own frame at runtime, which the policy allows); no `/api/` links
 - [ ] T024 [P] E2E container contract tests in `tests/e2e/container.spec.js` per contracts/container.md: `/healthz` → 200 `ok` with `no-store`; security headers including `Content-Security-Policy` on an HTML page, a CSS file and the 404; HTML `no-cache`; long cache on assets; gzip on a text asset; `/api/shows` and `/nope` → 404 with the site's 404 page
 - [ ] T025 Create `Dockerfile` (stage `build`: `node:24-alpine`, `npm ci`, copy sources, `ARG SITE_URL PLAUSIBLE_DOMAIN`, `FEED_OFFLINE=1 npm run build`; stage `site`: `alpine:3.22`, `apk add --no-cache nginx`, copy `docker/` config and `dist/`, `USER nginx`, `EXPOSE 8080`, `HEALTHCHECK` on `/healthz`), `Dockerfile.dockerignore`, `docker/nginx.conf` (one worker, pid and temp paths in `/tmp`, listen 8080, `absolute_redirect off`, `try_files $uri $uri/ $uri.html =404`, gzip, caching, `error_page 404 /404.html`, `/healthz`) and `docker/security-headers.conf` (included in every location), plus a minimal `site/404.njk` (permalink `/404.html`) and a placeholder `site/index.njk`, to pass T024
-- [ ] T026 Create `scripts/test-e2e.sh`: `FEED_OFFLINE` build of the image, run it as production does (`--read-only --tmpfs /tmp --memory 48m --cpus 0.25 --cap-drop ALL --security-opt no-new-privileges:true -p 8089:8080`), wait for `/healthz`, run Playwright with `BASE_URL=http://localhost:8089`, always remove the container
+- [ ] T026 Create `scripts/test-e2e.sh`: `FEED_OFFLINE` build of the image, run it as production does (`--read-only --tmpfs /tmp --memory 48m --cpus 0.25 --cap-drop ALL --security-opt no-new-privileges:true -p 8089:8080`), wait for `/healthz`, run Playwright with `BASE_URL=http://localhost:8089`, always remove the container. The image is built with `PLAUSIBLE_DOMAIN` unset, so no test page loads the analytics script; its paths are checked only in the build output (T048)
 
 **Checkpoint**: an empty site builds, the image serves it, and the foundation tests pass.
 
@@ -152,6 +152,7 @@ message reaches the mailbox (manual).
 - [ ] T050 [P] [US4] Create `site/privacy.md` (`/privacy/`), carrying over the old policy and rewriting its third-party section per FR-024: Web3Forms, hCaptcha via Web3Forms, the podcast host for audio and artwork, cookieless Plausible; no cookies or non-essential storage; Google Analytics, reCAPTCHA and the site's own mail server removed
 - [ ] T051 [P] [US4] Complete `site/404.njk`: branded content, a link home, `noindex`, excluded from the sitemap
 - [ ] T052 [P] [US4] Create `site/sitemap.xml.njk`, `site/robots.txt.njk` and `site/site.webmanifest.njk`, and copy the favicons from the old `src/DNI.Web/src/assets/icons/` into `site/assets/img/icons/`
+- [ ] T070 [US4] [derived] E2E tests in `tests/e2e/every-page.spec.js` per constitution Principle VI, over every HTML page listed in `dist/` (about 300): a 2xx response, the title from contracts/urls.md's pattern and a first heading, header navigation and footer present, every first-party image decodes, and no first-party console error or failed first-party request; third-party requests (artwork, captcha) are excluded from the failure checks
 
 ---
 
@@ -203,13 +204,13 @@ the deletions grouped by replacement.
 - [ ] T065 [US7] Delete the deployment material: `deploy.sh`, `docker-compose.yml`, `.dockerignore`, `nginx/` (proxy configs, maintenance page, notes), `.github/workflows/cd.yml`; remove the `docker-username` and `docker-password` lines from `.gitignore`
 - [ ] T066 [US7] Delete `.github/workflows/ci.yml` and update `.github/CONTRIBUTING.md` to the new commands
 - [ ] T067 [US7] Rewrite `README.md` for the new site only, and update `.claude/worktree-prep.json` (copy `node_modules`, run `npm ci`, ports `LOCAL_WEB_PORT` only, no `dotnet restore`)
-- [ ] T068 [US7] Build-output test `tests/build/clean.test.mjs`: no tracked file under the deleted paths; no tracked file names a host, server path, registry credential or deployment step
+- [ ] T068 [US7] Build-output test `tests/build/clean.test.mjs`: no tracked file under the deleted paths; no tracked file carries hosting detail: deploy or proxy server names, IP addresses, server paths, registry names or credentials, TLS certificate paths, or deployment steps (public third-party service URLs the site uses, such as the feed, the form service and listening platforms, are allowed)
 
 ---
 
 ## Phase 11: Polish
 
-- [ ] T069 Run the quickstart.md scenarios end to end against the local container; run a Lighthouse audit (`npx lighthouse` against the container, mobile profile, using Playwright's Chromium) on home, archive, an episode and contact; record the scores against SC-002 and SC-003 and the image size and memory figures against SC-006 in the PR description
+- [ ] T069 Run the quickstart.md scenarios end to end against the local container; run a Lighthouse audit (`npx lighthouse` against the container, mobile profile, using Playwright's Chromium) on one page of each template (home, archive, keyword list, episode, contact, a policy page and the 404 page) as the SC-003 sample; record the scores against SC-002 and SC-003 and the image size and memory figures against SC-006 in the PR description
 
 ---
 
