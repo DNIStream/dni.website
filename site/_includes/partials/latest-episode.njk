@@ -1,0 +1,12 @@
+{#- The newest episode: title, artwork and a link. No date, by design. -#}
+{%- set episode = episodes.latest %}
+{%- if episode %}
+<section class="latest-episode" aria-labelledby="latest-episode">
+  <h2 id="latest-episode">Latest episode</h2>
+  <a class="latest-episode__link" href="/show/{{ episode.slug }}/">
+    {%- set artworkSizes = "(min-width: 48rem) 16rem, 60vw" %}
+    {% include "partials/artwork.njk" %}
+    <span class="latest-episode__title">{{ episode.title }}</span>
+  </a>
+</section>
+{%- endif %}
