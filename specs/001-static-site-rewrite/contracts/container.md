@@ -16,7 +16,9 @@
 
 | Request | Headers |
 |---|---|
-| Static assets (`css js svg png jpg webp avif woff2 ico webmanifest`) | `Cache-Control: public, max-age=31536000, immutable` for fingerprinted assets; `public, max-age=86400` otherwise |
+| CSS and JS (always referenced with a `?v=<content hash>` query) | `Cache-Control: public, max-age=31536000, immutable` |
+| Fonts | `Cache-Control: public, max-age=31536000, immutable` (the file name carries the font version) |
+| Images, icons, `webmanifest` | `Cache-Control: public, max-age=86400` |
 | HTML | `Cache-Control: no-cache` |
 | Every response | `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy: camera=(), microphone=(), geolocation=()`, `Content-Security-Policy` (below) |
 | Text types over 1 KB | gzip-compressed when the client accepts it |
