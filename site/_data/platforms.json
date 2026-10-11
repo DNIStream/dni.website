@@ -1,0 +1,9 @@
+[
+  { "name": "Apple Podcasts", "icon": "/assets/img/platforms/apple-podcasts.png", "url": "https://podcasts.apple.com/gb/podcast/documentation-not-included/id1468075833" },
+  { "name": "Castbox", "icon": "/assets/img/platforms/castbox.png", "url": "https://castbox.fm/ch/2166220" },
+  { "name": "Castro", "icon": "/assets/img/platforms/castro.png", "url": "https://castro.fm/podcast/040fe34e-74f3-4983-a497-29529a6fd581" },
+  { "name": "Overcast", "icon": "/assets/img/platforms/overcast.png", "url": "https://overcast.fm/itunes1468075833/documentation-not-included" },
+  { "name": "Pocket Casts", "icon": "/assets/img/platforms/pocket-casts.png", "url": "https://pca.st/8g0R" },
+  { "name": "Spotify", "icon": "/assets/img/platforms/spotify.png", "url": "https://open.spotify.com/show/21KuGIBltgawtEqlXHSuGd" },
+  { "name": "TuneIn", "icon": "/assets/img/platforms/tunein.png", "url": "https://tunein.com/podcasts/Technology-Podcasts/Documentation-Not-Included-p1229542/" }
+]
