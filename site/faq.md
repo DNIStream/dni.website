@@ -8,14 +8,19 @@ description: "Answers to common questions about DNI Stream, its podcast and its 
 
 ## When are the shows on?
 
-The live shows are not running at the moment, but every episode of Documentation Not Included is in
-the [podcast archive](/show-archive/), and you can subscribe in your favourite podcast app from the
+Our shows are streamed live on [Twitch](https://www.twitch.tv/dnistream): follow us there to hear
+when we're next on. Every past episode of Documentation Not Included is in the
+[podcast archive](/show-archive/), and you can subscribe in your favourite podcast app from the
 Listen / Subscribe menu.
 
 ## How do I chat to you?
 
-Join our [Discord server](https://discord.gg/KsCt2hx): at least one of us is likely to be around, so
-pop in and drop us a message. You can also [send us a message](/contact/).
+During a show, join the live Twitch or Discord chat. Post an interesting comment or question and we
+may even read it out and discuss it on the show!
+
+When we're not streaming, at least one of us is likely to be active on our
+[Discord server](https://discord.gg/KsCt2hx), so pop in and drop us a message. You can also
+[send us a message](/contact/).
 
 ## Can you get &lt;insert name&gt; as a guest?
 

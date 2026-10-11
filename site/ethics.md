@@ -13,7 +13,7 @@ contains a set of principles and practices to guide all project Contributors.
 The following terms are defined herein:
 
 - **Brand / Project**: the "DNI Stream" repository
-- **Show**: one or more of our live shows, Documentation Not Included or Development Now Included
+- **Show**: one or more of our live shows, currently Documentation Not Included or Development Now Included
 - **Creator**: one or more of the Project's original creators, Josey Howarth and Chris Sebok
 - **Volunteer**: an unpaid member from the Community who helps out with one or more specific tasks
 - **Contributor**: a Creator, Volunteer or Guest
@@ -31,11 +31,11 @@ The following terms are defined herein:
 **DNI Stream** is a live knowledge repository for software professionals, managed and administrated by
 the Creators. We aim to make the tech industry more accessible to everyone, lowering the barrier to
 entry by providing accurate information that benefits our Community and the software development
-industry as a whole. Our Shows were streamed live so we could respond to our Community members'
+industry as a whole. All our Shows are streamed live so we can respond to our Community members'
 queries and questions immediately, giving them the information that they want on demand.
 
 **DNI Stream** is the overarching Brand, which we refer to as a *repository*. This repository is
-branched into separate services: a tech podcast, a development vodcast, and a chat server for our
+branched into separate live services: currently a tech podcast, a development vodcast, and a chat server for our
 community.
 
 ## About the Shows
