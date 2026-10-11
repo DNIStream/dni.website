@@ -343,5 +343,6 @@ docker-password
 .claude/**/*.local.*
 CLAUDE.local.md
 .remember/
+.claude/.speckit-autopilot/
 
 # Spec Kit - machine-local state is ignored by .specify/.gitignore
