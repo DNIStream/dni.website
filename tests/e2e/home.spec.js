@@ -2,14 +2,14 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("home page", () => {
-  test("introduces DNI and links to its three parts", { tag: "@critical" }, async ({ page }) => {
+  test("introduces DNI and links to the podcast and the Discord", { tag: "@critical" }, async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("h1")).toContainText("DNI Stream");
     const cards = page.locator(".feature-card");
-    await expect(cards).toHaveCount(3);
+    await expect(cards).toHaveCount(2);
     await expect(cards.nth(0).getByRole("link")).toHaveAttribute("href", "/show-archive/");
-    await expect(cards.nth(1).getByRole("link")).toHaveAttribute("href", "https://www.twitch.tv/dnistream");
-    await expect(cards.nth(2).getByRole("link")).toHaveAttribute("href", "https://discord.gg/KsCt2hx");
+    await expect(cards.nth(1).getByRole("link")).toHaveAttribute("href", "https://discord.gg/KsCt2hx");
+    await expect(page.locator("main")).not.toContainText("Development Now Included");
   });
 
   test("shows the latest episode without its date", async ({ page }) => {

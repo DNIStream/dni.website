@@ -13,7 +13,7 @@ contains a set of principles and practices to guide all project Contributors.
 The following terms are defined herein:
 
 - **Brand / Project**: the "DNI Stream" repository
-- **Show**: one or more of our live shows, currently Documentation Not Included or Development Now Included
+- **Show**: one or more episodes of our live show, Documentation Not Included
 - **Creator**: one or more of the Project's original creators, Josey Howarth and Chris Sebok
 - **Volunteer**: an unpaid member from the Community who helps out with one or more specific tasks
 - **Contributor**: a Creator, Volunteer or Guest
@@ -35,7 +35,7 @@ industry as a whole. All our Shows are streamed live so we can respond to our Co
 queries and questions immediately, giving them the information that they want on demand.
 
 **DNI Stream** is the overarching Brand, which we refer to as a *repository*. This repository is
-branched into separate live services: currently a tech podcast, a development vodcast, and a chat server for our
+branched into separate live services: currently a tech podcast and a chat server for our
 community.
 
 ## About the Shows
@@ -52,10 +52,6 @@ in mind when referring to or talking about visual elements that may not translat
 podcast, though the Hosts will do their best to highlight this when necessary during the show. Any
 links, videos or visual elements required should be added to the show notes so they can be published
 with the episode.
-
-**Development Now Included** is a live streamed vodcast where the Creators delve deeply into software
-development. These shows are not archived and are instead focussed on live audience interaction,
-featuring regular segues and mini bespoke tutorials.
 
 ## Code of Ethics
 

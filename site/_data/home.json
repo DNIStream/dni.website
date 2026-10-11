@@ -13,12 +13,6 @@
       "url": "/show-archive/"
     },
     {
-      "title": "Development Now Included",
-      "text": "The live stream: deep dives into technical subjects, from web development to enterprise architecture and indie game development.",
-      "action": "Watch on Twitch",
-      "url": "https://www.twitch.tv/dnistream"
-    },
-    {
       "title": "The DNI'ers",
       "text": "Our Discord server, with IT professionals from all over the world. Come along for geeky discussion, or vent about the system that just won't do what you want.",
       "action": "Join the Discord",
