@@ -263,6 +263,7 @@ FakesAssemblies/
 .ntvs_analysis.dat
 node_modules/
 playwright-report/
+test-results/
 
 # Visual Studio 6 build log
 *.plg
