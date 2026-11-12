@@ -2,6 +2,7 @@
 !package.json
 !package-lock.json
 !eleventy.config.js
+!VERSION
 !lib/
 !scripts/optimize-assets.mjs
 !site/

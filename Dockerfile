@@ -5,7 +5,7 @@ WORKDIR /app
 ENV PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
-COPY eleventy.config.js ./
+COPY eleventy.config.js VERSION ./
 COPY lib lib
 COPY scripts/optimize-assets.mjs scripts/optimize-assets.mjs
 COPY site site
