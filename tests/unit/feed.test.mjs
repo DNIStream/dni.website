@@ -102,6 +102,21 @@ test("rejects a slug with unsafe characters", () => {
   );
 });
 
+test("parses a feed with CRLF line endings and escaped markup", () => {
+  const xml = channel([
+    full(
+      "ep-1",
+      "Tue, 02 Aug 2022 18:00:00 +0000",
+      "<description>Line one\nLine &lt;b&gt;two&lt;/b&gt;</description>\n" +
+        "<content:encoded><![CDATA[<p>One\nTwo &amp; three</p>]]></content:encoded>",
+    ).replace("<title> ep-1 title </title>", "<title>Ep &amp; more</title>"),
+  ]).replace(/\n/g, "\r\n");
+  const [e] = parseFeed(xml);
+  assert.equal(e.title, "Ep & more");
+  assert.equal(e.summary, "Line one Line two");
+  assert.equal(e.notesHtml, "<p>One\nTwo &amp; three</p>");
+});
+
 const snapshotXml = readFileSync(SNAPSHOT, "utf8");
 const quiet = { log: () => {} };
 
