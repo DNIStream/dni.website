@@ -15,7 +15,7 @@ ARG PLAUSIBLE_DOMAIN=
 ARG FEED_OFFLINE=0
 RUN SITE_URL="$SITE_URL" PLAUSIBLE_DOMAIN="$PLAUSIBLE_DOMAIN" FEED_OFFLINE="$FEED_OFFLINE" npm run build
 
-FROM alpine:3.22 AS site
+FROM alpine:3.24 AS site
 RUN apk add --no-cache nginx \
   && rm -rf /etc/nginx/http.d /usr/share/nginx/html /var/lib/nginx/html
 COPY docker/nginx.conf /etc/nginx/nginx.conf
