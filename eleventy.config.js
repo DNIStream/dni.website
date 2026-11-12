@@ -44,6 +44,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData("env", {
     siteUrl: (process.env.SITE_URL || "http://localhost:8080").replace(/\/+$/, ""),
     plausibleDomain: process.env.PLAUSIBLE_DOMAIN || "",
+    version: readFileSync("VERSION", "utf8").trim(),
   });
 
   eleventyConfig.addShortcode("icon", icon);
