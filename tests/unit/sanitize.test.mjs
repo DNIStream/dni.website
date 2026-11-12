@@ -39,3 +39,42 @@ test("adds rel to external links", () => {
 test("returns an empty string for missing input", () => {
   assert.equal(sanitizeNotes(undefined), "");
 });
+
+test("escapes bare ampersands and decodes character references in text", () => {
+  assert.equal(
+    sanitizeNotes("<p>Q&A, R&amp;D, &copy; &#169; &#x27; AT&T</p>"),
+    "<p>Q&amp;A, R&amp;D, © © ' AT&amp;T</p>",
+  );
+  assert.equal(
+    sanitizeNotes("<p>Tom & Jerry &abcdefghijklmnopqrstuvwxyz; end</p>"),
+    "<p>Tom &amp; Jerry &amp;abcdefghijklmnopqrstuvwxyz; end</p>",
+  );
+});
+
+test("keeps query-string ampersands in links, escaped once", () => {
+  assert.equal(
+    sanitizeNotes('<p><a href="https://a.example/?a=1&b=2&amp;c=3">q</a></p>'),
+    '<p><a href="https://a.example/?a=1&amp;b=2&amp;c=3" rel="noopener noreferrer">q</a></p>',
+  );
+});
+
+test("drops noscript and iframe content, including iframe fallback markup", () => {
+  assert.equal(sanitizeNotes("<p>a</p><noscript><p>hidden</p></noscript><p>b</p>"), "<p>a</p><p>b</p>");
+  assert.equal(
+    sanitizeNotes('<p>a</p><iframe src="https://p.example"><p>fallback</p></iframe><p>b</p>'),
+    "<p>a</p><p>b</p>",
+  );
+});
+
+test("drops style elements inside svg", () => {
+  assert.equal(sanitizeNotes("<svg><style>&lt;img src=x onerror=alert(1)&gt;</style></svg><p>b</p>"), "<p>b</p>");
+});
+
+test("never lets markup hidden behind a CDATA marker through", () => {
+  const out = sanitizeNotes(
+    '<p>a</p><![CDATA[<noscript><p title="</noscript><img src=x onerror=alert(1)>">]]><p>b</p>',
+  );
+  assert.doesNotMatch(out, /<img|onerror|<noscript/);
+  assert.match(out, /^<p>a<\/p>/);
+  assert.match(out, /<p>b<\/p>$/);
+});
