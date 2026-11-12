@@ -16,7 +16,7 @@ The website of DNI Stream and its podcast, **Documentation Not Included**.
 <a href="LICENSE"><img alt="Licence: MIT" src="https://img.shields.io/github/license/DNIStream/dni.website"></a>
 
 **Built with**<br>
-<a href="https://nodejs.org/"><img alt="Node.js 24" src="https://img.shields.io/badge/Node.js-24-5FA04E?logo=nodedotjs&logoColor=white"></a>
+<a href="https://nodejs.org/"><img alt="Node.js 26" src="https://img.shields.io/badge/Node.js-26-5FA04E?logo=nodedotjs&logoColor=white"></a>
 <a href="https://www.11ty.dev/"><img alt="Eleventy 3" src="https://img.shields.io/badge/Eleventy-3-222222?logo=eleventy&logoColor=white"></a>
 <a href="docker/nginx.conf"><img alt="nginx on Alpine" src="https://img.shields.io/badge/nginx-Alpine-009639?logo=nginx&logoColor=white"></a>
 <a href="tests/e2e"><img alt="Tested with Playwright" src="https://img.shields.io/badge/tested%20with-Playwright-2EAD33?logo=playwright&logoColor=white"></a>
@@ -38,7 +38,7 @@ serves it. Episode pages are generated from the podcast's RSS feed.
 
 ## Prerequisites
 
-- Node.js 24
+- Node.js 26
 - Docker, for the container and the E2E tests
 
 ## Build and preview
