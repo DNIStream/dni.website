@@ -2,8 +2,8 @@
 
 | ID | Title | Status | Signed off at | Date | Reason |
 |---|---|---|---|---|---|
-| MT-01 | Site served by the Alpine 3.24 / nginx 1.30 image | untested | | | |
-| MT-02 | Live feed read by the Node 26 build | untested | | | |
+| MT-01 | Site served by the Alpine 3.24 / nginx 1.30 image | signed off | e52023a3ea0e | 2026-11-12 | |
+| MT-02 | Live feed read by the Node 26 build | signed off | e52023a3ea0e | 2026-11-12 | |
 
 ## MT-01: Site served by the Alpine 3.24 / nginx 1.30 image
 
